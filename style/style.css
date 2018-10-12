@@ -1,0 +1,39 @@
+h1,h2,h3,h4,h5,h6{
+	margin: 0;
+	padding: 0;
+}
+div,a,p,span{
+	box-sizing: border-box;
+}
+
+.section{
+	width: 1170px;
+	margin: 0 auto;
+	background-color: #eee;
+}
+.section p{
+	text-align: center;
+	max-width: 300px;
+
+}
+
+.header{
+	background-color: #fdcd3a;
+}
+
+.logo{
+	text-align: center;
+	font-size: 23px;
+	border-radius: 50%;
+	background-color: #000;
+	height: 64px;
+	width: 64px;
+	margin: 0 auto;
+	color: #fff;
+	line-height: 64px;
+}
+
+p{
+	margin-top: 40px;
+	color: #363636;
+}
