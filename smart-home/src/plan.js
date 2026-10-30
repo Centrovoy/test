@@ -58,24 +58,27 @@ export const ROOMS = [
 ];
 
 // Мебель. type определяет, как объект строится в scene.js.
-// Стили и цвета подобраны по фотографиям интерьера.
+// Внешний вид и расстановка — по фотографиям интерьера.
 export const FURNITURE = [
-  // детская: розовая кровать, белые шкафы, кресло-качалка
+  // детская: шкафы и дверь на восточной стене, розовая кровать вдоль северной стены,
+  // круглое зеркало над тумбой, лампа с перьями и кресло-качалка у двери
+  { type: 'wardrobe', r: [330, 55, 390, 182], h: 2.6, panels: 'w' },
   { type: 'bed', r: [85, 55, 235, 125], head: 'e', color: 'pink' },
+  { type: 'cabinet', r: [240, 55, 285, 82], h: 0.6 },
+  { type: 'vase', at: [262, 66], y: 0.6 },
+  { type: 'roundMirror', at: [262, 53], face: 's', rad: 0.42, y: 1.45 },
   { type: 'desk', r: [72, 222, 180, 263] },
   { type: 'chair', at: [118, 205], color: 'cabinet' },
-  { type: 'cabinet', r: [180, 238, 245, 263], h: 0.75 },
-  { type: 'desk', r: [243, 55, 310, 78] },
-  { type: 'chair', at: [276, 92], color: 'cabinet', face: Math.PI },
-  { type: 'wardrobe', r: [350, 55, 390, 160], h: 2.5 },
-  { type: 'rug', r: [120, 140, 300, 205] },
-  { type: 'armchair', at: [320, 205], rot: -Math.PI * 0.8 },
+  { type: 'rug', r: [110, 135, 320, 225], style: 'soft' },
+  { type: 'featherLamp', at: [318, 248] },
+  { type: 'armchair', at: [258, 214], rot: -Math.PI * 0.65 },
   // гардероб
   { type: 'wardrobe', r: [400, 55, 490, 92], h: 2.5 },
   { type: 'wardrobe', r: [455, 92, 490, 170], h: 2.5 },
-  // ванная: бежевая плитка, колонна стиралка+сушилка, рифлёная тумба
+  // ванная: колонна стиральная+сушильная машины, рифлёная тумба с круглым зеркалом, ванна со шторкой
   { type: 'washer', r: [528, 57, 577, 105] },
   { type: 'vanity', r: [577, 55, 640, 92] },
+  { type: 'roundMirror', at: [608, 53.5], face: 's', rad: 0.42, y: 1.5, lit: true },
   { type: 'bathtub', r: [640, 57, 710, 174] },
   // санузел
   { type: 'cabinet', r: [722, 55, 785, 75], h: 1.15, color: 'vanity' },
@@ -83,49 +86,55 @@ export const FURNITURE = [
   { type: 'wardrobe', r: [785, 55, 815, 118], h: 2.2, color: 'vanity' },
   { type: 'vanity', r: [790, 122, 815, 152] },
   // коридор
-  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5 },
+  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5, panels: 's' },
   { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.5 },
-  // кухня: светлые низы, тауп верх, чёрный фартук, витрины с подсветкой
+  // кухня: колонна с духовкой и СВЧ слева, светлые низы, тауп верх с двумя витринами, чёрный фартук
   { type: 'kitchenRun', r: [897, 55, 1155, 97], showcases: [990, 1080] },
   { type: 'kitchenRun', r: [897, 97, 945, 175] },
   { type: 'tallUnit', r: [897, 175, 945, 222] },
   { type: 'fridge', r: [897, 222, 945, 263] },
   { type: 'hob', at: [920, 140] },
   { type: 'sink', at: [962, 76] },
-  // столовая: мраморный стол, оливковые велюровые стулья
-  { type: 'table', r: [1048, 150, 1155, 208] },
-  { type: 'chair', at: [1072, 138] }, { type: 'chair', at: [1122, 138] },
-  { type: 'chair', at: [1072, 222], face: Math.PI }, { type: 'chair', at: [1122, 222], face: Math.PI },
-  // гостиная: светлый диван, круглое кресло, золотые столики, ч/б ковёр
-  { type: 'rug', r: [895, 300, 1105, 452], style: 'geo' },
-  { type: 'sofa', r: [922, 380, 1078, 445], back: 'n' },
-  { type: 'roundTable', at: [1000, 343], rad: 22, h: 0.48 },
-  { type: 'roundTable', at: [1042, 352], rad: 17, h: 0.4 },
-  { type: 'armchair', at: [1128, 333], style: 'round' },
-  { type: 'media', r: [815, 455, 1080, 495] },
-  { type: 'cabinet', r: [1102, 450, 1160, 475], h: 0.75, style: 'console' },
-  { type: 'mirror', r: [735, 290, 738, 445] },
-  { type: 'plant', at: [1158, 298] },
-  // спальня: стёганое изголовье во всю стену, белые тумбы
+  // столовая: овальный мраморный стол на золотом основании, оливковые стулья, букет
+  { type: 'table', r: [1040, 152, 1160, 206] },
+  { type: 'vase', at: [1100, 179], y: 0.77, flowers: true },
+  { type: 'chair', at: [1072, 138] }, { type: 'chair', at: [1128, 138] },
+  { type: 'chair', at: [1072, 222], face: Math.PI }, { type: 'chair', at: [1128, 222], face: Math.PI },
+  // гостиная: диван спинкой к стене с обоями, консоль у окна, круглое кресло у колонны,
+  // золотые столики на ч/б ковре, витрина в стене у кухни, зеркальная стена и барная тележка
+  { type: 'rug', r: [868, 318, 1088, 438], style: 'geo' },
+  { type: 'sofa', r: [900, 440, 1080, 492], back: 's' },
+  { type: 'roundTable', at: [985, 388], rad: 22, h: 0.48 },
+  { type: 'roundTable', at: [1028, 398], rad: 17, h: 0.4 },
+  { type: 'armchair', at: [1132, 318], style: 'round', rot: -Math.PI * 0.2 },
+  { type: 'cabinet', r: [1100, 466, 1160, 492], h: 0.75, style: 'console' },
+  { type: 'showcase', r: [822, 282, 878, 293], h: 2.6, face: 's' },
+  { type: 'mirror', r: [735, 290, 738, 450] },
+  { type: 'barCart', at: [757, 300] },
+  { type: 'plant', at: [868, 472], big: true },
+  // спальня: изголовье во всю стену у оливковой стены, белые рифлёные тумбы,
+  // комод с ТВ и шкаф вдоль перегородки
   { type: 'headboard', r: [860, 700, 1065, 712] },
   { type: 'bed', r: [905, 562, 1018, 700], head: 's' },
   { type: 'roundTable', at: [883, 682], rad: 15, style: 'white' },
   { type: 'roundTable', at: [1039, 682], rad: 15, style: 'white' },
+  { type: 'wardrobe', r: [822, 502, 878, 545], h: 2.6, panels: 's' },
+  { type: 'dresser', r: [878, 502, 1065, 528] },
   // лоджия
   { type: 'armchair', at: [1145, 655] },
   { type: 'plant', at: [1165, 530] },
-  // прихожая: белые шкафы, зелёная скамья
-  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.5 },
-  { type: 'bench', r: [714, 430, 732, 500] },
-  { type: 'plant', at: [790, 300] },
+  // прихожая: белые шкафы с золотыми ручками, зелёная скамья и картина в торце
+  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.6, panels: 'w' },
+  { type: 'bench', r: [738, 697, 798, 712] },
+  { type: 'art', r: [742, 709.5, 794, 712], y0: 1.0, y1: 1.8 },
 ];
 
 // Акцентные стены: тонкие панели поверх стен.
 export const ACCENTS = [
-  { r: [52, 52, 390, 54.5], color: 'wallKids' },
+  { r: [52, 52, 330, 54.5], color: 'wallKids' },
   { r: [52, 260.5, 350, 263], color: 'wallKids' },
-  { r: [387.5, 52, 390, 185], color: 'wallKids' },
   { r: [850, 709, 1085, 712], color: 'wallOlive' },
+  { r: [820, 492, 1085, 495], color: 'wallpaper', trim: true },
 ];
 
 // Устройства умного дома.
@@ -139,9 +148,10 @@ export const DEVICES = [
   { id: 'light.corridor', type: 'light', room: 'corridor', name: 'Споты', at: [640, 222] },
   { id: 'light.kitchen', type: 'light', room: 'kitchen', name: 'Споты на кухне', at: [970, 150] },
   { id: 'light.dining', type: 'light', room: 'kitchen', name: 'Подвес над столом', at: [1100, 180], pendant: true },
-  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [1000, 360], style: 'chandelier' },
+  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [990, 385], style: 'chandelier' },
   { id: 'light.hall', type: 'light', room: 'hall', name: 'Свет', at: [760, 620] },
   { id: 'light.bedroom', type: 'light', room: 'bedroom', name: 'Люстра', at: [960, 600], style: 'ring' },
+  { id: 'light.bedside', type: 'light', room: 'bedroom', name: 'Подвесы у кровати', at: [961, 682], style: 'bedside' },
   { id: 'light.loggia', type: 'light', room: 'loggia', name: 'Бра', at: [1142, 600] },
 
   // шторы
@@ -151,9 +161,9 @@ export const DEVICES = [
   { id: 'curtain.bedroom', type: 'curtain', room: 'bedroom', name: 'Шторы', r: [1075, 515, 1082, 700], axis: 'z', color: 'curtainBedroom' },
 
   // климат
-  { id: 'ac.kids', type: 'ac', room: 'kids', name: 'Кондиционер', at: [300, 55], face: 's' },
-  { id: 'ac.living', type: 'ac', room: 'living', name: 'Кондиционер', at: [1175, 395], face: 'w' },
-  { id: 'ac.bedroom', type: 'ac', room: 'bedroom', name: 'Кондиционер', at: [960, 505], face: 's' },
+  { id: 'ac.kids', type: 'ac', room: 'kids', name: 'Кондиционер', at: [388, 220], face: 'w' },
+  { id: 'ac.living', type: 'ac', room: 'living', name: 'Кондиционер', at: [1175, 440], face: 'w' },
+  { id: 'ac.bedroom', type: 'ac', room: 'bedroom', name: 'Кондиционер', at: [822, 550], face: 'e' },
   { id: 'heating.bath', type: 'heating', room: 'bath', name: 'Тёплый пол', r: [528, 108, 640, 174] },
 
   // датчики
@@ -169,14 +179,14 @@ export const DEVICES = [
   { id: 'lock.entrance', type: 'lock', room: 'hall', name: 'Умный замок', at: [716, 640] },
   { id: 'valve.water', type: 'valve', room: 'wc', name: 'Кран воды', at: [728, 68] },
   { id: 'camera.entrance', type: 'camera', room: 'hall', name: 'Камера', at: [800, 700] },
-  { id: 'tv.living', type: 'tv', room: 'living', name: 'Телевизор', at: [955, 475] },
+  { id: 'tv.bedroom', type: 'tv', room: 'bedroom', name: 'Телевизор', at: [970, 503] },
   { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [552, 80] },
   { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [760, 345] },
 ];
 
 // Маршрут робота-пылесоса (точки плана).
 export const VACUUM_PATH = [
-  [760, 345], [860, 300], [860, 360], [900, 450], [1090, 450], [1160, 420], [1100, 290],
+  [760, 345], [850, 310], [1080, 300], [1160, 390], [1090, 430], [870, 430], [850, 310],
   [1000, 270], [980, 240], [1000, 120], [1170, 120], [1170, 240], [1030, 240], [960, 270],
   [880, 300], [760, 345],
 ];

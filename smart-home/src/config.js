@@ -31,6 +31,6 @@ export const HA_CONFIG = {
     'lock.entrance': 'lock.vkhodnaia_dver',
     'valve.water': 'switch.kran_vody',
     'vacuum': 'vacuum.robot',
-    'tv.living': 'media_player.tv',
+    'tv.bedroom': 'media_player.tv',
   },
 };

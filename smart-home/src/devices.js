@@ -63,7 +63,7 @@ const build = {
     // золотое кольцо (спальни), стеклянные шары на золотых подвесах (столовая),
     // встроенные споты (остальные помещения).
     const g = new THREE.Group();
-    const goldMat = M(P.gold, { metalness: 0.85, roughness: 0.3 });
+    const goldMat = M(P.gold, { metalness: 0.35, roughness: 0.35 });
     const glowMat = emissive(P.lightWarm, 0);
     const style = def.pendant ? 'pendant' : def.style || 'spot';
     let y = CEILING - 0.02;
@@ -98,6 +98,20 @@ const build = {
         const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, CEILING - y), goldMat);
         rod.position.set(dx, (CEILING + y) / 2 + 0.06, 0);
         g.add(rod);
+      }
+    } else if (style === 'bedside') {
+      // два стеклянных шара на золотых штангах у тумб
+      y = 1.25;
+      for (const dx of [-1.11, 1.11]) {
+        const ball = new THREE.Mesh(new THREE.SphereGeometry(0.11, 20, 14), new THREE.MeshStandardMaterial({ color: '#ffffff', transparent: true, opacity: 0.35, roughness: 0.05 }));
+        ball.position.set(dx, y, 0);
+        const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 8), glowMat);
+        bulb.position.copy(ball.position);
+        const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.01, 0.01, 0.5), goldMat);
+        rod.position.set(dx, y + 0.35, 0);
+        const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.003, 0.003, CEILING - y - 0.6), M('#dddddd'));
+        cord.position.set(dx, (CEILING + y + 0.6) / 2, 0);
+        g.add(ball, bulb, rod, cord);
       }
     } else {
       // три встроенных спота
@@ -172,6 +186,7 @@ const build = {
     g.position.copy(at(def, 2.35));
     if (def.face === 's') g.position.z += 0.13;
     if (def.face === 'w') { g.rotation.y = -Math.PI / 2; g.position.x -= 0.13; }
+    if (def.face === 'e') { g.rotation.y = Math.PI / 2; g.position.x += 0.13; }
     let phase = 0;
     return {
       group: g,
@@ -380,10 +395,12 @@ const build = {
     const glow = new THREE.PointLight('#7aa7ff', 0, 4, 2);
     glow.position.set(0, 0, -0.6);
     g.add(frame, screen, glow);
-    g.position.set(mx(def.at[0]), 1.2, mz(477) - 0.03);
+    // стоит на комоде у перегородки, экраном на юг (к кровати)
+    g.position.set(mx(def.at[0]), 1.36, mz(def.at[1]) + 0.25);
+    g.rotation.y = Math.PI;
     return {
       group: g,
-      markerY: 0.75,
+      markerY: 2.0,
       apply() {},
       tick(dt, s, t) {
         const k = s.on ? 1 : 0;

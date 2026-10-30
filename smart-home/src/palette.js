@@ -17,7 +17,7 @@ export const PALETTE = {
   ground: '#e7e3dc',
 
   // мебель
-  gold: '#c5a052',
+  gold: '#d2ae5e',
   black: '#1d1d1f',
   cabinet: '#ece9e3',        // белые фасады шкафов
   kitchenLow: '#d5d0c8',     // нижние фасады кухни

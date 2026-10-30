@@ -91,7 +91,7 @@ export const SCENES = [
     run(h) {
       allLights(h, { on: false });
       ACS.forEach((id) => h.set(id, { on: false }, 'scene'));
-      h.set('tv.living', { on: false }, 'scene');
+      h.set('tv.bedroom', { on: false }, 'scene');
       h.set('heating.bath', { on: false }, 'scene');
       h.set('door.entrance', { open: false }, 'scene');
       h.set('lock.entrance', { locked: true }, 'scene');
@@ -112,14 +112,15 @@ export const SCENES = [
     },
   },
   {
-    id: 'movie', name: 'Кино', hint: 'Приглушить свет, закрыть шторы, ТВ',
+    id: 'movie', name: 'Кино', hint: 'Спальня: шторы, приглушённый свет, ТВ',
     run(h) {
-      h.set('curtain.living', { position: 0 }, 'scene');
-      h.set('curtain.kitchen', { position: 0 }, 'scene');
-      h.set('light.living', { on: true, brightness: 12 }, 'scene');
+      h.set('curtain.bedroom', { position: 0 }, 'scene');
+      h.set('light.bedroom', { on: false }, 'scene');
+      h.set('light.bedside', { on: true, brightness: 15 }, 'scene');
+      h.set('light.living', { on: false }, 'scene');
       h.set('light.kitchen', { on: false }, 'scene');
       h.set('light.dining', { on: false }, 'scene');
-      h.set('tv.living', { on: true }, 'scene');
+      h.set('tv.bedroom', { on: true }, 'scene');
     },
   },
   {
@@ -127,7 +128,7 @@ export const SCENES = [
     run(h) {
       allLights(h, { on: false });
       allCurtains(h, 0);
-      h.set('tv.living', { on: false }, 'scene');
+      h.set('tv.bedroom', { on: false }, 'scene');
       h.set('lock.entrance', { locked: true }, 'scene');
       h.set('ac.bedroom', { on: true, mode: 'cool', target: 22 }, 'scene');
       h.setMode('night', 'scene');
@@ -137,7 +138,7 @@ export const SCENES = [
     id: 'evening', name: 'Вечер', hint: 'Тёплый свет в жилых комнатах',
     run(h) {
       h.setMode('home', 'scene');
-      for (const [id, b] of [['light.living', 60], ['light.kitchen', 70], ['light.dining', 80], ['light.corridor', 40], ['light.hall', 50], ['light.kids', 70], ['light.bedroom', 40]]) {
+      for (const [id, b] of [['light.living', 60], ['light.kitchen', 70], ['light.dining', 80], ['light.corridor', 40], ['light.hall', 50], ['light.kids', 70], ['light.bedside', 50]]) {
         h.set(id, { on: true, brightness: b }, 'scene');
       }
     },
