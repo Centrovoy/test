@@ -165,7 +165,7 @@ export function buildShell(stage) {
     if (w.kind === 'wall') addWall(w.r, 0, CEILING);
     if (w.kind === 'door') addWall(w.r, w.head, CEILING);
     if (w.kind === 'window') {
-      addWall(w.r, 0, w.sill);
+      if (w.sill > 0.01) addWall(w.r, 0, w.sill);
       addWall(w.r, w.head, CEILING);
       const [x1, z1, x2, z2] = w.r;
       const thin = Math.abs(x2 - x1) < Math.abs(z2 - z1);
@@ -176,7 +176,7 @@ export function buildShell(stage) {
       g.castShadow = false;
       group.add(g);
       // подоконник и импосты
-      const sill = boxFromRect(w.r, w.sill - 0.02, w.sill + 0.02, frameMat);
+      const sill = boxFromRect(w.r, Math.max(0, w.sill - 0.02), w.sill + 0.03, frameMat);
       group.add(sill);
       const len = thin ? z2 - z1 : x2 - x1;
       const n = Math.max(1, Math.round(len / 75));
@@ -684,6 +684,45 @@ const builders = {
       g.add(boxFromRect([mid + 3, r[3] - 34, r[2] - 8, r[3] - 6], 0.54, 0.68, M('#ffffff')));
       g.add(boxFromRect([r[0] + 20, r[3] - 40, r[2] - 20, r[3] - 33], 0.54, 0.66, M('#9a928a')));
     }
+    return g;
+  },
+  // диван-кровать в детской: розовый велюр, спинка вдоль стены с валиком,
+  // высокое изголовье с волнистым верхом и низкий подлокотник с другой стороны
+  daybed: (f) => {
+    const g = new THREE.Group();
+    const [x1, z1, x2, z2] = f.r;
+    const velvet = M(P.pink, { roughness: 1 });
+    const d = (z2 - z1) / PX_PER_M;
+    g.add(boxFromRect([x1, z1, x2, z2], 0.06, 0.34, velvet));
+    g.add(boxFromRect([x1, z1, x2, z2], 0, 0.06, gold()));
+    // матрас и серое покрывало
+    g.add(boxFromRect([x1 + 8, z1 + 11, x2 - 9, z2 - 2], 0.34, 0.5, M(P.linen)));
+    g.add(boxFromRect([x1 + 8, z1 + 11, x2 - 45, z2 - 1], 0.5, 0.55, M('#d5d3cf', { roughness: 1 })));
+    // спинка вдоль стены с валиком сверху
+    g.add(boxFromRect([x1, z1, x2, z1 + 11], 0.34, 0.74, velvet));
+    const bolster = new THREE.Mesh(new THREE.CylinderGeometry(0.075, 0.075, (x2 - x1) / PX_PER_M, 24), velvet);
+    bolster.rotation.z = Math.PI / 2;
+    bolster.position.set(mx((x1 + x2) / 2), 0.74, mz(z1 + 5.5));
+    bolster.castShadow = true;
+    g.add(bolster);
+    // изголовье: две волны сверху
+    g.add(boxFromRect([x2 - 9, z1, x2, z2], 0.34, 0.86, velvet));
+    for (const k of [0.27, 0.73]) {
+      const wave = new THREE.Mesh(new THREE.CylinderGeometry(d * 0.25, d * 0.25, 9 / PX_PER_M, 32), velvet);
+      wave.rotation.z = Math.PI / 2;
+      wave.position.set(mx(x2 - 4.5), 0.86, mz(z1) + d * k);
+      wave.castShadow = true;
+      g.add(wave);
+    }
+    // низкий подлокотник
+    g.add(boxFromRect([x1, z1, x1 + 9, z2], 0.34, 0.6, velvet));
+    const arm = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, d, 24), velvet);
+    arm.rotation.x = Math.PI / 2;
+    arm.position.set(mx(x1 + 4.5), 0.6, mz((z1 + z2) / 2));
+    g.add(arm);
+    // подушки с принтом у изголовья
+    g.add(boxFromRect([x2 - 24, z1 + 14, x2 - 11, z1 + 40], 0.5, 0.82, M('#f1e9df', { roughness: 1 })));
+    g.add(boxFromRect([x2 - 24, z1 + 42, x2 - 11, z2 - 6], 0.5, 0.8, M('#e9ddd1', { roughness: 1 })));
     return g;
   },
   // мягкое изголовье с вертикальной стёжкой во всю стену

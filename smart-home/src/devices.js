@@ -138,16 +138,20 @@ const build = {
   },
 
   curtain(def) {
+    // single: 'end' — одно полотно, при открытии собирается к дальнему краю (слева направо);
+    // иначе две половины расходятся к краям окна
     const g = new THREE.Group();
     const [x1, z1, x2, z2] = def.r;
     const len = (z2 - z1) / PX_PER_M;
-    const geo = new THREE.BoxGeometry(0.06, 2.4, 1);
+    const H = 2.48;
+    const geo = new THREE.BoxGeometry(0.06, H, 1);
     const mat = M(P[def.color || 'curtain'], { roughness: 0.75, metalness: def.color ? 0 : 0.15 });
     const left = new THREE.Mesh(geo, mat);
     const right = new THREE.Mesh(geo, mat);
-    for (const m of [left, right]) { m.castShadow = true; m.position.y = 1.3; }
-    const rail = boxFromRect([x1, z1, x2, z2], 2.52, 2.55, M(P.metal));
-    g.add(left, right, rail);
+    for (const m of [left, right]) { m.castShadow = true; m.position.y = H / 2 + 0.02; }
+    const rail = boxFromRect([x1, z1, x2, z2], 2.55, 2.58, M(P.metal));
+    g.add(right, rail);
+    if (!def.single) g.add(left);
     const cx = mx((x1 + x2) / 2);
     const zA = mz(z1), zB = mz(z2);
     let cur = 1;
@@ -158,10 +162,16 @@ const build = {
       tick(dt, s) {
         const target = s.position / 100;
         cur += (target - cur) * Math.min(1, dt * 2.5);
+        if (def.single) {
+          const w = Math.max(0.25, len * (1 - cur) + 0.25 * cur);
+          right.scale.z = w;
+          right.position.set(cx, H / 2 + 0.02, zB - w / 2);
+          return;
+        }
         const w = Math.max(0.15, (len / 2) * (1 - cur) + 0.15);
         left.scale.z = w; right.scale.z = w;
-        left.position.set(cx, 1.3, zA + w / 2);
-        right.position.set(cx, 1.3, zB - w / 2);
+        left.position.set(cx, H / 2 + 0.02, zA + w / 2);
+        right.position.set(cx, H / 2 + 0.02, zB - w / 2);
       },
     };
   },

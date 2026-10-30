@@ -12,7 +12,8 @@ export const mx = (x) => (x - PLAN_CENTER[0]) / PX_PER_M;
 export const mz = (y) => (y - PLAN_CENTER[1]) / PX_PER_M;
 
 const W = (x1, y1, x2, y2) => ({ r: [x1, y1, x2, y2], kind: 'wall' });
-const WIN = (x1, y1, x2, y2, sill = 0.85, head = 2.45) => ({ r: [x1, y1, x2, y2], kind: 'window', sill, head });
+// окна панорамные — от пола до потолка
+const WIN = (x1, y1, x2, y2, sill = 0, head = 2.62) => ({ r: [x1, y1, x2, y2], kind: 'window', sill, head });
 const DOOR = (x1, y1, x2, y2, head = 2.1) => ({ r: [x1, y1, x2, y2], kind: 'door', head });
 
 export const WALLS = [
@@ -26,8 +27,8 @@ export const WALLS = [
   W(1088, 263, 1197, 282),
   W(1180, 282, 1197, 292), WIN(1180, 292, 1197, 485), W(1180, 485, 1197, 507),
   W(1100, 495, 1197, 507),
-  WIN(1185, 507, 1197, 712, 0.95, 2.45),
-  W(1085, 495, 1100, 515), WIN(1085, 515, 1100, 605), DOOR(1085, 605, 1100, 700, 2.3), W(1085, 700, 1100, 712),
+  WIN(1185, 507, 1197, 712),
+  W(1085, 495, 1100, 515), WIN(1085, 515, 1100, 700), W(1085, 700, 1100, 712),
 
   // перегородки
   W(390, 52, 400, 185), DOOR(390, 185, 400, 255), W(390, 255, 400, 263),
@@ -63,7 +64,7 @@ export const FURNITURE = [
   // детская: шкафы и дверь на восточной стене, розовая кровать вдоль северной стены,
   // круглое зеркало над тумбой, лампа с перьями и кресло-качалка у двери
   { type: 'wardrobe', r: [330, 55, 390, 182], h: 2.6, panels: 'w' },
-  { type: 'bed', r: [85, 55, 235, 125], head: 'e', color: 'pink' },
+  { type: 'daybed', r: [85, 55, 235, 125] },
   { type: 'cabinet', r: [240, 55, 285, 82], h: 0.6 },
   { type: 'vase', at: [262, 66], y: 0.6 },
   { type: 'roundMirror', at: [262, 53], face: 's', rad: 0.42, y: 1.45 },
@@ -158,7 +159,7 @@ export const DEVICES = [
   { id: 'curtain.kids', type: 'curtain', room: 'kids', name: 'Шторы', r: [55, 62, 62, 253], axis: 'z', color: 'curtainKids' },
   { id: 'curtain.kitchen', type: 'curtain', room: 'kitchen', name: 'Шторы', r: [1170, 105, 1177, 253], axis: 'z' },
   { id: 'curtain.living', type: 'curtain', room: 'living', name: 'Шторы', r: [1170, 292, 1177, 485], axis: 'z' },
-  { id: 'curtain.bedroom', type: 'curtain', room: 'bedroom', name: 'Шторы', r: [1075, 515, 1082, 700], axis: 'z', color: 'curtainBedroom' },
+  { id: 'curtain.bedroom', type: 'curtain', room: 'bedroom', name: 'Шторы', r: [1075, 515, 1082, 700], axis: 'z', color: 'curtainBedroom', single: 'end' },
 
   // климат
   { id: 'ac.kids', type: 'ac', room: 'kids', name: 'Кондиционер', at: [388, 220], face: 'w' },
