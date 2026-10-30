@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Умная квартира — 3D</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="app">
+    <aside class="side side-left">
+      <header class="brand">
+        <div>
+          <h1>Умная квартира</h1>
+          <p>Визуализация автоматизации</p>
+        </div>
+        <span id="mode" class="mode-chip">Дома</span>
+      </header>
+
+      <section>
+        <h2>Сценарии</h2>
+        <div id="scenes" class="scenes"></div>
+      </section>
+
+      <section>
+        <h2>Помещения</h2>
+        <div id="rooms" class="rooms"></div>
+      </section>
+
+      <section>
+        <h2>Правила автоматизации</h2>
+        <div id="rules" class="rules"></div>
+      </section>
+    </aside>
+
+    <main class="stage">
+      <div id="viewport" class="viewport"></div>
+      <div class="toolbar">
+        <div class="group">
+          <button id="view-iso" class="tb">Изометрия</button>
+          <button id="view-top" class="tb">Сверху</button>
+          <button id="view-front" class="tb">Сбоку</button>
+        </div>
+        <div class="group">
+          <button id="walls" class="tb">Срез стен</button>
+          <button id="markers" class="tb active">Устройства</button>
+        </div>
+        <div class="group time">
+          <button id="time-play" class="tb" title="Ускоренное время">▶</button>
+          <input id="time" type="range" min="0" max="23.99" step="0.05" aria-label="Время суток">
+          <span id="time-label">19:30</span>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="sims-wrap">
+          <h2>Имитация событий</h2>
+          <div id="sims" class="sims"></div>
+        </div>
+        <div class="log-wrap">
+          <h2>Журнал</h2>
+          <div id="log" class="log"></div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="side side-right">
+      <header class="panel-head">
+        <h2 id="panel-title">Гостиная</h2>
+        <div id="panel-climate" class="climate"></div>
+      </header>
+      <div id="devices" class="devices"></div>
+    </aside>
+  </div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
