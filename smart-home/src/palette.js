@@ -1,31 +1,47 @@
-// Цветовая гамма интерьера.
-// Все цвета модели берутся только отсюда — чтобы подогнать визуализацию
-// под фотографии проекта, достаточно поменять значения в этом файле.
+// Цветовая гамма интерьера (по фотографиям проекта).
+// Все цвета модели берутся только отсюда.
 export const PALETTE = {
   // отделка
-  floorWood: '#c8a27a',     // инженерная доска, светлый дуб
-  floorTile: '#d9d5ce',     // керамогранит в мокрых зонах
-  floorLoggia: '#bfb6aa',
-  wall: '#f1ede6',          // тёплый белый
-  wallCap: '#3b3734',       // срез стены (как на архитектурном плане)
-  glass: '#a9cfe0',
-  frame: '#e9e7e3',
+  floorWood: '#5c402e',      // паркет «ёлочка», тёмный орех
+  floorWoodLine: '#4b3324',
+  floorTile: '#d8cdbf',      // бежевый керамогранит в ванной и санузле
+  floorLoggia: '#cfc8bd',
+  wall: '#ebe8e3',           // светлый тёплый серый
+  wallCap: '#2e2b29',
+  wallpaper: '#ddd0c4',      // обои с золотыми линиями в гостиной
+  wallOlive: '#a6a26c',      // оливковая стена за изголовьем в спальне
+  wallKids: '#dcc1b9',       // пыльно-розовые стены детской
+  mirror: '#c9d2d6',
+  glass: '#b8d6e4',
+  frame: '#f2f1ee',
   ground: '#e7e3dc',
 
   // мебель
-  wood: '#b48a62',
-  woodDark: '#7a5a40',
-  cabinet: '#f4f2ee',       // фасады шкафов и кухни
-  worktop: '#6e665f',
-  textile: '#8f9aa0',       // диван, кресла
-  textileAccent: '#6f8f8a',
-  linen: '#efe9df',
-  rug: '#d2c9bb',
-  curtain: '#e6dfd3',
-  metal: '#a3a3a1',
-  dark: '#2b2b2d',
+  gold: '#c5a052',
+  black: '#1d1d1f',
+  cabinet: '#ece9e3',        // белые фасады шкафов
+  kitchenLow: '#d5d0c8',     // нижние фасады кухни
+  kitchenHigh: '#b5ada3',    // верхние фасады кухни (тауп)
+  worktop: '#1e1e1f',        // чёрная столешница и фартук
+  marble: '#f1efec',
+  showcase: '#ffd9a3',       // подсветка витрин
+  sofa: '#e3e1dc',
+  velvetGrey: '#575250',     // кресло в гостиной
+  olive: '#5d5f37',          // стулья в столовой
+  headboard: '#e2d8cb',
+  linen: '#efeeeb',
+  pink: '#cf6e6d',           // кровать в детской
+  bench: '#2f5a37',          // скамья в прихожей
+  vanity: '#e4d9c7',
+  rugLight: '#ece7dd',
+  rugDark: '#1f1f1f',
+  curtain: '#b38c4b',        // золотисто-горчичные шторы
+  curtainBedroom: '#8a7c62',
+  curtainKids: '#e7e0d6',
   ceramic: '#fbfbfa',
-  plant: '#6f8b5e',
+  plant: '#4f7a45',
+  dark: '#2b2b2d',
+  metal: '#b9b9b6',
 
   // состояния устройств
   lightWarm: '#ffd9a0',

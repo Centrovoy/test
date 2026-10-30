@@ -58,84 +58,97 @@ export const ROOMS = [
 ];
 
 // Мебель. type определяет, как объект строится в scene.js.
+// Стили и цвета подобраны по фотографиям интерьера.
 export const FURNITURE = [
-  // детская
-  { type: 'bed', r: [85, 55, 235, 125], head: 'e', single: true },
+  // детская: розовая кровать, белые шкафы, кресло-качалка
+  { type: 'bed', r: [85, 55, 235, 125], head: 'e', color: 'pink' },
   { type: 'desk', r: [72, 222, 180, 263] },
-  { type: 'chair', at: [118, 205] },
+  { type: 'chair', at: [118, 205], color: 'cabinet' },
   { type: 'cabinet', r: [180, 238, 245, 263], h: 0.75 },
   { type: 'desk', r: [243, 55, 310, 78] },
-  { type: 'chair', at: [276, 92] },
-  { type: 'wardrobe', r: [350, 55, 390, 160], h: 2.3 },
+  { type: 'chair', at: [276, 92], color: 'cabinet', face: Math.PI },
+  { type: 'wardrobe', r: [350, 55, 390, 160], h: 2.5 },
   { type: 'rug', r: [120, 140, 300, 205] },
+  { type: 'armchair', at: [320, 205], rot: -Math.PI * 0.8 },
   // гардероб
-  { type: 'wardrobe', r: [400, 55, 490, 92], h: 2.3 },
-  { type: 'wardrobe', r: [455, 92, 490, 170], h: 2.3 },
-  // ванная
+  { type: 'wardrobe', r: [400, 55, 490, 92], h: 2.5 },
+  { type: 'wardrobe', r: [455, 92, 490, 170], h: 2.5 },
+  // ванная: бежевая плитка, колонна стиралка+сушилка, рифлёная тумба
   { type: 'washer', r: [528, 57, 577, 105] },
   { type: 'vanity', r: [577, 55, 640, 92] },
   { type: 'bathtub', r: [640, 57, 710, 174] },
   // санузел
-  { type: 'cabinet', r: [722, 55, 785, 75], h: 1.15 },
+  { type: 'cabinet', r: [722, 55, 785, 75], h: 1.15, color: 'vanity' },
   { type: 'toilet', at: [748, 98] },
-  { type: 'wardrobe', r: [785, 55, 815, 118], h: 2.2 },
+  { type: 'wardrobe', r: [785, 55, 815, 118], h: 2.2, color: 'vanity' },
   { type: 'vanity', r: [790, 122, 815, 152] },
   // коридор
-  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.4 },
-  { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.4 },
-  // кухня
-  { type: 'kitchenRun', r: [897, 55, 1155, 97] },
+  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5 },
+  { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.5 },
+  // кухня: светлые низы, тауп верх, чёрный фартук, витрины с подсветкой
+  { type: 'kitchenRun', r: [897, 55, 1155, 97], showcases: [990, 1080] },
   { type: 'kitchenRun', r: [897, 97, 945, 175] },
   { type: 'tallUnit', r: [897, 175, 945, 222] },
   { type: 'fridge', r: [897, 222, 945, 263] },
   { type: 'hob', at: [920, 140] },
   { type: 'sink', at: [962, 76] },
+  // столовая: мраморный стол, оливковые велюровые стулья
   { type: 'table', r: [1048, 150, 1155, 208] },
   { type: 'chair', at: [1072, 138] }, { type: 'chair', at: [1122, 138] },
-  { type: 'chair', at: [1072, 222] }, { type: 'chair', at: [1122, 222] },
-  // гостиная
+  { type: 'chair', at: [1072, 222], face: Math.PI }, { type: 'chair', at: [1122, 222], face: Math.PI },
+  // гостиная: светлый диван, круглое кресло, золотые столики, ч/б ковёр
+  { type: 'rug', r: [895, 300, 1105, 452], style: 'geo' },
   { type: 'sofa', r: [922, 380, 1078, 445], back: 'n' },
-  { type: 'roundTable', at: [1003, 343], rad: 22 },
-  { type: 'roundTable', at: [1045, 348], rad: 14 },
-  { type: 'armchair', at: [1128, 333] },
+  { type: 'roundTable', at: [1000, 343], rad: 22, h: 0.48 },
+  { type: 'roundTable', at: [1042, 352], rad: 17, h: 0.4 },
+  { type: 'armchair', at: [1128, 333], style: 'round' },
   { type: 'media', r: [815, 455, 1080, 495] },
-  { type: 'cabinet', r: [1102, 450, 1160, 475], h: 0.75 },
-  { type: 'rug', r: [900, 300, 1100, 450] },
-  { type: 'plant', at: [1155, 300] },
-  // спальня
-  { type: 'bed', r: [905, 562, 1018, 700], head: 's' },
-  { type: 'roundTable', at: [885, 682], rad: 14 },
-  { type: 'roundTable', at: [1037, 682], rad: 14 },
+  { type: 'cabinet', r: [1102, 450, 1160, 475], h: 0.75, style: 'console' },
+  { type: 'mirror', r: [735, 290, 738, 445] },
+  { type: 'plant', at: [1158, 298] },
+  // спальня: стёганое изголовье во всю стену, белые тумбы
   { type: 'headboard', r: [860, 700, 1065, 712] },
+  { type: 'bed', r: [905, 562, 1018, 700], head: 's' },
+  { type: 'roundTable', at: [883, 682], rad: 15, style: 'white' },
+  { type: 'roundTable', at: [1039, 682], rad: 15, style: 'white' },
   // лоджия
   { type: 'armchair', at: [1145, 655] },
   { type: 'plant', at: [1165, 530] },
-  // прихожая
-  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.4 },
-  { type: 'rug', r: [718, 620, 790, 690] },
+  // прихожая: белые шкафы, зелёная скамья
+  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.5 },
+  { type: 'bench', r: [714, 430, 732, 500] },
+  { type: 'plant', at: [790, 300] },
+];
+
+// Акцентные стены: тонкие панели поверх стен.
+export const ACCENTS = [
+  { r: [52, 52, 390, 54.5], color: 'wallKids' },
+  { r: [52, 260.5, 350, 263], color: 'wallKids' },
+  { r: [387.5, 52, 390, 185], color: 'wallKids' },
+  { r: [850, 709, 1085, 712], color: 'wallOlive' },
 ];
 
 // Устройства умного дома.
 // at — точка на плане, h — высота установки (м).
 export const DEVICES = [
   // освещение
-  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра', at: [220, 160] },
+  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра', at: [220, 160], style: 'ring' },
   { id: 'light.dressing', type: 'light', room: 'dressing', name: 'Свет', at: [440, 135] },
   { id: 'light.bath', type: 'light', room: 'bath', name: 'Свет', at: [610, 120] },
   { id: 'light.wc', type: 'light', room: 'wc', name: 'Свет', at: [760, 120] },
   { id: 'light.corridor', type: 'light', room: 'corridor', name: 'Споты', at: [640, 222] },
-  { id: 'light.kitchen', type: 'light', room: 'kitchen', name: 'Свет кухни', at: [970, 150] },
+  { id: 'light.kitchen', type: 'light', room: 'kitchen', name: 'Споты на кухне', at: [970, 150] },
   { id: 'light.dining', type: 'light', room: 'kitchen', name: 'Подвес над столом', at: [1100, 180], pendant: true },
-  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [1000, 360] },
+  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [1000, 360], style: 'chandelier' },
   { id: 'light.hall', type: 'light', room: 'hall', name: 'Свет', at: [760, 620] },
-  { id: 'light.bedroom', type: 'light', room: 'bedroom', name: 'Люстра', at: [960, 600] },
+  { id: 'light.bedroom', type: 'light', room: 'bedroom', name: 'Люстра', at: [960, 600], style: 'ring' },
   { id: 'light.loggia', type: 'light', room: 'loggia', name: 'Бра', at: [1142, 600] },
 
   // шторы
-  { id: 'curtain.kids', type: 'curtain', room: 'kids', name: 'Шторы', r: [55, 62, 62, 253], axis: 'z' },
+  { id: 'curtain.kids', type: 'curtain', room: 'kids', name: 'Шторы', r: [55, 62, 62, 253], axis: 'z', color: 'curtainKids' },
   { id: 'curtain.kitchen', type: 'curtain', room: 'kitchen', name: 'Шторы', r: [1170, 105, 1177, 253], axis: 'z' },
   { id: 'curtain.living', type: 'curtain', room: 'living', name: 'Шторы', r: [1170, 292, 1177, 485], axis: 'z' },
-  { id: 'curtain.bedroom', type: 'curtain', room: 'bedroom', name: 'Шторы', r: [1075, 515, 1082, 700], axis: 'z' },
+  { id: 'curtain.bedroom', type: 'curtain', room: 'bedroom', name: 'Шторы', r: [1075, 515, 1082, 700], axis: 'z', color: 'curtainBedroom' },
 
   // климат
   { id: 'ac.kids', type: 'ac', room: 'kids', name: 'Кондиционер', at: [300, 55], face: 's' },
@@ -158,12 +171,12 @@ export const DEVICES = [
   { id: 'camera.entrance', type: 'camera', room: 'hall', name: 'Камера', at: [800, 700] },
   { id: 'tv.living', type: 'tv', room: 'living', name: 'Телевизор', at: [955, 475] },
   { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [552, 80] },
-  { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [790, 300] },
+  { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [760, 345] },
 ];
 
 // Маршрут робота-пылесоса (точки плана).
 export const VACUUM_PATH = [
-  [790, 300], [860, 300], [860, 360], [900, 450], [1090, 450], [1160, 420], [1100, 290],
+  [760, 345], [860, 300], [860, 360], [900, 450], [1090, 450], [1160, 420], [1100, 290],
   [1000, 270], [980, 240], [1000, 120], [1170, 120], [1170, 240], [1030, 240], [960, 270],
-  [880, 300], [790, 300],
+  [880, 300], [760, 345],
 ];

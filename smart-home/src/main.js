@@ -9,21 +9,12 @@ import { createUI } from './ui.js';
 import { connectHomeAssistant } from './bridge.js';
 import { HA_CONFIG } from './config.js';
 import { mx, mz } from './plan.js';
-import { PALETTE } from './palette.js';
 
 const home = createHome();
 const stage = createStage(document.getElementById('viewport'));
 const env = buildEnvironment(stage);
 const shell = buildShell(stage);
 buildFurniture(stage);
-
-// у каждой комнаты свой материал пола — чтобы подсвечивать тревогу
-for (const meshes of Object.values(shell.floors)) {
-  const m = meshes[0].material.clone();
-  m.emissive = new THREE.Color(PALETTE.alarm);
-  m.emissiveIntensity = 0;
-  for (const mesh of meshes) mesh.material = m;
-}
 
 let ui;
 const devices = buildDevices(stage, home.devices, (id) => ui.selectDevice(id));
@@ -67,7 +58,7 @@ function syncRoomLabels(t) {
     el.querySelector('.room-climate').textContent = `${c.temp.toFixed(1)}°`;
     const alarm = home.devices.some((d) => d.room === room.id && isAlarm(d, home.state[d.id]));
     el.classList.toggle('alarm', alarm);
-    shell.floors[room.id][0].material.emissiveIntensity = alarm ? 0.25 + 0.2 * Math.sin(t * 5) : 0;
+    for (const f of shell.floors[room.id]) f.material.emissiveIntensity = alarm ? 0.25 + 0.2 * Math.sin(t * 5) : 0;
   }
 }
 

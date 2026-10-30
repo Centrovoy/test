@@ -59,32 +59,66 @@ function emissive(color, intensity = 0) {
 
 const build = {
   light(def) {
+    // Светильники как на фото: хрустальная люстра с золотым кольцом (гостиная),
+    // золотое кольцо (спальни), стеклянные шары на золотых подвесах (столовая),
+    // встроенные споты (остальные помещения).
     const g = new THREE.Group();
-    const y = def.pendant ? 1.55 : CEILING - 0.02;
-    const shadeMat = emissive(P.lightWarm, 0);
-    let shade;
-    if (def.pendant) {
-      shade = new THREE.Mesh(new THREE.ConeGeometry(0.22, 0.22, 32, 1, true), shadeMat);
-      shade.material.side = THREE.DoubleSide;
-      const cord = new THREE.Mesh(new THREE.CylinderGeometry(0.006, 0.006, CEILING - y), M(P.dark));
-      cord.position.y = (CEILING + y) / 2 + 0.1;
-      g.add(cord);
+    const goldMat = M(P.gold, { metalness: 0.85, roughness: 0.3 });
+    const glowMat = emissive(P.lightWarm, 0);
+    const style = def.pendant ? 'pendant' : def.style || 'spot';
+    let y = CEILING - 0.02;
+    if (style === 'chandelier') {
+      y = 2.05;
+      const ring = new THREE.Mesh(new THREE.CylinderGeometry(0.32, 0.32, 0.1, 40, 1, true), goldMat);
+      ring.material.side = THREE.DoubleSide;
+      ring.position.y = y + 0.1;
+      const crystals = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.26, 0.3, 40, 1, true), glowMat);
+      crystals.material.side = THREE.DoubleSide;
+      crystals.position.y = y - 0.05;
+      g.add(ring, crystals);
+    } else if (style === 'ring') {
+      y = 2.2;
+      const ring = new THREE.Mesh(new THREE.TorusGeometry(0.33, 0.025, 10, 48), glowMat);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = y;
+      const ring2 = new THREE.Mesh(new THREE.TorusGeometry(0.33, 0.012, 8, 48), goldMat);
+      ring2.rotation.x = Math.PI / 2.6;
+      ring2.position.y = y + 0.05;
+      g.add(ring, ring2);
+    } else if (style === 'pendant') {
+      y = 1.6;
+      for (const [dx, dz, s] of [[-0.35, 0, 0.13], [0.35, 0.05, 0.13], [-0.2, 0.12, 0.08], [0.18, -0.1, 0.09]]) {
+        const ball = new THREE.Mesh(new THREE.SphereGeometry(s, 20, 14), new THREE.MeshStandardMaterial({ color: '#ffffff', transparent: true, opacity: 0.35, roughness: 0.05 }));
+        ball.position.set(dx, y, dz);
+        const bulb = new THREE.Mesh(new THREE.SphereGeometry(0.035, 10, 8), glowMat);
+        bulb.position.copy(ball.position);
+        g.add(ball, bulb);
+      }
+      for (const dx of [-0.35, 0.35]) {
+        const rod = new THREE.Mesh(new THREE.CylinderGeometry(0.008, 0.008, CEILING - y), goldMat);
+        rod.position.set(dx, (CEILING + y) / 2 + 0.06, 0);
+        g.add(rod);
+      }
     } else {
-      shade = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.22, 0.04, 32), shadeMat);
+      // три встроенных спота
+      for (const dx of [-0.5, 0, 0.5]) {
+        const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.02, 16), glowMat);
+        spot.position.set(dx, y, 0);
+        g.add(spot);
+      }
     }
-    shade.position.y = y;
     const lamp = new THREE.PointLight(P.lightWarm, 0, 7.5, 1.6);
-    lamp.position.set(0, def.pendant ? y - 0.15 : CEILING - 0.35, 0);
-    g.add(shade, lamp);
+    lamp.position.set(0, style === 'spot' ? CEILING - 0.35 : y - 0.15, 0);
+    g.add(lamp);
     g.position.copy(at(def));
     return {
       group: g,
-      markerY: y + 0.15,
+      markerY: y + 0.3,
       apply(s) {
         const k = s.on ? s.brightness / 100 : 0;
         lamp.intensity = 7 * k;
-        shadeMat.emissiveIntensity = 2.2 * k;
-        shadeMat.color.set(s.on ? P.lightWarm : '#e9e6e0');
+        glowMat.emissiveIntensity = 2.2 * k;
+        glowMat.color.set(s.on ? P.lightWarm : '#e9e6e0');
       },
     };
   },
@@ -94,7 +128,7 @@ const build = {
     const [x1, z1, x2, z2] = def.r;
     const len = (z2 - z1) / PX_PER_M;
     const geo = new THREE.BoxGeometry(0.06, 2.4, 1);
-    const mat = M(P.curtain, { roughness: 1 });
+    const mat = M(P[def.color || 'curtain'], { roughness: 0.75, metalness: def.color ? 0 : 0.15 });
     const left = new THREE.Mesh(geo, mat);
     const right = new THREE.Mesh(geo, mat);
     for (const m of [left, right]) { m.castShadow = true; m.position.y = 1.3; }
@@ -258,7 +292,7 @@ const build = {
     // полотно входной двери с петлёй у верхнего края проёма
     const pivot = new THREE.Group();
     const leafLen = (690 - 615) / PX_PER_M;
-    const leaf = new THREE.Mesh(new THREE.BoxGeometry(0.05, 2.08, leafLen), M(P.woodDark));
+    const leaf = new THREE.Mesh(new THREE.BoxGeometry(0.05, 2.08, leafLen), M(P.cabinet, { roughness: 0.5 }));
     leaf.position.set(0, 1.04, leafLen / 2);
     leaf.castShadow = true;
     pivot.add(leaf);
@@ -392,7 +426,7 @@ const build = {
     const led = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.01, 0.01), ledMat);
     led.position.set(0, 0.07, -0.17);
     g.add(body, top, led);
-    const dock = boxFromRect([778, 288, 802, 296], 0, 0.12, M(P.dark));
+    const dock = boxFromRect([748, 326, 772, 334], 0, 0.12, M(P.dark));
     const pts = VACUUM_PATH.map(([x, y]) => new THREE.Vector3(mx(x), 0, mz(y)));
     const lens = [];
     let total = 0;
