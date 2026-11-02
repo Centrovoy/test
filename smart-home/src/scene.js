@@ -785,55 +785,67 @@ const builders = {
     const g = new THREE.Group();
     const [x1, z1, x2, z2] = f.r;
     const wide = x2 - x1 > z2 - z1;
-    g.add(boxFromRect(f.r, 0.1, 0.86, M(P.kitchenLow, { roughness: 0.5 })));
+    g.add(boxFromRect(f.r, 0.1, 0.89, M(P.kitchenLow, { roughness: 0.5 })));
     g.add(boxFromRect(f.r, 0, 0.1, M(P.black)));
-    g.add(boxFromRect([x1 - 1, z1 - 1, x2 + 1, z2 + 1], 0.86, 0.9, M(P.worktop, { roughness: 0.3 })));
+    g.add(boxFromRect([x1 - 1, z1 - 1, x2 + 1, z2 + 1], 0.89, 0.93, M(P.worktop, { roughness: 0.3 })));
+    if (f.dishwasher) {
+      // посудомоечная машина 600: фасад в цвет кухни и полоса панели управления
+      const [a, b] = f.dishwasher;
+      g.add(boxFromRect([a + 0.5, z2, b - 0.5, z2 + 0.6], 0.12, 0.86, M(P.kitchenLow, { roughness: 0.4 })));
+      g.add(boxFromRect([a + 0.5, z2, b - 0.5, z2 + 0.8], 0.8, 0.86, M('#c9ccce', { metalness: 0.5, roughness: 0.3 })));
+    }
     // чёрный фартук
     const splash = wide ? [x1, z1, x2, z1 + 2] : [x1, z1, x1 + 2, z2];
-    g.add(boxFromRect(splash, 0.9, 1.5, M(P.worktop, { roughness: 0.2 })));
+    g.add(boxFromRect(splash, 0.93, 1.53, M(P.worktop, { roughness: 0.2 })));
     // верхние шкафы (тауп) с двумя подсвеченными витринами
     const upper = wide ? [x1, z1, x2, z1 + 25] : [x1, z1, x1 + 25, z2];
-    g.add(boxFromRect(upper, 1.5, 2.45, M(P.kitchenHigh, { roughness: 0.6 })));
+    g.add(boxFromRect(upper, 1.53, 2.6, M(P.kitchenHigh, { roughness: 0.6 })));
     if (wide) {
       for (const sx of f.showcases || []) {
-        g.add(boxFromRect([sx, z1 + 2, sx + 30, z1 + 25.8], 1.52, 2.43, M(P.black)));
-        g.add(boxFromRect([sx + 2, z1 + 25.5, sx + 28, z1 + 26.3], 1.55, 2.4, showcaseMat()));
+        const sw = f.showcaseW || 30;
+        g.add(boxFromRect([sx, z1 + 2, sx + sw, z1 + 25.8], 1.55, 2.58, M(P.black)));
+        g.add(boxFromRect([sx + 2, z1 + 25.5, sx + sw - 2, z1 + 26.3], 1.58, 2.55, showcaseMat()));
       }
       // подсветка рабочей зоны
-      g.add(boxFromRect([x1 + 2, z1 + 22, x2 - 2, z1 + 24], 1.48, 1.5, showcaseMat()));
+      g.add(boxFromRect([x1 + 2, z1 + 22, x2 - 2, z1 + 24], 1.51, 1.53, showcaseMat()));
     }
     return g;
   },
   tallUnit: (f) => {
     const g = new THREE.Group();
-    g.add(boxFromRect(f.r, 0, 2.45, M(P.kitchenHigh, { roughness: 0.6 })));
+    g.add(boxFromRect(f.r, 0, 2.6, M(P.kitchenHigh, { roughness: 0.6 })));
     const { cx, cz } = rectSize(f.r);
+    // духовой шкаф и СВЧ на высотах по развёртке
     const oven = roundedBox(0.04, 0.55, 0.55, M(P.black, { roughness: 0.2 }));
-    oven.position.set(cx + 0.33, 0.95, cz);
+    oven.position.set(cx + 0.31, 0.86, cz);
     const mw = roundedBox(0.04, 0.38, 0.55, M(P.black, { roughness: 0.2 }));
-    mw.position.set(cx + 0.33, 1.5, cz);
+    mw.position.set(cx + 0.31, 1.38, cz);
     g.add(oven, mw);
     return g;
   },
   fridge: (f) => {
     const g = new THREE.Group();
-    g.add(boxFromRect(f.r, 0, 2.45, M(P.kitchenHigh, { roughness: 0.6 })));
+    // ниша встроенного холодильника до 2100, над ней антресоль 500
+    g.add(boxFromRect(f.r, 0, 2.1, M(P.kitchenHigh, { roughness: 0.6 })));
+    g.add(boxFromRect(f.r, 2.12, 2.6, M(P.kitchenHigh, { roughness: 0.6 })));
     const { cx, cz } = rectSize(f.r);
     const handle = roundedBox(0.02, 0.6, 0.02, gold());
-    handle.position.set(cx + 0.35, 1.2, cz + 0.2);
+    handle.position.set(cx + 0.31, 1.2, cz + 0.2);
     g.add(handle);
     return g;
   },
   hob: (f) => {
     const m = roundedBox(0.52, 0.01, 0.5, M(P.black, { roughness: 0.15 }));
-    m.position.set(mx(f.at[0]), 0.905, mz(f.at[1]));
+    m.position.set(mx(f.at[0]), 0.935, mz(f.at[1]));
     return m;
   },
   sink: (f) => {
     const m = roundedBox(0.5, 0.012, 0.4, M('#2a2a2a', { roughness: 0.3 }));
-    m.position.set(mx(f.at[0]), 0.905, mz(f.at[1]));
+    m.position.set(mx(f.at[0]), 0.935, mz(f.at[1]));
     return m;
   },
+  // торцевая планка-заглушка во всю высоту
+  filler: (f) => boxFromRect(f.r, 0, 2.6, M(P.kitchenHigh, { roughness: 0.6 })),
   vanity: (f) => {
     const g = new THREE.Group();
     g.add(boxFromRect(f.r, 0.35, 0.82, M(P.vanity)));

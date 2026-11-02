@@ -54,6 +54,33 @@
     "notes": ""
   },
   {
+    "id": "doc-kitchen-elevation",
+    "title": "Развёртка кухни (дизайн-проект, лист 12, М 1:30)",
+    "kind": "drawing",
+    "room": "kitchen",
+    "path": "razvertka-kuhni.pdf",
+    "date": "",
+    "items": [
+      "kitchen.kitchenRun",
+      "kitchen.kitchenRun-2",
+      "kitchen.tallUnit",
+      "kitchen.fridge-2",
+      "kitchen.filler",
+      "kitchen.sink",
+      "kitchen.mixer",
+      "kitchen.hob",
+      "kitchen.oven",
+      "kitchen.microwave",
+      "kitchen.hood",
+      "kitchen.dishwasher",
+      "kitchen.fridge",
+      "kitchen.ledshowcase",
+      "kitchen.ledwork",
+      "kitchen.ceiling"
+    ],
+    "notes": "Посудомоечная машина по факту 600 мм (в примечании листа — 450). Высоту ниши холодильника регулировать после покупки. Ручки — профиль Gola."
+  },
+  {
     "id": "doc-lighting-plan",
     "title": "План освещения (выполнен вариант 1, левый)",
     "kind": "drawing",
