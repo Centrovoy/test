@@ -533,5 +533,24 @@
     "path": "foto/20-spalnya-tumba.webp",
     "date": "",
     "notes": ""
+  },
+  {
+    "id": "doc-spot-bulb",
+    "title": "Фото: маркировка лампы спота SAPRA LM1095E",
+    "kind": "photo",
+    "room": "",
+    "path": "lampa-spot-sapra.png",
+    "date": "",
+    "items": [
+      "kitchen.bulb",
+      "corridor.bulb",
+      "hall.bulb",
+      "bath.bulb",
+      "wc.bulb",
+      "dressing.bulb",
+      "storage.bulb",
+      "kids.bulb-2"
+    ],
+    "notes": "GU10, 9,5 Вт, 4000 K, 750 лм, 220–240 В"
   }
 ]

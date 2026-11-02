@@ -62,6 +62,7 @@ const RUDENKO = { supplier: 'Студия Руденко (шторы, подуш
 const CLEAN = 'Химчистка мебели: Чисто Хата — instagram.com/chisto_hata';
 const PAINT_MILK = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 1', sku: 'цвет SIENA 30', specs: 'краска ВД-ВАЭ цветная, молочная; тара 10 л / 14 кг' };
 const PAINT_GREEN = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 3', sku: 'цвет TUNDRA 85', specs: 'краска ВД-ВАЭ цветная, зелёная (спальня за изголовьем и лоджия); тара 2,35 л' };
+const SPOT_BULB = { brand: 'SAPRA', model: 'LM1095E', specs: 'LED, цоколь GU10, 9,5 Вт, 4000 K (нейтральный белый), 750 лм, 220–240 В', notes: 'По маркировке лампы (фото в документах)' };
 const WIRING = { brand: 'Schneider Electric', model: 'AtlasDesign, бежевый' };
 const CABINET_FINISH = { specs: 'фасады окрашены RAL 9001 Cream, корпус — ДСП яркий серый' };
 
@@ -245,7 +246,7 @@ export function buildSeed() {
       : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
       || `встроенные споты${n ? ` × ${n}` : ''}`;
     add(d.room, 'lighting', 'fixture', `${d.name}: светильник`, { specs: style, qty: n ? String(n) : '1', at: d.at, deviceId: d.id, notes: d.spots || d.style === 'floor' || d.style === 'strip' ? SRC_LIGHT : '' });
-    add(d.room, 'lighting', 'bulb', d.style === 'strip' ? `${d.name}: лента и блок питания` : `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', qty: n ? String(n) : '', at: d.at });
+    add(d.room, 'lighting', 'bulb', d.style === 'strip' ? `${d.name}: лента и блок питания` : `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', ...(n ? SPOT_BULB : {}), qty: n ? String(n) : '', at: d.at });
   }
   add('kitchen', 'lighting', 'ledwork', 'Подсветка рабочей зоны: LED-лента и блок питания', { at: [1030, 90] });
   add('kitchen', 'lighting', 'ledshowcase', 'Подсветка витрин кухни: LED-лента и блок питания', { at: [1040, 70] });
