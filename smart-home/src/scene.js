@@ -566,12 +566,36 @@ const builders = {
   },
   desk: (f) => {
     const g = new THREE.Group();
-    g.add(boxFromRect(f.r, 0.72, 0.76, M(P.cabinet)));
+    const [x1, z1, x2, z2] = f.r;
+    if (!f.drawers) {
+      g.add(boxFromRect(f.r, 0.72, 0.76, M(P.cabinet)));
+    } else {
+      // столешница с царгой 160 мм и ящиками на всю длину
+      g.add(boxFromRect(f.r, 0.59, 0.75, M(P.cabinet, { roughness: 0.5 })));
+      for (let i = 1; i < f.drawers; i++) {
+        const x = x1 + ((x2 - x1) * i) / f.drawers;
+        g.add(boxFromRect([x - 0.25, z1 - 0.4, x + 0.25, z1], 0.6, 0.73, M('#cfc9bf')));
+      }
+    }
     const { w, d, cx, cz } = rectSize(f.r);
     for (const sx of [-1, 1]) {
-      const leg = roundedBox(0.03, 0.72, d - 0.06, gold());
-      leg.position.set(cx + sx * (w / 2 - 0.04), 0.36, cz);
-      g.add(leg);
+      if (f.drawers) {
+        // П-образная опора из профиля: две стойки и нижняя перекладина
+        const x = cx + sx * (w / 2 - 0.06);
+        for (const sz of [-1, 1]) {
+          const post = roundedBox(0.035, 0.59, 0.035, gold());
+          post.position.set(x, 0.295, cz + sz * (d / 2 - 0.04));
+          g.add(post);
+        }
+        const bar = roundedBox(0.035, 0.035, d - 0.05, gold());
+        bar.position.set(x, 0.02, cz);
+        const top = bar.clone(); top.position.y = 0.575;
+        g.add(bar, top);
+      } else {
+        const leg = roundedBox(0.03, 0.72, d - 0.06, gold());
+        leg.position.set(cx + sx * (w / 2 - 0.04), 0.36, cz);
+        g.add(leg);
+      }
     }
     return g;
   },
