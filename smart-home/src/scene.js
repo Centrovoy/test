@@ -894,11 +894,11 @@ const builders = {
     const g = new THREE.Group();
     const w = f.gang === 2 ? 0.15 : 0.085;
     const along = f.face === 'n' || f.face === 's';
-    const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? w : 0.012, 0.085, along ? 0.012 : w), M('#f7f6f3', { roughness: 0.4 }));
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? w : 0.012, 0.085, along ? 0.012 : w), M('#ece3d3', { roughness: 0.4 }));
     g.add(plate);
     for (let i = 0; i < (f.gang || 1); i++) {
       const off = f.gang === 2 ? (i ? 0.034 : -0.034) : 0;
-      const key = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.05 : 0.008, 0.05, along ? 0.008 : 0.05), M('#e9e7e2', { roughness: 0.5 }));
+      const key = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.05 : 0.008, 0.05, along ? 0.008 : 0.05), M('#e3d8c5', { roughness: 0.5 }));
       const d = { n: -0.008, s: 0.008, e: 0.008, w: -0.008 }[f.face];
       key.position.set(along ? off : d, 0, along ? d : off);
       g.add(key);
@@ -913,9 +913,9 @@ const builders = {
     const d = { n: -0.008, s: 0.008, e: 0.008, w: -0.008 }[f.face];
     for (let i = 0; i < f.n; i++) {
       const off = (i - (f.n - 1) / 2) * 0.075;
-      const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.072 : 0.012, 0.072, along ? 0.012 : 0.072), M('#f7f6f3', { roughness: 0.4 }));
+      const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.072 : 0.012, 0.072, along ? 0.012 : 0.072), M('#ece3d3', { roughness: 0.4 }));
       plate.position.set(along ? off : 0, 0, along ? 0 : off);
-      const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.01, 18), M(f.net && i === 0 ? '#3e7bd6' : '#dedcd7'));
+      const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.01, 18), M(f.net && i === 0 ? '#3e7bd6' : '#d9cdb9'));
       hole.rotation[along ? 'x' : 'z'] = Math.PI / 2;
       hole.position.set(along ? off : d, 0, along ? d : off);
       g.add(plate, hole);

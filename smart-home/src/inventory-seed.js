@@ -62,6 +62,7 @@ const RUDENKO = { supplier: 'Студия Руденко (шторы, подуш
 const CLEAN = 'Химчистка мебели: Чисто Хата — instagram.com/chisto_hata';
 const PAINT_MILK = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 1', sku: 'цвет SIENA 30', specs: 'краска ВД-ВАЭ цветная, молочная; тара 10 л / 14 кг' };
 const PAINT_GREEN = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 3', sku: 'цвет TUNDRA 85', specs: 'краска ВД-ВАЭ цветная, зелёная (спальня за изголовьем и лоджия); тара 2,35 л' };
+const WIRING = { brand: 'Schneider Electric', model: 'AtlasDesign, бежевый' };
 const CABINET_FINISH = { specs: 'фасады окрашены RAL 9001 Cream, корпус — ДСП яркий серый' };
 
 // Межкомнатные двери по заказ-наряду; сторона открытия — со стороны коридора.
@@ -267,15 +268,17 @@ export function buildSeed() {
   for (const f of FURNITURE.filter((x) => x.type === 'socket')) {
     const kind = f.n === 1 ? 'Розетка' : `Блок розеток × ${f.n}`;
     add(f.room, 'electric', 'wallsocket', `${kind} ${f.label.replace(/, h \d+$/, '')}${f.net ? ' + интернет' : ''}`, {
+      ...WIRING,
       at: f.at, place: f.label, qty: String(f.n),
       specs: `${f.new ? 'новая по проекту' : 'существующая'}, высота ${Math.round(f.h * 1000)} мм`,
       notes: SRC_SOCK,
     });
   }
-  add('storage', 'electric', 'sockets', 'Розетки', { qty: '', at: [856, 120], notes: 'На плане розеток не показаны; кладовка есть в подписи автомата «Кухня»' });
+  add('storage', 'electric', 'sockets', 'Розетки', { ...WIRING, qty: '', at: [856, 120], notes: 'На плане розеток не показаны; кладовка есть в подписи автомата «Кухня»' });
   // выключатели — каждый на своём месте по плану освещения
   for (const f of FURNITURE.filter((x) => x.type === 'switch')) {
     add(f.room, 'electric', 'wallswitch', `Выключатель ${f.label}${f.gang === 2 ? ' (двухклавишный)' : ''}`, {
+      ...WIRING,
       at: f.at, place: f.label, specs: f.new ? 'новый по проекту, высота 900 мм' : 'существующий',
       ...(f.room === 'kitchen' ? { specs: 'перенесён с колонны у окна; высота 900 мм, 150 мм от угла стены' } : {}),
       notes: 'По плану освещения (выполнен вариант 1)',
