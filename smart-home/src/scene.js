@@ -212,7 +212,7 @@ export function buildShell(stage) {
     }
   }
 
-  // полы: паркет «ёлочкой» в жилых комнатах, плитка в мокрых зонах
+  // полы: ламинат «ёлочкой» в жилых комнатах, плитка в мокрых зонах
   const herring = herringboneTexture();
   const tileTex = tileTexture();
   const floors = {};

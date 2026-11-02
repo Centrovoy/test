@@ -2,7 +2,7 @@
 // Все цвета модели берутся только отсюда.
 export const PALETTE = {
   // отделка
-  floorWood: '#5c402e',      // паркет «ёлочка», тёмный орех
+  floorWood: '#5c402e',      // ламинат «ёлочка» BerryAlloc Chateau Walnut Brown
   floorWoodLine: '#4b3324',
   floorTile: '#d8cdbf',      // бежевый керамогранит в ванной и санузле
   floorLoggia: '#cfc8bd',

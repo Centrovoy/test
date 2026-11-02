@@ -44,6 +44,13 @@ const roomAt = (pt) => ROOMS.find((r) => r.rects.some((rc) => inRect(pt, rc)))?.
 const center = (r) => [(r[0] + r[2]) / 2, (r[1] + r[3]) / 2];
 const m = (px) => (px / PX_PER_M).toFixed(2);
 const SRC = 'По развёртке ванной комнаты (дизайн-проект)';
+
+// Пол во всех жилых комнатах, коридоре, прихожей и кладовой.
+const FLOOR = {
+  brand: 'BerryAlloc', model: 'Chateau Walnut Brown (орех коричневый)', sku: '62002166 / 62002167',
+  specs: 'бельгийский ламинат, 32 класс, укладка «ёлочкой» (два артикула — левые и правые планки), на клей Uzin MK 160',
+  supplier: 'triopol.by', link: 'https://triopol.by/product/belgiyskiy-laminat-berryalloc-walnut-brown-oreh-korichnevyiy-62002166-62002167-chateau-32-klass-6031/',
+};
 const SRC_WC = 'По развёртке санузла (дизайн-проект)';
 const SRC_LIGHT = 'По плану освещения (выполнен вариант 1)';
 const SRC_SOCK = 'По плану розеток';
@@ -85,7 +92,7 @@ export function buildSeed() {
   for (const r of ROOMS) {
     const at = r.label;
     if (r.floor === 'wood') {
-      add(r.id, 'finish', 'floor', 'Паркет «ёлочка»', { specs: 'тёмный орех', at });
+      add(r.id, 'finish', 'floor', 'Ламинат «ёлочка»', { ...FLOOR, at });
       add(r.id, 'finish', 'skirting', 'Плинтус', { at });
     } else if (r.floor === 'tile') {
       add(r.id, 'finish', 'floor', 'Керамогранит пола', { specs: 'бежевый', at });
@@ -98,6 +105,10 @@ export function buildSeed() {
     if (r.floor !== 'tile') add(r.id, 'finish', 'paint', 'Краска стен', { specs: wall || 'светлый тёплый серый', at });
     add(r.id, 'finish', 'ceiling', 'Потолок', { at });
   }
+  add('hall', 'finish', 'floorglue', 'Клей для пола', {
+    brand: 'Uzin', model: 'MK 160', specs: 'силановый клей для паркета, ведро 16 кг', place: 'Под ламинатом во всех комнатах с «ёлочкой»',
+    supplier: 'evroparket.by', link: 'https://evroparket.by/klei-parket/uzin-mk-160-silanovyj-klej-dlya-parketa-16kg-more', at: [760, 450],
+  });
   add('living', 'finish', 'wallpaper', 'Обои с золотыми линиями (стена за диваном)', { at: [950, 490] });
   add('living', 'finish', 'trim', 'Золотые профили-молдинги по краям обоев', { qty: '2', at: [820, 490] });
 
