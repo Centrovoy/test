@@ -110,7 +110,7 @@ export const FURNITURE = [
   { type: 'armchair', at: [1132, 318], style: 'round', rot: -Math.PI * 0.2 },
   { type: 'cabinet', r: [1100, 466, 1160, 492], h: 0.75, style: 'console' },
   { type: 'showcase', r: [822, 282, 878, 293], h: 2.6, face: 's' },
-  { type: 'mirror', r: [735, 290, 738, 450] },
+  { type: 'mirror', r: [735, 290, 738, 450], room: 'living' },
   { type: 'barCart', at: [757, 300], room: 'living' },
   { type: 'plant', at: [868, 472], big: true },
   // спальня: изголовье во всю стену у оливковой стены, белые рифлёные тумбы,
