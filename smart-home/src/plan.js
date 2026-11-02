@@ -53,7 +53,7 @@ export const ROOMS = [
   { id: 'corridor', name: 'Коридор', rects: [[400, 183, 885, 263], [735, 263, 810, 282]], floor: 'wood', label: [640, 225], temp: 22.6, hum: 43 },
   { id: 'kitchen', name: 'Кухня-столовая', rects: [[897, 52, 1180, 263]], floor: 'wood', label: [1010, 200], temp: 23.1, hum: 46 },
   { id: 'living', name: 'Гостиная', rects: [[808, 263, 1180, 495]], floor: 'wood', label: [1000, 300], temp: 23.0, hum: 45 },
-  { id: 'hall', name: 'Прихожая', rects: [[712, 282, 808, 712]], floor: 'tile', label: [760, 560], temp: 22.1, hum: 41 },
+  { id: 'hall', name: 'Прихожая', rects: [[712, 282, 808, 712]], floor: 'wood', label: [760, 560], temp: 22.1, hum: 41 },
   { id: 'bedroom', name: 'Спальня', rects: [[820, 502, 1085, 712]], floor: 'wood', label: [960, 535], temp: 24.8, hum: 47 },
   { id: 'loggia', name: 'Лоджия', rects: [[1100, 507, 1185, 712]], floor: 'loggia', label: [1142, 560], temp: 19.5, hum: 52 },
 ];
