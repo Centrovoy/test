@@ -113,16 +113,38 @@ const build = {
         cord.position.set(dx, (CEILING + y + 0.6) / 2, 0);
         g.add(ball, bulb, rod, cord);
       }
+    } else if (style === 'floor') {
+      // торшер: основание, стойка, абажур
+      const base = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.03, 24), goldMat);
+      base.position.y = 0.015;
+      const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.45), goldMat);
+      pole.position.y = 0.74;
+      const shade = new THREE.Mesh(new THREE.CylinderGeometry(0.17, 0.22, 0.28, 28, 1, true), glowMat);
+      shade.material.side = THREE.DoubleSide;
+      shade.position.y = 1.55;
+      g.add(base, pole, shade);
+      y = 1.6;
+    } else if (style === 'strip') {
+      // LED-лента: тонкая светящаяся полоса по прямоугольнику плана на высоте def.y
+      const [x1, z1, x2, z2] = def.strip;
+      const strip = new THREE.Mesh(new THREE.BoxGeometry(Math.max(0.02, (x2 - x1) / PX_PER_M), 0.015, Math.max(0.02, (z2 - z1) / PX_PER_M)), glowMat);
+      strip.position.set(mx((x1 + x2) / 2) - mx(def.at[0]), def.y, mz((z1 + z2) / 2) - mz(def.at[1]));
+      g.add(strip);
+      y = def.y;
     } else {
-      // три встроенных спота
-      for (const dx of [-0.5, 0, 0.5]) {
-        const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.02, 16), glowMat);
-        spot.position.set(dx, y, 0);
-        g.add(spot);
+      // встроенные споты: по точкам плана освещения (def.spots) или три в ряд
+      const pts = def.spots ? def.spots.map(([sx, sy]) => [mx(sx) - mx(def.at[0]), mz(sy) - mz(def.at[1])]) : [[-0.5, 0], [0, 0], [0.5, 0]];
+      for (const [dx, dz] of pts) {
+        const spot = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 0.02, 16), glowMat);
+        spot.position.set(dx, y, dz);
+        const rim = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.008, 6, 20), M('#d8d8d6'));
+        rim.rotation.x = Math.PI / 2;
+        rim.position.set(dx, y - 0.005, dz);
+        g.add(spot, rim);
       }
     }
     const lamp = new THREE.PointLight(P.lightWarm, 0, 7.5, 1.6);
-    lamp.position.set(0, style === 'spot' ? CEILING - 0.35 : y - 0.15, 0);
+    lamp.position.set(0, style === 'spot' ? CEILING - 0.35 : style === 'strip' ? y - 0.1 : y - 0.15, 0);
     g.add(lamp);
     g.position.copy(at(def));
     return {
@@ -197,6 +219,7 @@ const build = {
     if (def.face === 's') g.position.z += 0.13;
     if (def.face === 'w') { g.rotation.y = -Math.PI / 2; g.position.x -= 0.13; }
     if (def.face === 'e') { g.rotation.y = Math.PI / 2; g.position.x += 0.13; }
+    if (def.face === 'n') { g.rotation.y = Math.PI; g.position.z -= 0.13; }
     let phase = 0;
     return {
       group: g,

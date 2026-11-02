@@ -45,6 +45,7 @@ const center = (r) => [(r[0] + r[2]) / 2, (r[1] + r[3]) / 2];
 const m = (px) => (px / PX_PER_M).toFixed(2);
 const SRC = 'По развёртке ванной комнаты (дизайн-проект)';
 const SRC_WC = 'По развёртке санузла (дизайн-проект)';
+const SRC_LIGHT = 'По плану освещения (выполнен вариант 1)';
 
 // Уточнения из чертежей: дополняют записи, собранные по плану.
 const PATCHES = {
@@ -178,10 +179,13 @@ export function buildSeed() {
   add('bath', 'climate', 'fan', 'Вытяжной вентилятор', { at: [620, 70] });
 
   // ---- свет ----
-  for (const d of DEVICES.filter((x) => x.type === 'light')) {
-    const style = d.pendant ? 'подвес из стеклянных шаров' : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати' }[d.style] || 'встроенные споты';
-    add(d.room, 'lighting', 'fixture', `${d.name}: светильник`, { specs: style, at: d.at, deviceId: d.id });
-    add(d.room, 'lighting', 'bulb', `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', qty: '', at: d.at });
+  for (const d of DEVICES.filter((x) => x.type === 'light' && x.seed !== false)) {
+    const n = d.spots?.length;
+    const style = d.pendant ? 'подвес из стеклянных шаров'
+      : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
+      || `встроенные споты${n ? ` × ${n}` : ''}`;
+    add(d.room, 'lighting', 'fixture', `${d.name}: светильник`, { specs: style, qty: n ? String(n) : '1', at: d.at, deviceId: d.id, notes: d.spots || d.style === 'floor' || d.style === 'strip' ? SRC_LIGHT : '' });
+    add(d.room, 'lighting', 'bulb', d.style === 'strip' ? `${d.name}: лента и блок питания` : `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', qty: n ? String(n) : '', at: d.at });
   }
   add('kitchen', 'lighting', 'ledwork', 'Подсветка рабочей зоны: LED-лента и блок питания', { at: [1030, 90] });
   add('kitchen', 'lighting', 'ledshowcase', 'Подсветка витрин кухни: LED-лента и блок питания', { at: [1040, 70] });

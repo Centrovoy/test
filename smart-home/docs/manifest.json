@@ -54,6 +54,35 @@
     "notes": ""
   },
   {
+    "id": "doc-lighting-plan",
+    "title": "План освещения (выполнен вариант 1, левый)",
+    "kind": "drawing",
+    "room": "",
+    "path": "plan-osveshcheniya.pdf",
+    "date": "",
+    "items": [
+      "bath.fixture",
+      "bedroom.ac",
+      "bedroom.fixture",
+      "corridor.fixture",
+      "corridor.fixture-2",
+      "dressing.fixture",
+      "hall.fixture",
+      "kids.ac",
+      "kids.fixture",
+      "kids.fixture-2",
+      "kids.fixture-3",
+      "kitchen.fixture",
+      "kitchen.fixture-2",
+      "kitchen.ledwork",
+      "living.ac",
+      "living.fixture",
+      "living.fixture-2",
+      "wc.fixture"
+    ],
+    "notes": "На листе два варианта; в квартире выполнен первый (левый). Обозначения: потолочный свет, люстра, вывод кабеля, существующие выключатели."
+  },
+  {
     "id": "doc-panel-photo",
     "title": "Электрощиток: фото с подписями автоматов",
     "kind": "photo",

@@ -150,18 +150,24 @@ export const ACCENTS = [
 // at — точка на плане, h — высота установки (м).
 export const DEVICES = [
   // освещение
-  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра', at: [220, 160], style: 'ring' },
-  { id: 'light.dressing', type: 'light', room: 'dressing', name: 'Свет', at: [440, 135] },
-  { id: 'light.bath', type: 'light', room: 'bath', name: 'Свет', at: [610, 120] },
-  { id: 'light.wc', type: 'light', room: 'wc', name: 'Свет', at: [760, 120] },
-  { id: 'light.corridor', type: 'light', room: 'corridor', name: 'Споты', at: [640, 222] },
-  { id: 'light.kitchen', type: 'light', room: 'kitchen', name: 'Споты на кухне', at: [970, 150] },
-  { id: 'light.dining', type: 'light', room: 'kitchen', name: 'Подвес над столом', at: [1100, 180], pendant: true },
-  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [990, 385], style: 'chandelier' },
-  { id: 'light.hall', type: 'light', room: 'hall', name: 'Свет', at: [760, 620] },
-  { id: 'light.bedroom', type: 'light', room: 'bedroom', name: 'Люстра', at: [960, 600], style: 'ring' },
+  // точки света — по плану освещения (выполнен вариант 1); spots — встроенные споты
+  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра', at: [225, 153], style: 'ring' },
+  { id: 'light.dressing', type: 'light', room: 'dressing', name: 'Споты', at: [443, 130], spots: [[457, 109], [457, 152], [429, 109], [429, 152]] },
+  { id: 'light.bath', type: 'light', room: 'bath', name: 'Споты', at: [637, 110], spots: [[684, 92], [653, 129], [621, 92], [590, 129]] },
+  { id: 'light.wc', type: 'light', room: 'wc', name: 'Споты', at: [761, 123], spots: [[761, 99], [761, 147]] },
+  { id: 'light.corridor', type: 'light', room: 'corridor', name: 'Споты', at: [627, 213], spots: [[785, 213], [680, 213], [575, 213], [469, 213]] },
+  { id: 'light.kitchen', type: 'light', room: 'kitchen', name: 'Споты на кухне', at: [1030, 150], spots: [[1131, 115], [1061, 115], [992, 115], [992, 178], [992, 241]] },
+  { id: 'light.dining', type: 'light', room: 'kitchen', name: 'Подвес над столом', at: [1100, 182], pendant: true },
+  { id: 'light.living', type: 'light', room: 'living', name: 'Люстра', at: [1005, 341], style: 'chandelier' },
+  { id: 'light.hall', type: 'light', room: 'hall', name: 'Споты', at: [782, 490], spots: [[782, 332], [782, 437], [782, 542], [782, 648]] },
+  { id: 'light.bedroom', type: 'light', room: 'bedroom', name: 'Люстра', at: [967, 571], style: 'ring' },
   { id: 'light.bedside', type: 'light', room: 'bedroom', name: 'Подвесы у кровати', at: [961, 682], style: 'bedside' },
   { id: 'light.loggia', type: 'light', room: 'loggia', name: 'Бра', at: [1142, 600] },
+  { id: 'light.kids-spots', type: 'light', room: 'kids', name: 'Споты', at: [245, 153], spots: [[350, 107], [350, 200], [140, 107], [140, 200]] },
+  { id: 'light.kids-desk', type: 'light', room: 'kids', name: 'Подсветка стола', at: [110, 258], style: 'strip', strip: [80, 259, 175, 261], y: 1.8 },
+  { id: 'light.storage', type: 'light', room: 'corridor', name: 'Свет в кладовой (комната пылесоса)', at: [854, 166], spots: [[854, 166]] },
+  { id: 'light.counter', type: 'light', room: 'kitchen', name: 'Подсветка столешницы', at: [1030, 78], style: 'strip', strip: [899, 76, 1153, 78], y: 1.48, seed: false },
+  { id: 'light.floorlamp', type: 'light', room: 'living', name: 'Торшер', at: [1098, 290], style: 'floor' },
 
   // шторы
   { id: 'curtain.kids', type: 'curtain', room: 'kids', name: 'Шторы', r: [55, 62, 62, 253], axis: 'z', color: 'curtainKids' },
@@ -171,7 +177,7 @@ export const DEVICES = [
 
   // климат
   { id: 'ac.kids', type: 'ac', room: 'kids', name: 'Кондиционер', at: [388, 220], face: 'w' },
-  { id: 'ac.living', type: 'ac', room: 'living', name: 'Кондиционер', at: [1175, 440], face: 'w' },
+  { id: 'ac.living', type: 'ac', room: 'living', name: 'Кондиционер', at: [1137, 492], face: 'n' },
   { id: 'ac.bedroom', type: 'ac', room: 'bedroom', name: 'Кондиционер', at: [822, 550], face: 'e' },
   { id: 'heating.bath', type: 'heating', room: 'bath', name: 'Тёплый пол', r: [528, 108, 640, 174] },
 

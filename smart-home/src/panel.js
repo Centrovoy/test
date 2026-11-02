@@ -38,7 +38,7 @@ export const PANEL = [
           { text: 'Несущая стена кухни/гостиной, кладовка', icon: 'socket' },
         ],
         rooms: ['kitchen', 'living', 'dressing'],
-        devices: ['light.kitchen', 'light.dining'],
+        devices: ['light.kitchen', 'light.dining', 'light.counter'],
         points: [[1000, 80, 'Фартук'], [1080, 75, 'Вытяжка'], [921, 198, 'Микроволновка'], [870, 290, 'Розетки, несущая стена']],
       },
       {
@@ -50,7 +50,7 @@ export const PANEL = [
           { text: 'Комната пылесоса: свет', icon: 'light' },
         ],
         rooms: ['bedroom', 'corridor', 'hall'],
-        devices: ['light.bedroom', 'light.bedside', 'tv.bedroom', 'curtain.bedroom', 'light.corridor', 'light.hall'],
+        devices: ['light.bedroom', 'light.bedside', 'tv.bedroom', 'curtain.bedroom', 'light.corridor', 'light.hall', 'light.storage'],
         points: [[970, 512, 'ТВ'], [883, 682, 'Розетка у кровати'], [640, 240, 'Коридор'], [760, 650, 'Прихожая']],
       },
     ],
@@ -94,7 +94,7 @@ export const PANEL = [
           { text: 'Детская: розетки', icon: 'socket' },
           { text: 'Детская: свет', icon: 'light' },
         ],
-        rooms: ['kids'], devices: ['light.kids', 'curtain.kids'],
+        rooms: ['kids'], devices: ['light.kids', 'light.kids-spots', 'light.kids-desk', 'curtain.kids'],
         points: [[150, 240, 'Розетки у стола'], [260, 66, 'Розетка у кровати']],
       },
       {
@@ -136,7 +136,7 @@ export const PANEL = [
 ];
 
 // Устройства модели, которых нет ни в одной подписи щитка.
-export const UNLABELED = ['light.living', 'light.loggia', 'light.dressing'];
+export const UNLABELED = ['light.living', 'light.floorlamp', 'light.loggia', 'light.dressing'];
 
 export const BREAKERS = PANEL.flatMap((r) => r.breakers);
 
