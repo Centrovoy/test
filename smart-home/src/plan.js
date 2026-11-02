@@ -221,7 +221,7 @@ export const DEVICES = [
   { id: 'light.loggia', type: 'light', room: 'loggia', name: 'Бра', at: [1142, 600] },
   { id: 'light.kids-spots', type: 'light', room: 'kids', name: 'Споты', at: [245, 153], spots: [[350, 107], [350, 200], [140, 107], [140, 200]] },
   { id: 'light.kids-desk', type: 'light', room: 'kids', name: 'Подсветка стола', at: [110, 258], style: 'strip', strip: [80, 259, 175, 261], y: 1.8 },
-  { id: 'light.storage', type: 'light', room: 'storage', name: 'Свет', at: [854, 140], spots: [[854, 140]] },
+  { id: 'light.storage', type: 'light', room: 'storage', name: 'Свет', at: [854, 140], style: 'panel' },
   { id: 'light.counter', type: 'light', room: 'kitchen', name: 'Подсветка столешницы', at: [1030, 78], style: 'strip', strip: [899, 76, 1153, 78], y: 1.48, seed: false },
   { id: 'light.floorlamp', type: 'light', room: 'living', name: 'Торшер', at: [1098, 290], style: 'floor' },
 

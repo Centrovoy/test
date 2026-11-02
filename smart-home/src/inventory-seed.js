@@ -248,7 +248,7 @@ export function buildSeed() {
   for (const d of DEVICES.filter((x) => x.type === 'light' && x.seed !== false)) {
     const n = d.spots?.length;
     const style = d.pendant ? 'подвес из стеклянных шаров'
-      : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
+      : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', panel: 'круглая встраиваемая панель', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
       || `встроенные споты${n ? ` × ${n}` : ''}`;
     add(d.room, 'lighting', 'fixture', `${d.name}: светильник`, { specs: style, qty: n ? String(n) : '1', at: d.at, deviceId: d.id, notes: d.spots || d.style === 'floor' || d.style === 'strip' ? SRC_LIGHT : '' });
     add(d.room, 'lighting', 'bulb', d.style === 'strip' ? `${d.name}: лента и блок питания` : `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', ...(n ? SPOT_BULB : {}), qty: n ? String(n) : '', at: d.at });

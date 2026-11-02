@@ -113,6 +113,11 @@ const build = {
         cord.position.set(dx, (CEILING + y + 0.6) / 2, 0);
         g.add(ball, bulb, rod, cord);
       }
+    } else if (style === 'panel') {
+      // встраиваемая круглая безрамочная LED-панель (Eleganz 36 Вт, Ø ≈ 240 мм)
+      const panel = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.12, 0.012, 40), glowMat);
+      panel.position.y = y;
+      g.add(panel);
     } else if (style === 'floor') {
       // торшер: основание, стойка, абажур
       const base = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.18, 0.03, 24), goldMat);
