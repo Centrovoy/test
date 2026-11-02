@@ -56,6 +56,10 @@ const SRC_LIGHT = 'По плану освещения (выполнен вари
 const SRC_SOCK = 'По плану розеток';
 const SRC_KITCHEN = 'По развёртке кухни (дизайн-проект)';
 const ORDER = 'Заказ-наряд № 13/07-1 от 13.07.2022';
+const TILE = { brand: 'Уральский гранит', model: 'UF010 MR', specs: 'керамогранит 60 × 60 см', supplier: 'Керамокомплект — keramokomplekt.by', link: 'https://keramokomplekt.by/contact/' };
+const DOORS_SHOP = { supplier: 'Urban Style Doors — instagram.com/urban_style_doors', link: 'https://www.instagram.com/urban_style_doors' };
+const RUDENKO = { supplier: 'Студия Руденко (шторы, подушки) — instagram.com/studio.rudenko', link: 'https://www.instagram.com/studio.rudenko' };
+const CLEAN = 'Химчистка мебели: Чисто Хата — instagram.com/chisto_hata';
 
 // Межкомнатные двери по заказ-наряду; сторона открытия — со стороны коридора.
 const DOOR_ORDER = {
@@ -79,6 +83,11 @@ const PATCHES = {
   'kitchen.fridge-2': { specs: '700 мм, ниша до 2100 мм + антресоль 500 мм', notes: SRC_KITCHEN },
   'kitchen.filler': { name: 'Торцевая планка кухни', specs: '240 мм, во всю высоту 2600 мм', notes: SRC_KITCHEN },
   'kitchen.ceiling': { specs: 'высота 2622 мм' },
+  // поставщики и материалы, указанные владельцем (личные телефоны мастеров — только в базе артефакта)
+  'bath.floor': TILE, 'bath.walltile': TILE, 'wc.floor': TILE, 'wc.walltile': TILE,
+  'living.fixture': { brand: 'Odeon Light', model: 'Focco' },
+  'kitchen.table': { name: 'Обеденный стол (столешница из керамогранита, золотое основание)', supplier: 'Grant Stone — instagram.com/grant_stone.by', link: 'https://www.instagram.com/grant_stone.by' },
+  'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
   'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },
   'wc.cabinet': { specs: '1000 × 300 мм; короб инсталляции 0–1200, шкаф с двумя дверцами 1200–2622 мм', notes: SRC_WC },
   'wc.wardrobe': { specs: '900 × 400 мм, высота 2622 мм, в углу у раковины', notes: SRC_WC },
@@ -151,9 +160,9 @@ export function buildSeed() {
       const open = o.open === 'от себя' ? 'открывается от себя (из коридора внутрь)' : 'открывается на себя (в коридор)';
       add(room, 'doors', 'door', `${name}: полотно и коробка`, {
         model: 'ФГ (гладкая)', specs: `полотно ${o.leaf} мм, проём ${o.hole} мм, толщина стены ${o.wall} мм; цвет П127; ${open}; наличники: 4 стандартных + 1 шириной 10 см (у колонны)`,
-        price: o.price, place: o.open, at: c, notes: `${ORDER}, строка ${o.n}`,
+        price: o.price, place: o.open, at: c, notes: `${ORDER}, строка ${o.n}`, ...DOORS_SHOP,
       });
-      add(room, 'doors', 'handle', `${name}: механизм и петли`, { specs: o.mech, qty: '', at: c, notes: `${ORDER}, строка ${o.n}` });
+      add(room, 'doors', 'handle', `${name}: механизм и петли`, { specs: o.mech, qty: '', at: c, notes: `${ORDER}, строка ${o.n}`, ...DOORS_SHOP });
     } else {
       add(room, 'doors', 'door', `${name}: полотно и коробка`, { specs: size, at: c });
       add(room, 'doors', 'handle', `${name}: ручка, защёлка, петли`, { at: c });
@@ -165,7 +174,7 @@ export function buildSeed() {
     }
   }
 
-  add('corridor', 'doors', 'extension', 'Доборы дверные', { specs: '2100 × 100 мм, комплекты на все 6 межкомнатных дверей', qty: '6', price: '80,00 за комплект (всего 480,00)', at: [640, 222], notes: ORDER });
+  add('corridor', 'doors', 'extension', 'Доборы дверные', { specs: '2100 × 100 мм, комплекты на все 6 межкомнатных дверей', qty: '6', price: '80,00 за комплект (всего 480,00)', at: [640, 222], notes: ORDER, ...DOORS_SHOP });
 
   // ---- отопление ----
   for (const [room, at] of [['kids', [70, 160]], ['kitchen', [1165, 180]], ['living', [1165, 400]], ['bedroom', [1070, 560]]]) {
@@ -282,9 +291,9 @@ export function buildSeed() {
   // ---- шторы ----
   for (const d of DEVICES.filter((x) => x.type === 'curtain')) {
     const c = center(d.r);
-    add(d.room, 'textile', 'curtain', d.single ? 'Штора (одно полотно)' : 'Шторы', { at: c, specs: d.room === 'bedroom' ? 'оливково-коричневые' : d.room === 'kids' ? 'светлые' : 'золотисто-горчичные' });
+    add(d.room, 'textile', 'curtain', d.single ? 'Штора (одно полотно)' : 'Шторы', { at: c, specs: d.room === 'bedroom' ? 'оливково-коричневые' : d.room === 'kids' ? 'светлые' : 'золотисто-горчичные', ...RUDENKO });
     add(d.room, 'textile', 'motor', 'Электрокарниз (мотор, профиль, бегунки)', { at: c, deviceId: d.id });
-    add(d.room, 'textile', 'tulle', 'Тюль', { at: c });
+    add(d.room, 'textile', 'tulle', 'Тюль', { at: c, ...RUDENKO });
   }
 
   // ---- мебель и декор ----
@@ -334,6 +343,12 @@ export function buildSeed() {
     seen[key] = items[items.length - 1];
   }
 
+  add('living', 'textile', 'pillows', 'Декоративные подушки', { place: 'диван в гостиной, кровати в спальне и детской', qty: '', at: [1000, 430], ...RUDENKO });
+  add('bedroom', 'furniture', 'nightstand-right', 'Прикроватная тумба справа', { place: 'справа от кровати', specs: 'белая, рифлёная, на золотом цоколе', at: [1039, 682] });
+  for (const id of ['living.sofa', 'living.armchair', 'kids.daybed', 'kids.armchair', 'bedroom.bed', 'bedroom.headboard', 'kitchen.chair', 'loggia.armchair']) {
+    const it = items.find((x) => x.id === id);
+    if (it) it.notes = it.notes ? `${it.notes}; ${CLEAN}` : CLEAN;
+  }
   for (const it of items) {
     it.at = it.at ? it.at.map((v) => Math.round(v)) : null;
     Object.assign(it, PATCHES[it.id] || {});
