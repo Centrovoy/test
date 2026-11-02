@@ -34,6 +34,26 @@
     "notes": ""
   },
   {
+    "id": "doc-wc-elevation",
+    "title": "Развёртка санузла (дизайн-проект, М 1:30)",
+    "kind": "drawing",
+    "room": "wc",
+    "path": "razvertka-sanuzla.pdf",
+    "date": "",
+    "items": [
+      "wc.install",
+      "wc.toilet",
+      "wc.flush",
+      "wc.basin",
+      "wc.basinmixer",
+      "wc.cabinet",
+      "wc.wardrobe",
+      "wc.ceiling",
+      "wc.door"
+    ],
+    "notes": ""
+  },
+  {
     "id": "doc-panel-photo",
     "title": "Электрощиток: фото с подписями автоматов",
     "kind": "photo",

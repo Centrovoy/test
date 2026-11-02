@@ -427,6 +427,16 @@ const builders = {
       }
       return g;
     }
+    if (f.style === 'installation') {
+      // короб инсталляции, кнопка смыва и шкаф с двумя дверцами над ним до потолка
+      const [x1, z1, x2, z2] = f.r;
+      g.add(boxFromRect(f.r, 0, f.h, M(P[f.color])));
+      g.add(boxFromRect(f.r, f.h + 0.02, 2.6, M(P[f.color], { roughness: 0.6 })));
+      const mid = (x1 + x2) / 2;
+      g.add(boxFromRect([mid - 0.3, z2, mid + 0.3, z2 + 0.5], f.h + 0.04, 2.58, M('#cfc6b8')));
+      g.add(boxFromRect([mid - 9, z2, mid + 9, z2 + 0.6], 0.95, 1.08, M('#ffffff', { roughness: 0.3 })));
+      return g;
+    }
     g.add(boxFromRect(f.r, 0.08, f.h, M(f.color ? P[f.color] : P.cabinet)));
     g.add(boxFromRect(f.r, 0, 0.08, M(P.dark)));
     return g;
@@ -884,11 +894,26 @@ const builders = {
     return g;
   },
   toilet: (f) => {
+    // подвесной унитаз: чаша на высоте 400 мм, выступает от стены (f.at — точка на стене)
     const g = new THREE.Group();
-    const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.16, 0.4, 24), M(P.ceramic, { roughness: 0.2 }));
-    bowl.scale.z = 1.35; bowl.position.set(0, 0.2, 0.05); bowl.castShadow = true;
-    g.add(bowl);
+    const bowl = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.14, 0.32, 24), M(P.ceramic, { roughness: 0.2 }));
+    bowl.scale.z = 1.4;
+    bowl.position.set(0, f.hung ? 0.26 : 0.2, 0.27);
+    bowl.castShadow = true;
+    const seat = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.03, 24), M('#ffffff', { roughness: 0.3 }));
+    seat.scale.z = 1.4;
+    seat.position.set(0, (f.hung ? 0.26 : 0.2) + 0.17, 0.27);
+    g.add(bowl, seat);
     g.position.set(mx(f.at[0]), 0, mz(f.at[1]));
+    return g;
+  },
+  // подвесная раковина без тумбы
+  wallSink: (f) => {
+    const g = new THREE.Group();
+    g.add(boxFromRect(f.r, f.y - 0.1, f.y, M(P.ceramic, { roughness: 0.15 })));
+    const [x1, z1, x2, z2] = f.r;
+    g.add(boxFromRect([x2 - 3, (z1 + z2) / 2 - 1, x2 - 1, (z1 + z2) / 2 + 1], f.y, f.y + 0.18, M('#c9ccce', { metalness: 0.6, roughness: 0.25 })));
+    g.add(boxFromRect([x1 + 6, (z1 + z2) / 2 - 1.5, x2 - 1, (z1 + z2) / 2 + 1.5], f.y - 0.4, f.y - 0.1, M('#c9ccce', { metalness: 0.6, roughness: 0.25 })));
     return g;
   },
   // колонна в ванной: внизу стиральная машина Bosch, над ней сушильная Bosch на полке,

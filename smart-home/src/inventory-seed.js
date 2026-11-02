@@ -44,6 +44,7 @@ const roomAt = (pt) => ROOMS.find((r) => r.rects.some((rc) => inRect(pt, rc)))?.
 const center = (r) => [(r[0] + r[2]) / 2, (r[1] + r[3]) / 2];
 const m = (px) => (px / PX_PER_M).toFixed(2);
 const SRC = 'По развёртке ванной комнаты (дизайн-проект)';
+const SRC_WC = 'По развёртке санузла (дизайн-проект)';
 
 // Уточнения из чертежей: дополняют записи, собранные по плану.
 const PATCHES = {
@@ -51,6 +52,9 @@ const PATCHES = {
   'bath.vanity': { specs: 'длина 1000 мм, скос тумбы параллелен скосу ванны; под накладную раковину 600 × 340', notes: SRC },
   'bath.washer-2': { name: 'Ниша-колонна под стиральную и сушильную машины со шкафом', specs: '700 × 700 мм; стиральная 0–900, сушильная 900–1722, шкаф 1722–2622 мм', notes: SRC },
   'bath.wardrobe': { specs: '480 × 400 мм, высота 2622 мм, в нише стены у двери', notes: SRC },
+  'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },
+  'wc.cabinet': { specs: '1000 × 300 мм; короб инсталляции 0–1200, шкаф с двумя дверцами 1200–2622 мм', notes: SRC_WC },
+  'wc.wardrobe': { specs: '900 × 400 мм, высота 2622 мм, в углу у раковины', notes: SRC_WC },
 };
 
 export function buildSeed() {
@@ -108,7 +112,7 @@ export function buildSeed() {
   for (const d of WALLS.filter((x) => x.kind === 'door')) {
     const [x1, y1, x2, y2] = d.r;
     const c = center(d.r);
-    const room = x1 === 685 ? 'hall' : x1 === 390 ? 'kids' : x1 === 412 ? 'dressing' : x1 === 557 ? 'bath' : x1 === 728 ? 'wc' : x1 === 885 ? 'kitchen' : 'bedroom';
+    const room = x1 === 685 ? 'hall' : x1 === 390 ? 'kids' : x1 === 412 ? 'dressing' : x1 === 557 ? 'bath' : x1 === 726 ? 'wc' : x1 === 885 ? 'kitchen' : 'bedroom';
     const name = doorNames[room];
     const size = `проём ${m(Math.max(x2 - x1, y2 - y1))} × ${d.head.toFixed(2)} м`;
     add(room, 'doors', 'door', `${name}: полотно и коробка`, { specs: size, at: c });
@@ -138,11 +142,11 @@ export function buildSeed() {
   pl('bath', 'basinmixer', 'Смеситель раковины', [609, 58]);
   pl('bath', 'mirror', 'Круглое зеркало с подсветкой', [609, 55]);
   pl('bath', 'drain', 'Сифоны и выпуски', [609, 80]);
-  pl('wc', 'install', 'Инсталляция', [748, 65]);
-  pl('wc', 'toilet', 'Унитаз подвесной', [748, 98]);
-  pl('wc', 'flush', 'Кнопка смыва', [748, 60]);
-  pl('wc', 'basin', 'Раковина', [802, 137]);
-  pl('wc', 'basinmixer', 'Смеситель раковины', [810, 137]);
+  pl('wc', 'install', 'Инсталляция', [755, 63], { specs: 'зона 1000 мм вдоль стены, глубина 300 мм, короб до 1200 мм', notes: SRC_WC });
+  pl('wc', 'toilet', 'Унитаз подвесной', [752, 92], { specs: 'высота 400 мм, ось в 450 мм от стены', notes: SRC_WC });
+  pl('wc', 'flush', 'Кнопка смыва', [755, 74], { specs: 'на коробе инсталляции, ≈ 1000 мм от пола' });
+  pl('wc', 'basin', 'Раковина подвесная', [806, 151], { specs: '500 × 250 × 100 мм, верх на высоте 900 мм', notes: SRC_WC });
+  pl('wc', 'basinmixer', 'Смеситель раковины', [812, 151]);
   pl('wc', 'boiler', 'Водонагреватель', [800, 88], { notes: 'Автомат «Водонагреватель С/У» C32' });
   pl('wc', 'filters', 'Фильтры грубой очистки, счётчики воды, редуктор', [740, 70]);
   pl('kitchen', 'sink', 'Кухонная мойка', [962, 76]);
@@ -230,8 +234,8 @@ export function buildSeed() {
       case 'daybed': return ['furniture', 'Диван-кровать (розовый велюр)'];
       case 'desk': return ['furniture', 'Письменный стол'];
       case 'chair': return ['furniture', room === 'kitchen' ? 'Стул обеденный (оливковый велюр, золотые ножки)' : 'Стул'];
-      case 'cabinet': return ['furniture', f.style === 'console' ? 'Консоль (чёрный поднос, золотые ножки)' : room === 'wc' ? 'Короб инсталляции / полка' : 'Тумба'];
-      case 'wardrobe': return ['furniture', room === 'dressing' ? 'Стеллаж гардеробной' : room === 'wc' ? 'Шкаф в санузле' : room === 'bath' ? 'Шкаф в нише стены' : 'Шкаф'];
+      case 'cabinet': return ['furniture', f.style === 'console' ? 'Консоль (чёрный поднос, золотые ножки)' : room === 'wc' ? 'Короб инсталляции и шкаф над ним' : 'Тумба'];
+      case 'wardrobe': return ['furniture', room === 'dressing' ? 'Стеллаж гардеробной' : room === 'wc' ? 'Хозяйственный шкаф' : room === 'bath' ? 'Шкаф в нише стены' : 'Шкаф'];
       case 'rug': return ['textile', f.style === 'geo' ? 'Ковёр чёрно-белый геометрический' : 'Ковёр'];
       case 'armchair': return ['furniture', f.style === 'round' ? 'Кресло круглое (серый велюр, золотой кант)' : room === 'kids' ? 'Кресло-качалка' : 'Кресло'];
       case 'vanity': return ['furniture', 'Тумба под раковину (рифлёный фасад)'];
@@ -253,7 +257,7 @@ export function buildSeed() {
       case 'featherLamp': return ['decor', 'Торшер с перьями'];
       case 'washer': return ['furniture', 'Ниша-колонна под стиральную и сушильную машины со шкафом'];
       case 'vase': return ['decor', null];
-      case 'cornerBath': case 'towelRail': case 'toilet': case 'hob': case 'sink': return ['', null];
+      case 'cornerBath': case 'towelRail': case 'wallSink': case 'toilet': case 'hob': case 'sink': return ['', null];
       default: return ['furniture', null];
     }
   };
