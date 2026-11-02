@@ -134,6 +134,30 @@
     "notes": "Выключатель кухни перенесён с колонны у окна на стену у колонны холодильника: h 900, 150 мм от угла. На этом же листе отмечен перенос розетки на фартуке — пока не выполнен в модели."
   },
   {
+    "id": "doc-doors-order",
+    "title": "Заказ-наряд на межкомнатные двери № 13/07-1 от 13.07.2022",
+    "kind": "contract",
+    "room": "",
+    "path": "zakaz-naryad-dveri.jpg",
+    "date": "2022-07-13",
+    "items": [
+      "bedroom.door",
+      "bedroom.handle",
+      "storage.door",
+      "storage.handle",
+      "bath.door",
+      "bath.handle",
+      "wc.door",
+      "wc.handle",
+      "dressing.door",
+      "dressing.handle",
+      "kids.door",
+      "kids.handle",
+      "corridor.extension"
+    ],
+    "notes": "6 дверей ФГ (гладкая), цвет П127, доборы 2100×100 — 6 комплектов. Строки: 1 спальня, 2 кладовая, 3 ванная, 4 санузел, 5 гардероб, 6 детская. Адрес и телефон на фото скрыты."
+  },
+  {
     "id": "doc-socket-plan",
     "title": "План розеток",
     "kind": "drawing",

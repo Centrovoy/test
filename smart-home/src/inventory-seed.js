@@ -55,6 +55,17 @@ const SRC_WC = 'По развёртке санузла (дизайн-проек�
 const SRC_LIGHT = 'По плану освещения (выполнен вариант 1)';
 const SRC_SOCK = 'По плану розеток';
 const SRC_KITCHEN = 'По развёртке кухни (дизайн-проект)';
+const ORDER = 'Заказ-наряд № 13/07-1 от 13.07.2022';
+
+// Межкомнатные двери по заказ-наряду; сторона открытия — со стороны коридора.
+const DOOR_ORDER = {
+  bedroom: { n: 1, hole: '897 × 2080', wall: 135, leaf: '800 × 2010', open: 'от себя', price: '613,00', mech: 'магнитный замок AGB Polaris, 2 скрытые петли 3.0' },
+  storage: { n: 2, hole: '894 × 2110', wall: 145, leaf: '800 × 2000', open: 'на себя', price: '513,00', mech: '2 скрытые петли AGB 3.0' },
+  bath: { n: 3, hole: '780 × 2095', wall: 140, leaf: '700 × 2000', open: 'на себя', price: '513,00', mech: '2 скрытые петли AGB 3.0' },
+  wc: { n: 4, hole: '700 × 2107', wall: 140, leaf: '600 × 2000', open: 'на себя', price: '513,00', mech: '2 скрытые петли AGB 3.0' },
+  dressing: { n: 5, hole: '810 × 2095', wall: 140, leaf: '700 × 2000', open: 'на себя', price: '513,00', mech: '2 скрытые петли AGB 3.0' },
+  kids: { n: 6, hole: '870 × 2112', wall: 145, leaf: '790 × 2010', open: 'от себя', price: '613,00', mech: '3 скрытые петли AGB 3.0' },
+};
 
 // Уточнения из чертежей: дополняют записи, собранные по плану.
 const PATCHES = {
@@ -128,21 +139,33 @@ export function buildSeed() {
   }
 
   // ---- двери ----
-  const doorNames = { hall: 'Входная дверь', kids: 'Дверь в детскую', dressing: 'Дверь в гардероб', bath: 'Дверь в ванную', wc: 'Дверь в санузел', kitchen: 'Дверь на кухню', bedroom: 'Дверь в спальню' };
+  const doorNames = { hall: 'Входная дверь', kids: 'Дверь в детскую', dressing: 'Дверь в гардероб', bath: 'Дверь в ванную', wc: 'Дверь в санузел', kitchen: 'Дверь на кухню', bedroom: 'Дверь в спальню', storage: 'Дверь в кладовую' };
   for (const d of WALLS.filter((x) => x.kind === 'door')) {
     const [x1, y1, x2, y2] = d.r;
     const c = center(d.r);
-    const room = x1 === 685 ? 'hall' : x1 === 390 ? 'kids' : x1 === 412 ? 'dressing' : x1 === 557 ? 'bath' : x1 === 726 ? 'wc' : x1 === 885 ? 'kitchen' : 'bedroom';
+    const room = x1 === 685 ? 'hall' : x1 === 390 ? 'kids' : x1 === 412 ? 'dressing' : x1 === 557 ? 'bath' : x1 === 726 ? 'wc' : x1 === 828 ? 'storage' : x1 === 885 ? 'kitchen' : 'bedroom';
     const name = doorNames[room];
     const size = `проём ${m(Math.max(x2 - x1, y2 - y1))} × ${d.head.toFixed(2)} м`;
-    add(room, 'doors', 'door', `${name}: полотно и коробка`, { specs: size, at: c });
-    add(room, 'doors', 'handle', `${name}: ручка, защёлка, петли`, { at: c });
+    const o = DOOR_ORDER[room];
+    if (o) {
+      const open = o.open === 'от себя' ? 'открывается от себя (из коридора внутрь)' : 'открывается на себя (в коридор)';
+      add(room, 'doors', 'door', `${name}: полотно и коробка`, {
+        model: 'ФГ (гладкая)', specs: `полотно ${o.leaf} мм, проём ${o.hole} мм, толщина стены ${o.wall} мм; цвет П127; ${open}; наличники: 4 стандартных + 1 шириной 10 см (у колонны)`,
+        price: o.price, place: o.open, at: c, notes: `${ORDER}, строка ${o.n}`,
+      });
+      add(room, 'doors', 'handle', `${name}: механизм и петли`, { specs: o.mech, qty: '', at: c, notes: `${ORDER}, строка ${o.n}` });
+    } else {
+      add(room, 'doors', 'door', `${name}: полотно и коробка`, { specs: size, at: c });
+      add(room, 'doors', 'handle', `${name}: ручка, защёлка, петли`, { at: c });
+    }
     if (room === 'hall') {
       add(room, 'doors', 'closer', 'Входная дверь: доводчик', { at: c });
       add(room, 'doors', 'cylinder', 'Входная дверь: личинка замка', { at: c });
       add(room, 'doors', 'peephole', 'Входная дверь: глазок', { at: c });
     }
   }
+
+  add('corridor', 'doors', 'extension', 'Доборы дверные', { specs: '2100 × 100 мм, комплекты на все 6 межкомнатных дверей', qty: '6', price: '80,00 за комплект (всего 480,00)', at: [640, 222], notes: ORDER });
 
   // ---- отопление ----
   for (const [room, at] of [['kids', [70, 160]], ['kitchen', [1165, 180]], ['living', [1165, 400]], ['bedroom', [1070, 560]]]) {
