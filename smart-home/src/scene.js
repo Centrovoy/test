@@ -835,15 +835,52 @@ const builders = {
       if (wide) { const a = x1 + ((x2 - x1) * i) / n; g.add(boxFromRect([a + 0.6, z2, a + (x2 - x1) / n - 0.6, z2 + 1], 0.37, 0.8, M(P.vanity))); }
       else { const a = z1 + ((z2 - z1) * i) / n; g.add(boxFromRect([x1 - 1, a + 0.3, x1, a + (z2 - z1) / n - 0.3], 0.37, 0.8, M(P.vanity))); }
     }
-    g.add(boxFromRect([x1 + 3, z1 + 3, x2 - 3, z2 - 3], 0.82, 0.88, M(P.ceramic, { roughness: 0.15 })));
+    // столешница и накладная раковина (по умолчанию 600×340×110 мм, по центру тумбы)
+    g.add(boxFromRect(f.r, 0.82, 0.86, M(P.vanity)));
+    const [sw, sd] = f.sink || [0.6, 0.34];
+    const cx = (x1 + x2) / 2, cz = (z1 + z2) / 2;
+    const hw = (wide ? sw : sd) * PX_PER_M / 2, hd = (wide ? sd : sw) * PX_PER_M / 2;
+    g.add(boxFromRect([cx - hw, cz - hd, cx + hw, cz + hd], 0.86, 0.97, M(P.ceramic, { roughness: 0.15 })));
     return g;
   },
-  bathtub: (f) => {
+  // угловая асимметричная ванна: многоугольник по точкам плана, чаша и шторка вдоль скоса
+  cornerBath: (f) => {
     const g = new THREE.Group();
-    g.add(boxFromRect(f.r, 0, 0.56, M(P.ceramic, { roughness: 0.2 })));
-    g.add(boxFromRect([f.r[0] + 6, f.r[1] + 6, f.r[2] - 6, f.r[3] - 6], 0.4, 0.565, M('#e3edf0', { roughness: 0.08 })));
-    // шторка
-    g.add(boxFromRect([f.r[0] - 1, f.r[1], f.r[0] + 1, f.r[3]], 0.6, 2.2, M(P.curtainKids, { roughness: 1 })));
+    const shapeOf = (pts) => {
+      const sh = new THREE.Shape();
+      pts.forEach(([x, y], i) => (i ? sh.lineTo(mx(x), -mz(y)) : sh.moveTo(mx(x), -mz(y))));
+      sh.closePath();
+      return sh;
+    };
+    const extrude = (pts, y0, h, material) => {
+      const m = new THREE.Mesh(new THREE.ExtrudeGeometry(shapeOf(pts), { depth: h, bevelEnabled: false }), material);
+      m.rotation.x = -Math.PI / 2;
+      m.position.y = y0;
+      m.castShadow = true; m.receiveShadow = true;
+      return m;
+    };
+    g.add(extrude(f.pts, 0, 0.6, M(P.ceramic, { roughness: 0.2 })));
+    const cx = f.pts.reduce((a, p) => a + p[0], 0) / f.pts.length;
+    const cy = f.pts.reduce((a, p) => a + p[1], 0) / f.pts.length;
+    const inner = f.pts.map(([x, y]) => [cx + (x - cx) * 0.8, cy + (y - cy) * 0.85]);
+    g.add(extrude(inner, 0.42, 0.185, M('#e3edf0', { roughness: 0.08 })));
+    // шторка вдоль скошенного края
+    const [a, b] = [f.pts[2], f.pts[3]];
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]) / PX_PER_M;
+    const curtain = new THREE.Mesh(new THREE.BoxGeometry(0.02, 1.6, len), M(P.curtainKids, { roughness: 1 }));
+    curtain.position.set(mx((a[0] + b[0]) / 2), 1.4, mz((a[1] + b[1]) / 2));
+    curtain.rotation.y = Math.atan2(b[0] - a[0], b[1] - a[1]);
+    curtain.castShadow = true;
+    g.add(curtain);
+    return g;
+  },
+  // полотенцесушитель-лесенка (хром)
+  towelRail: (f) => {
+    const g = new THREE.Group();
+    const chrome = M('#d6d9db', { metalness: 0.6, roughness: 0.25 });
+    const [x1, z1, x2, z2] = f.r;
+    for (const x of [x1, x2 - 1]) g.add(boxFromRect([x, z1, x + 1, z2], f.y0, f.y1, chrome));
+    for (let y = f.y0 + 0.06; y < f.y1; y += 0.1) g.add(boxFromRect([x1, z1, x2, z2], y, y + 0.018, chrome));
     return g;
   },
   toilet: (f) => {
@@ -864,11 +901,11 @@ const builders = {
     const grey = M('#d9dbdc', { roughness: 0.4 });
     const display = M('#202426', { roughness: 0.2 });
     // боковины ниши и задняя стенка
-    g.add(boxFromRect([x1, z1, x1 + 3, z2], 0, 2.45, niche));
-    g.add(boxFromRect([x2 - 3, z1, x2, z2], 0, 2.45, niche));
-    g.add(boxFromRect([x1 + 3, z1, x2 - 3, z1 + 2], 0, 2.45, niche));
+    g.add(boxFromRect([x1, z1, x1 + 3, z2], 0, 2.6, niche));
+    g.add(boxFromRect([x2 - 3, z1, x2, z2], 0, 2.6, niche));
+    g.add(boxFromRect([x1 + 3, z1, x2 - 3, z1 + 2], 0, 2.6, niche));
     // полка между машинами
-    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 0.86, 0.9, niche));
+    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 0.88, 0.92, niche));
     const bx1 = x1 + 5, bx2 = x2 - 5, bz1 = z1 + 4, bz2 = z2 - 1;
     const machine = (y0, y1, dryer) => {
       g.add(boxFromRect([bx1, bz1, bx2, bz2], y0, y1, white));
@@ -884,14 +921,14 @@ const builders = {
         g.add(boxFromRect([bx2 - 14, bz2, bx2 - 4, bz2 + 0.6], y0 + 0.05, y0 + 0.17, grey));
       }
     };
-    machine(0.02, 0.85, false);
-    machine(0.92, 1.74, true);
+    machine(0.02, 0.88, false);
+    machine(0.92, 1.72, true);
     // шкаф для хранения с вертикальными рёбрами
-    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 1.78, 2.45, niche));
+    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 1.76, 2.6, niche));
     const n = 14;
     for (let i = 0; i < n; i++) {
       const a = x1 + 3 + ((x2 - x1 - 6) * (i + 0.5)) / n;
-      g.add(boxFromRect([a - 0.6, z2, a + 0.6, z2 + 0.8], 1.8, 2.43, niche));
+      g.add(boxFromRect([a - 0.6, z2, a + 0.6, z2 + 0.8], 1.78, 2.58, niche));
     }
     return g;
   },

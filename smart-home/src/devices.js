@@ -444,7 +444,7 @@ const build = {
       spin.add(logo);
     }
     g.add(face, rim, glow, spin);
-    g.position.set(mx(def.at[0]), dryer ? 1.25 : 0.4, mz(104) + 0.02);
+    g.position.set(mx(def.at[0]), dryer ? 1.31 : 0.45, mz(def.front ?? 104) + 0.02);
     return {
       group: g,
       markerY: dryer ? 1.65 - 1.25 : 1.65 - 0.4,

@@ -4,7 +4,8 @@
 // Прямоугольники задаются как [x1, y1, x2, y2].
 
 export const PX_PER_M = 70;
-export const CEILING = 2.7;
+// высота потолка по дизайн-проекту (развёртка ванной): 2622 мм
+export const CEILING = 2.62;
 export const PLAN_CENTER = [617, 384];
 
 // Перевод координат плана в метры сцены (центр квартиры — начало координат).
@@ -13,7 +14,7 @@ export const mz = (y) => (y - PLAN_CENTER[1]) / PX_PER_M;
 
 const W = (x1, y1, x2, y2) => ({ r: [x1, y1, x2, y2], kind: 'wall' });
 // окна панорамные — от пола до потолка
-const WIN = (x1, y1, x2, y2, sill = 0, head = 2.62) => ({ r: [x1, y1, x2, y2], kind: 'window', sill, head });
+const WIN = (x1, y1, x2, y2, sill = 0, head = 2.55) => ({ r: [x1, y1, x2, y2], kind: 'window', sill, head });
 const DOOR = (x1, y1, x2, y2, head = 2.1) => ({ r: [x1, y1, x2, y2], kind: 'door', head });
 
 export const WALLS = [
@@ -33,8 +34,8 @@ export const WALLS = [
   // перегородки
   W(390, 52, 400, 185), DOOR(390, 185, 400, 255), W(390, 255, 400, 263),
   W(400, 176, 412, 183), DOOR(412, 176, 452, 183), W(452, 176, 525, 183),
-  W(490, 52, 525, 176),
-  W(525, 176, 545, 183), DOOR(545, 176, 600, 183), W(600, 176, 715, 183),
+  W(490, 52, 525, 143), W(490, 143, 497, 176), // в западной стене ванной — шкаф в нише 480×400
+  W(525, 176, 557, 183), DOOR(557, 176, 612, 183), W(612, 176, 715, 183),
   W(712, 52, 722, 183),
   W(722, 176, 728, 183), DOOR(728, 176, 770, 183), W(770, 176, 828, 183),
   W(815, 52, 828, 183),
@@ -76,11 +77,16 @@ export const FURNITURE = [
   // гардероб
   { type: 'wardrobe', r: [400, 55, 490, 92], h: 2.5 },
   { type: 'wardrobe', r: [455, 92, 490, 170], h: 2.5 },
-  // ванная: колонна стиральная+сушильная машины, рифлёная тумба с круглым зеркалом, ванна со шторкой
-  { type: 'washer', r: [528, 57, 577, 105] },
-  { type: 'vanity', r: [577, 55, 640, 92] },
-  { type: 'roundMirror', at: [608, 53.5], face: 's', rad: 0.42, y: 1.5, lit: true },
-  { type: 'bathtub', r: [640, 57, 710, 174] },
+  // ванная — по развёртке из дизайн-проекта (1 мм = 0.07 px):
+  // колонна 700×700 в углу, тумба 1000 со скосом вдоль ванны и накладной раковиной 600×340,
+  // угловая асимметричная ванна 1600×1000 (узкий край 600), полотенцесушитель у двери,
+  // шкаф в нише 480×400 в западной стене
+  { type: 'washer', r: [525, 52, 574, 101] },
+  { type: 'vanity', r: [574, 52, 644, 87] },
+  { type: 'roundMirror', at: [609, 53.5], face: 's', rad: 0.42, y: 1.5, lit: true },
+  { type: 'cornerBath', pts: [[712, 52], [712, 164], [642, 164], [670, 52]] },
+  { type: 'towelRail', r: [625, 173, 659, 175], y0: 1.12, y1: 1.66 },
+  { type: 'wardrobe', r: [497, 143, 525, 176], h: 2.6, color: 'vanity', panels: 'e', room: 'bath' },
   // санузел
   { type: 'cabinet', r: [722, 55, 785, 75], h: 1.15, color: 'vanity' },
   { type: 'toilet', at: [748, 98] },
@@ -181,8 +187,8 @@ export const DEVICES = [
   { id: 'valve.water', type: 'valve', room: 'wc', name: 'Кран воды', at: [728, 68] },
   { id: 'camera.entrance', type: 'camera', room: 'hall', name: 'Камера', at: [800, 700] },
   { id: 'tv.bedroom', type: 'tv', room: 'bedroom', name: 'Телевизор', at: [970, 503] },
-  { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [552, 80] },
-  { id: 'dryer.bath', type: 'washer', variant: 'dryer', room: 'bath', name: 'Сушильная машина', at: [552, 80] },
+  { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [550, 80], front: 101 },
+  { id: 'dryer.bath', type: 'washer', variant: 'dryer', room: 'bath', name: 'Сушильная машина', at: [550, 80], front: 101 },
   { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [760, 345] },
 ];
 
