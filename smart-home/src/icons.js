@@ -17,5 +17,12 @@ export const ICONS = {
   tv: svg('<rect x="3" y="5" width="18" height="12" rx="1"/><path d="M8 21h8"/>'),
   washer: svg('<rect x="4" y="3" width="16" height="18" rx="2"/><circle cx="12" cy="13" r="4"/><path d="M8 6h.01M11 6h.01"/>'),
   vacuum: svg('<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v2"/>'),
+  socket: svg('<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="9" cy="12" r="1.2"/><circle cx="15" cy="12" r="1.2"/>'),
+  power: svg('<path d="M12 3v8M6.5 6.5a8 8 0 1 0 11 0"/>'),
+  appliance: svg('<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 8h16M8 5.5h.01M11 5.5h.01"/>'),
+  net: svg('<rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 17h.01M12 14V9M8.5 7.5a5 5 0 0 1 7 0M6 5a8.5 8.5 0 0 1 12 0"/>'),
+  fan: svg('<circle cx="12" cy="12" r="1.5"/><path d="M12 10.5C11 6 13 3 15.5 4.5S14 10 12 10.5zM13.5 12c4.5-1 7.5 1 6 3.5S14 14 13.5 12zM10.5 12.8C8 16.5 6 18.5 4.5 16.5S8 12 10.5 12.8z"/>'),
+  hood: svg('<path d="M9 3h6v5l5 6H4l5-6zM8 18c1 1 0 2 1 3M12 18c1 1 0 2 1 3M16 18c1 1 0 2 1 3"/>'),
+  panel: svg('<rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M7 7h10M7 12h10M7 17h10M9 6v2M12 6v2M15 11v2M10 16v2"/>'),
   thermo: svg('<path d="M10 14V5a2 2 0 0 1 4 0v9a4 4 0 1 1-4 0z"/>'),
 };

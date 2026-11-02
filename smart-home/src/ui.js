@@ -67,6 +67,7 @@ export function createUI(home, actions) {
       home.set('door.entrance', { open: true }, 'sim');
       setTimeout(() => home.set('door.entrance', { open: false }, 'sim'), 4000);
     }],
+    ['Сработал дифавтомат ванной', () => actions.trip('q-bath')],
     ['Сбросить тревоги', () => {
       for (const d of home.devices) if (d.type === 'leak' || d.type === 'smoke') home.set(d.id, { alarm: false }, 'sim');
       home.set('valve.water', { open: true }, 'sim');
@@ -166,8 +167,10 @@ export function createUI(home, actions) {
       cards[e.id]?.sync(home.state[e.id]);
       syncRooms();
       const def = home.def(e.id);
-      if (e.source !== 'rule' && e.source !== 'scene') home.notify(describe(def, e.state), isAlarm(def, e.state) ? 'alarm' : 'info', e.source);
+      if (e.source !== 'rule' && e.source !== 'scene' && e.source !== 'power') home.notify(describe(def, e.state), isAlarm(def, e.state) ? 'alarm' : 'info', e.source);
     }
+    if (e.type === 'power') cards[e.id]?.sync(home.state[e.id]);
+    if (e.type === 'breaker') syncRooms();
     if (e.type === 'mode') $('#mode').textContent = MODE_NAMES[e.mode];
     if (e.type === 'time') { timeInput.value = e.hours; timeLabel.textContent = fmtHours(e.hours); }
     if (e.type === 'log') addLog(e.entry);
@@ -319,7 +322,12 @@ function deviceCard(home, def) {
     for (const fn of syncers) fn(s);
     el.classList.toggle('is-on', isActive(def, s));
     el.classList.toggle('is-alarm', isAlarm(def, s));
-    statusEl.textContent = describe(def, s).split(': ').slice(1).join(': ');
+    const powered = home.powered(def.id);
+    el.classList.toggle('no-power', !powered);
+    const f = home.feeder(def.id);
+    statusEl.textContent = powered
+      ? describe(def, s).split(': ').slice(1).join(': ')
+      : `нет питания — ${f ? `автомат «${f.title}» ${f.rating}` : 'ввод'} отключён`;
   };
   sync(s0);
   return { el, sync };

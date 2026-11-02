@@ -1,6 +1,14 @@
 // Состояние дома, сценарии и правила автоматизации.
 import { DEVICES, ROOMS } from './plan.js';
 import { DEFAULT_STATE } from './devices.js';
+import { BREAKERS } from './panel.js';
+
+// Что происходит с устройством, когда пропадает питание.
+const POWER_OFF = {
+  light: { on: false }, ac: { on: false }, tv: { on: false }, heating: { on: false },
+  washer: { running: false }, camera: { recording: false },
+};
+const MAINS = BREAKERS.filter((b) => b.kind === 'main').map((b) => b.id);
 
 export function createHome() {
   const listeners = new Set();
@@ -13,6 +21,7 @@ export function createHome() {
     rooms: ROOMS,
     state,
     climate,
+    breakers: Object.fromEntries(BREAKERS.map((b) => [b.id, true])),
     mode: 'home',   // home | away | night
     hours: 13,
     log: [],
@@ -23,10 +32,40 @@ export function createHome() {
     get(id) { return state[id]; },
     def(id) { return DEVICES.find((d) => d.id === id); },
 
-    // Единая точка изменения состояния. source: 'ui' | 'scene' | 'rule' | 'sim' | 'bridge'
+    // Автомат, от которого питается устройство (если он подписан на щитке).
+    feeder(id) {
+      return BREAKERS.find((b) => b.kind !== 'main' && b.devices.includes(id));
+    },
+
+    // Есть ли питание: включены оба вводных и автомат линии.
+    powered(id) {
+      if (MAINS.some((m) => !home.breakers[m])) return false;
+      const f = home.feeder(id);
+      return !f || home.breakers[f.id];
+    },
+
+    // Включить или отключить автомат. source: 'ui' | 'trip' (срабатывание) | 'rule'
+    setBreaker(id, on, source = 'ui') {
+      if (home.breakers[id] === on) return;
+      home.breakers[id] = on;
+      const b = BREAKERS.find((x) => x.id === id);
+      if (!on) {
+        for (const d of DEVICES) {
+          if (!home.powered(d.id) && POWER_OFF[d.type]) home.set(d.id, POWER_OFF[d.type], 'power');
+        }
+      }
+      home.emit({ type: 'breaker', id, on, source });
+      for (const d of DEVICES) home.emit({ type: 'power', id: d.id });
+      if (source !== 'trip') home.notify(`Щиток: ${b.title} (${b.rating}) — ${on ? 'включён' : 'отключён'}`, on ? 'ok' : 'info', source);
+      runRules(home, { type: 'breaker', id, on, source, breaker: b });
+    },
+
+    // Единая точка изменения состояния. source: 'ui' | 'scene' | 'rule' | 'sim' | 'bridge' | 'power'
     set(id, patch, source = 'ui') {
       const prev = state[id];
       if (!prev) return;
+      // без питания устройство не принимает команды (кроме отключения при обесточивании)
+      if (source !== 'power' && source !== 'bridge' && !home.powered(id) && POWER_OFF[home.def(id)?.type]) return;
       const next = { ...prev, ...patch };
       if (JSON.stringify(prev) === JSON.stringify(next)) return;
       state[id] = next;
@@ -219,6 +258,16 @@ export const RULES = [
       const open = crossed(e.prev, e.hours, 7);
       CURTAINS.forEach((id) => h.set(id, { position: open ? 100 : 0 }, 'rule'));
       h.notify(open ? 'Рассвет: шторы открыты' : 'Закат: шторы закрыты', 'info', 'rule');
+    },
+  },
+  {
+    id: 'breaker-trip', name: 'Сработал автомат → уведомление',
+    desc: 'При срабатывании дифавтомата — тревога с названием линии; если сработала линия ванной, стирка останавливается',
+    enabled: true,
+    when: (e) => e.type === 'breaker' && !e.on && e.source === 'trip',
+    then(h, e) {
+      const what = e.breaker.kind === 'rcbo' ? 'Дифавтомат (утечка тока)' : 'Автомат';
+      h.notify(`${what}: «${e.breaker.title}» ${e.breaker.rating} отключился`, 'alarm', 'rule');
     },
   },
   {

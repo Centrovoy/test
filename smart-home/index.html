@@ -54,6 +54,7 @@
         <div class="group">
           <button id="walls" class="tb">Срез стен</button>
           <button id="markers" class="tb active">Устройства</button>
+          <button id="panel-open" class="tb">Щиток</button>
         </div>
         <div class="group time">
           <button id="time-play" class="tb" title="Ускоренное время">▶</button>
@@ -61,6 +62,24 @@
           <span id="time-label">19:30</span>
         </div>
       </div>
+      <section id="panel-drawer" class="panel-drawer" hidden aria-label="Электрощиток">
+        <header class="pdr-head">
+          <div>
+            <h2>Электрощиток</h2>
+            <p id="panel-summary" class="pdr-summary"></p>
+          </div>
+          <div class="pdr-legend">
+            <span><i class="lg lg-main"></i>Ввод</span>
+            <span><i class="lg lg-rcbo"></i>Дифавтомат 30 мА</span>
+            <span><i class="lg lg-mcb"></i>Автомат</span>
+          </div>
+          <button id="panel-close" class="tb" type="button" aria-label="Закрыть щиток">✕</button>
+        </header>
+        <div class="pdr-body">
+          <div class="panel-scroll"><div id="panel-rows" class="panel-rows"></div></div>
+          <div id="panel-detail" class="panel-detail"></div>
+        </div>
+      </section>
       <div class="bottom">
         <div class="sims-wrap">
           <h2>Имитация событий</h2>

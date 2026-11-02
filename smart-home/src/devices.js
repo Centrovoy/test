@@ -514,8 +514,9 @@ export function buildDevices(stage, defs, onMarkerClick) {
   return map;
 }
 
-export function refreshMarker(entry, state) {
+export function refreshMarker(entry, state, powered = true) {
   const { def, el } = entry;
+  el.classList.toggle('no-power', !powered);
   el.classList.toggle('is-on', isActive(def, state));
   el.classList.toggle('is-alarm', isAlarm(def, state));
   if (def.type === 'lock') el.innerHTML = state.locked ? ICONS.lock : ICONS.unlock;
