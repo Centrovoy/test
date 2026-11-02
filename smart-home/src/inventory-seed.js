@@ -98,6 +98,7 @@ const PATCHES = {
   'bath.drain': { name: 'Сифон для ванны', brand: 'McAlpine', model: 'MRB12', specs: 'хром, с прочисткой снаружи, слив-перелив', link: 'https://ozon.by/t/zLJsaq6', supplier: 'Ozon' },
   'bath.mirrorled': { name: 'Подсветка зеркала: блок питания', brand: 'Ecola', model: 'блок питания 100 Вт 220–12 В IP67', specs: 'для светодиодной ленты подсветки зеркала', link: 'https://ozon.by/t/9oKMQ81', supplier: 'Ozon' },
   'kids.thermo': { brand: 'ZEISSLER', model: 'Термоголовка 6–28 °C, белая', specs: 'жидкостная, резьба M30 × 1,5, регулировка 6–28 °C, рабочее давление 10 бар', price: '25,72 BYN' },
+  'living.showcase': { name: 'Шкаф-витрина в нише стены', specs: 'встроен в нишу стены между кухней и гостиной у колонны холодильника, вровень со стеной; стеклянная дверь, подсветка полок; ≈ 700 × 2400 мм' },
   'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
   'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
   'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },

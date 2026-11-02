@@ -111,6 +111,7 @@ if (connectHomeAssistant(home, HA_CONFIG)) home.notify('Подключение �
 // Публичное API для отладки и внешних интеграций:
 // window.smartHome.set('light.living', { on: true, brightness: 50 })
 window.smartHome = home;
+window.smartStage = stage; // для отладки камеры
 
 function syncRoomLabels(t) {
   for (const room of home.rooms) {

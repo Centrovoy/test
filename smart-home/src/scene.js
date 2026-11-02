@@ -164,6 +164,11 @@ export function buildShell(stage) {
   for (const w of WALLS) {
     if (w.kind === 'wall') addWall(w.r, 0, CEILING);
     if (w.kind === 'door') addWall(w.r, w.head, CEILING);
+    if (w.kind === 'niche') {
+      const [x1, y1, x2, y2] = w.r;
+      addWall(w.r, w.head, CEILING);
+      addWall(w.open === 's' ? [x1, y1, x2, y1 + 2] : [x1, y2 - 2, x2, y2], 0, w.head);
+    }
     if (w.kind === 'window') {
       if (w.sill > 0.01) addWall(w.r, 0, w.sill);
       addWall(w.r, w.head, CEILING);
@@ -378,7 +383,7 @@ const gold = () => M(P.gold, { metalness: 0.35, roughness: 0.35 });
 const showcaseMat = () => new THREE.MeshStandardMaterial({ color: P.showcase, emissive: P.showcase, emissiveIntensity: 0.9, roughness: 0.6 });
 
 // Витрина: чёрная рама, подсвеченные полки. face — сторона, куда смотрит фасад (n/s/e/w).
-function showcase(r, h, face) {
+function showcase(r, h, face, opts = {}) {
   const g = new THREE.Group();
   g.add(boxFromRect(r, 0, h, M(P.wall)));
   const [x1, z1, x2, z2] = r;
@@ -397,6 +402,10 @@ function showcase(r, h, face) {
   }[face];
   g.add(boxFromRect(inset, 0.15, h - 0.12, showcaseMat()));
   for (let y = 0.6; y < h - 0.2; y += 0.42) g.add(boxFromRect(inset, y, y + 0.025, M(P.black)));
+  if (opts.glassDoor) {
+    const door = { n: [x1 + 1, z1 - 1.2, x2 - 1, z1 - 0.6], s: [x1 + 1, z2 + 0.6, x2 - 1, z2 + 1.2], e: [x2 + 0.6, z1 + 1, x2 + 1.2, z2 - 1], w: [x1 - 1.2, z1 + 1, x1 - 0.6, z2 - 1] }[face];
+    g.add(boxFromRect(door, 0.1, h - 0.06, new THREE.MeshStandardMaterial({ color: '#cfe0e6', transparent: true, opacity: 0.25, roughness: 0.05 })));
+  }
   return g;
 }
 
@@ -553,7 +562,7 @@ const builders = {
     g.add(boxFromRect(f.r, f.y0, f.y1, [M(P.dark), M(P.dark), M(P.dark), M(P.dark), new THREE.MeshStandardMaterial({ map: tex }), new THREE.MeshStandardMaterial({ map: tex })]));
     return g;
   },
-  showcase: (f) => showcase(f.r, f.h || 2.4, f.face),
+  showcase: (f) => showcase(f.r, f.h || 2.4, f.face, { glassDoor: f.glassDoor }),
   bench: (f) => {
     const g = new THREE.Group();
     g.add(boxFromRect(f.r, 0.4, 0.46, M(P.cabinet)));

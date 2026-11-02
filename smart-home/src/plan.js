@@ -16,6 +16,8 @@ const W = (x1, y1, x2, y2) => ({ r: [x1, y1, x2, y2], kind: 'wall' });
 // окна панорамные — от пола до потолка
 const WIN = (x1, y1, x2, y2, sill = 0, head = 2.55) => ({ r: [x1, y1, x2, y2], kind: 'window', sill, head });
 const DOOR = (x1, y1, x2, y2, head = 2.1) => ({ r: [x1, y1, x2, y2], kind: 'door', head });
+// ниша в стене: открыта со стороны `open` (n/s), сверху — стена над нишей
+const NICHE = (x1, y1, x2, y2, head, open) => ({ r: [x1, y1, x2, y2], kind: 'niche', head, open });
 
 export const WALLS = [
   // наружный контур
@@ -40,7 +42,7 @@ export const WALLS = [
   W(722, 176, 726, 183), DOOR(726, 176, 775, 183), W(775, 176, 828, 183), DOOR(828, 176, 885, 183),
   W(815, 52, 828, 183),
   W(885, 52, 897, 190), DOOR(885, 190, 897, 250), W(885, 250, 897, 263),
-  W(810, 263, 890, 282),
+  W(810, 263, 822, 282), NICHE(822, 263, 872, 282, 2.4, 's'), W(872, 263, 890, 282), // ниша под витрину у колонны холодильника
   W(808, 495, 1085, 502),
   W(808, 502, 820, 518), DOOR(808, 518, 820, 581), W(808, 581, 850, 592), W(840, 592, 850, 712),
 ];
@@ -125,7 +127,8 @@ export const FURNITURE = [
   { type: 'roundTable', at: [1028, 398], rad: 17, h: 0.4 },
   { type: 'armchair', at: [1132, 318], style: 'round', rot: -Math.PI * 0.2 },
   { type: 'cabinet', r: [1100, 466, 1160, 492], h: 0.75, style: 'console' },
-  { type: 'showcase', r: [822, 282, 878, 293], h: 2.6, face: 's' },
+  // шкаф-витрина со стеклянной дверью и подсветкой — в нише стены у колонны холодильника, вровень со стеной
+  { type: 'showcase', r: [822, 265, 872, 282], h: 2.4, face: 's', glassDoor: true },
   { type: 'mirror', r: [735, 290, 738, 450], room: 'living' },
   { type: 'barCart', at: [757, 300], room: 'living' },
   { type: 'plant', at: [868, 472], big: true },
