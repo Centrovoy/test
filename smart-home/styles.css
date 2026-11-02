@@ -59,6 +59,7 @@
 }
 
 * { box-sizing: border-box; }
+[hidden] { display: none !important; }
 html, body { margin: 0; height: 100%; }
 body {
   font-family: 'Manrope', system-ui, sans-serif;
@@ -370,6 +371,17 @@ h2 {
 .chip.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
 .inv-saved { color: var(--muted); font-size: 12px; }
 .room-inv-btn { margin-top: 8px; }
+.inv-tools .segmented { flex: none; }
+.inv-docs-count { color: var(--accent); }
+.inv-docs { margin-top: 12px; border-top: 1px solid var(--line); padding-top: 10px; display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+.inv-docs h4 { margin: 0; font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; }
+.inv-docs ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 3px; }
+.inv-docs a, .inv-form-head a { color: var(--accent); }
+.inv-docs small { color: var(--muted); }
+.inv-links { display: flex; flex-direction: column; gap: 3px; max-height: 180px; overflow-y: auto; width: 100%; }
+.inv-links .inv-check { color: var(--text); font-size: 12.5px; }
+.inv-preview { display: block; margin-bottom: 10px; }
+.inv-preview img { max-width: 100%; max-height: 220px; border-radius: 8px; border: 1px solid var(--line); display: block; }
 
 /* ---- адаптив ---- */
 @media (max-width: 1100px) {

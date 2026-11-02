@@ -1,7 +1,8 @@
-// Хранилище «паспорта квартиры».
+// Хранилище «паспорта квартиры» и документов.
 // В опубликованном артефакте записи лежат в базе артефакта (capability `db`,
-// коллекция `items`) и видны на всех устройствах. Локально (из репозитория)
-// записи хранятся в браузере; их можно выгрузить и загрузить JSON-файлом.
+// коллекции `items` и `docs`), а файлы документов — в его хранилище (`assets`).
+// Локально (из репозитория) записи хранятся в браузере и выгружаются JSON-файлом,
+// а документы берутся из папки docs/ по списку docs/manifest.json.
 import { buildSeed } from './inventory-seed.js';
 
 const LOCAL_KEY = 'smart-home.inventory.v1';
@@ -14,12 +15,17 @@ export async function openInventory() {
   const store = {
     mode: 'loading',
     items: [],
+    docs: [],
     canEdit: true,
+    canUpload: false,
     error: '',
     on(fn) { listeners.add(fn); fn(store); return () => listeners.delete(fn); },
     emit() { for (const fn of listeners) fn(store); },
     save: async () => {},
     remove: async () => {},
+    saveDoc: async () => {},
+    removeDoc: async () => {},
+    uploadDoc: async () => { throw new Error('Загрузка недоступна'); },
   };
 
   const db = window.claude?.use ? await withTimeout(window.claude.use('db'), DB_TIMEOUT) : null;
@@ -63,6 +69,36 @@ function attachDb(store, db) {
     }
   };
   store.remove = async (id) => { await col.doc(id).delete(); };
+
+  // документы: записи в `docs`, файлы в хранилище артефакта
+  const docsCol = db.collection('docs');
+  docsCol.onSnapshot((snap) => {
+    store.docs = snap.docs.map((d) => {
+      const body = d.data();
+      return { ...body, id: d.id, url: body.assetId ? `/_blob/${body.assetId}` : '' };
+    });
+    store.emit();
+  }, () => {});
+
+  let assets = null;
+  window.claude.use('assets').then((a) => { assets = a; store.canUpload = Boolean(a); store.emit(); });
+
+  store.saveDoc = async (doc) => {
+    const { id, url, ...body } = doc;
+    await docsCol.doc(id).set({ ...body, updatedAt: new Date().toISOString() });
+  };
+  store.uploadDoc = async (file, meta) => {
+    if (!assets) throw new Error('Загружать файлы может только владелец страницы');
+    const up = await assets.upload(file);
+    const id = `doc-${Date.now().toString(36)}`;
+    await store.saveDoc({ id, title: meta.title || file.name, kind: meta.kind || 'other', room: meta.room || '', items: meta.items || [], notes: '', date: '', assetId: up.id, contentType: up.contentType, size: up.sizeBytes });
+    return id;
+  };
+  store.removeDoc = async (doc) => {
+    await docsCol.doc(doc.id).delete();
+    const shared = store.docs.some((d) => d.id !== doc.id && d.assetId === doc.assetId);
+    if (assets && doc.assetId && !shared) { try { await assets.delete(doc.assetId); } catch { /* файл уже удалён */ } }
+  };
 }
 
 function attachLocal(store) {
@@ -85,6 +121,11 @@ function attachLocal(store) {
     persist();
     store.emit();
   };
+  // документы из папки docs/ (только чтение)
+  fetch('docs/manifest.json').then((r) => (r.ok ? r.json() : [])).then((list) => {
+    store.docs = list.map((d) => ({ ...d, url: `docs/${d.path}` }));
+    store.emit();
+  }).catch(() => {});
   store.exportJSON = () => JSON.stringify(store.items, null, 2);
   store.importJSON = (text) => {
     const arr = JSON.parse(text);
@@ -99,3 +140,13 @@ function attachLocal(store) {
 export function isFilled(item) {
   return Boolean((item.brand && item.model) || item.sku);
 }
+
+export const DOC_KINDS = [
+  ['drawing', 'Чертёж / проект'],
+  ['manual', 'Инструкция'],
+  ['receipt', 'Чек / накладная'],
+  ['warranty', 'Гарантия'],
+  ['contract', 'Договор / акт'],
+  ['photo', 'Фото'],
+  ['other', 'Другое'],
+];

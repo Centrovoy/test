@@ -88,11 +88,16 @@
             <p id="inv-summary" class="pdr-summary">Загрузка…</p>
           </div>
           <div class="inv-tools">
-            <input id="inv-search" type="search" placeholder="Поиск: название, бренд, артикул" aria-label="Поиск">
+            <div id="inv-tabs" class="segmented" role="tablist" aria-label="Раздел паспорта">
+              <button type="button" data-tab="items" class="active">Позиции</button>
+              <button type="button" data-tab="docs">Документы</button>
+            </div>
+            <input id="inv-search" type="search" placeholder="Поиск: название, бренд, артикул, документ" aria-label="Поиск">
             <select id="inv-room" aria-label="Помещение"></select>
             <select id="inv-cat" aria-label="Категория"></select>
             <label class="inv-check"><input id="inv-missing" type="checkbox"> Только незаполненные</label>
             <button id="inv-add" class="chip" type="button">Добавить</button>
+            <label class="chip inv-import" hidden>Загрузить документ<input id="inv-upload" type="file" accept="application/pdf,image/*,.txt,.csv,.md"></label>
             <button id="inv-export" class="chip" type="button" hidden>Выгрузить JSON</button>
             <label class="chip inv-import" hidden>Загрузить JSON<input id="inv-import" type="file" accept="application/json,.json"></label>
           </div>

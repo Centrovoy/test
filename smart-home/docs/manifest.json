@@ -1,0 +1,363 @@
+[
+  {
+    "id": "doc-plan",
+    "title": "План квартиры с расстановкой",
+    "kind": "drawing",
+    "room": "",
+    "items": [],
+    "path": "plan-kvartiry.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-bath-elevation",
+    "title": "Развёртка ванной комнаты (дизайн-проект, М 1:30)",
+    "kind": "drawing",
+    "room": "bath",
+    "path": "razvertka-vannoy.pdf",
+    "date": "",
+    "items": [
+      "bath.tub",
+      "bath.tubmixer",
+      "bath.curtainrod",
+      "bath.basin",
+      "bath.vanity",
+      "bath.washer",
+      "bath.dryer",
+      "bath.washer-2",
+      "bath.towel",
+      "bath.wardrobe",
+      "bath.ceiling",
+      "bath.mirror",
+      "bath.door"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "doc-panel-photo",
+    "title": "Электрощиток: фото с подписями автоматов",
+    "kind": "photo",
+    "room": "hall",
+    "path": "elektroshchitok.jpg",
+    "date": "",
+    "items": [
+      "hall.panel",
+      "hall.brk-q-in-c50",
+      "hall.brk-q-hob",
+      "hall.brk-q-boiler",
+      "hall.brk-q-kitchen",
+      "hall.brk-q-bedroom",
+      "hall.brk-q-bath",
+      "hall.brk-q-dishwasher",
+      "hall.brk-q-oven",
+      "hall.brk-q-kids",
+      "hall.brk-q-hood",
+      "hall.brk-q-lowvolt",
+      "hall.brk-q-ac-kids",
+      "hall.brk-q-ac-main",
+      "hall.brk-q-in-63"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-01",
+    "title": "Фото: Гостиная: вид на окна, кресло, диван",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.sofa",
+      "living.armchair",
+      "living.curtain",
+      "living.fixture",
+      "living.rug",
+      "living.roundTable"
+    ],
+    "path": "foto/01-gostinaya-okno.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-02",
+    "title": "Фото: Спальня: изголовье, оливковая стена, подвесы",
+    "kind": "photo",
+    "room": "bedroom",
+    "items": [
+      "bedroom.headboard",
+      "bedroom.roundTable",
+      "bedroom.fixture-2",
+      "bedroom.paint"
+    ],
+    "path": "foto/02-spalnya-izgolove.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-03",
+    "title": "Фото: Гостиная: витрина, зеркальная стена, барная тележка",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.showcase",
+      "living.mirror",
+      "living.barCart",
+      "living.ledshowcase"
+    ],
+    "path": "foto/03-gostinaya-vitrina-zerkalo.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-04",
+    "title": "Фото: Гостиная: обои, диван, консоль, кондиционер",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.wallpaper",
+      "living.sofa",
+      "living.cabinet",
+      "living.ac",
+      "living.fixture"
+    ],
+    "path": "foto/04-gostinaya-oboi-divan.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-05",
+    "title": "Фото: Спальня: комод с ТВ, балконный блок, люстра",
+    "kind": "photo",
+    "room": "bedroom",
+    "items": [
+      "bedroom.dresser",
+      "bedroom.tv",
+      "bedroom.frame",
+      "bedroom.fixture",
+      "bedroom.curtain"
+    ],
+    "path": "foto/05-spalnya-tv-balkon.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-06",
+    "title": "Фото: Кухня: гарнитур, витрины, стол, стулья",
+    "kind": "photo",
+    "room": "kitchen",
+    "items": [
+      "kitchen.kitchenRun",
+      "kitchen.table",
+      "kitchen.chair",
+      "kitchen.fixture-2",
+      "kitchen.ledshowcase"
+    ],
+    "path": "foto/06-kuhnya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-07",
+    "title": "Фото: Детская: шкафы, диван-кровать, кондиционер",
+    "kind": "photo",
+    "room": "kids",
+    "items": [
+      "kids.wardrobe",
+      "kids.daybed",
+      "kids.ac",
+      "kids.fixture",
+      "kids.featherLamp",
+      "kids.armchair",
+      "kids.rug"
+    ],
+    "path": "foto/07-detskaya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-08",
+    "title": "Фото: Прихожая: шкафы, скамья, картина",
+    "kind": "photo",
+    "room": "hall",
+    "items": [
+      "hall.wardrobe",
+      "hall.bench",
+      "hall.art"
+    ],
+    "path": "foto/08-prihozhaya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-09",
+    "title": "Фото: Гостиная и столовая",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.showcase",
+      "living.armchair",
+      "kitchen.table",
+      "kitchen.fixture-2"
+    ],
+    "path": "foto/09-gostinaya-stolovaya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-10",
+    "title": "Фото: Гостиная: диван и зеркальная стена",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.sofa",
+      "living.mirror",
+      "living.roundTable"
+    ],
+    "path": "foto/10-gostinaya-divan-zerkalo.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-11",
+    "title": "Фото: Ванная: зеркало с подсветкой, раковина",
+    "kind": "photo",
+    "room": "bath",
+    "items": [
+      "bath.mirror",
+      "bath.mirrorled",
+      "bath.basin",
+      "bath.basinmixer",
+      "bath.curtainrod"
+    ],
+    "path": "foto/11-vannaya-zerkalo.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-12",
+    "title": "Фото: Ванная: колонна Bosch, тумба, полотенцесушитель",
+    "kind": "photo",
+    "room": "bath",
+    "items": [
+      "bath.washer",
+      "bath.dryer",
+      "bath.washer-2",
+      "bath.vanity",
+      "bath.towel"
+    ],
+    "path": "foto/12-vannaya-stiralnaya-sushilnaya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-13",
+    "title": "Фото: Гостиная: витрина и кресло",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.showcase",
+      "living.armchair"
+    ],
+    "path": "foto/13-gostinaya-vitrina.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-14",
+    "title": "Фото: Гостиная: консоль у окна, радиатор",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.cabinet",
+      "living.radiator",
+      "living.tulle"
+    ],
+    "path": "foto/14-gostinaya-konsol.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-15",
+    "title": "Фото: Гостиная: обои с золотыми линиями",
+    "kind": "photo",
+    "room": "living",
+    "items": [
+      "living.wallpaper",
+      "living.sofa",
+      "living.plant"
+    ],
+    "path": "foto/15-gostinaya-oboi.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-16",
+    "title": "Фото: Столовая: стол, стулья, подвес",
+    "kind": "photo",
+    "room": "kitchen",
+    "items": [
+      "kitchen.table",
+      "kitchen.chair",
+      "kitchen.fixture-2",
+      "kitchen.curtain",
+      "kitchen.frame"
+    ],
+    "path": "foto/16-stolovaya.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-17",
+    "title": "Фото: Кухня: гарнитур и витрины",
+    "kind": "photo",
+    "room": "kitchen",
+    "items": [
+      "kitchen.kitchenRun",
+      "kitchen.kitchenRun-2",
+      "kitchen.sink"
+    ],
+    "path": "foto/17-kuhnya-garnitur.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-18",
+    "title": "Фото: Кухня: колонна с духовкой и СВЧ",
+    "kind": "photo",
+    "room": "kitchen",
+    "items": [
+      "kitchen.tallUnit",
+      "kitchen.oven",
+      "kitchen.microwave"
+    ],
+    "path": "foto/18-kuhnya-tehnika.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-19",
+    "title": "Фото: Спальня: шкаф, комод с ТВ, кондиционер",
+    "kind": "photo",
+    "room": "bedroom",
+    "items": [
+      "bedroom.wardrobe",
+      "bedroom.dresser",
+      "bedroom.tv",
+      "bedroom.ac"
+    ],
+    "path": "foto/19-spalnya-shkaf-tv.webp",
+    "date": "",
+    "notes": ""
+  },
+  {
+    "id": "doc-foto-20",
+    "title": "Фото: Спальня: прикроватная тумба и подвес",
+    "kind": "photo",
+    "room": "bedroom",
+    "items": [
+      "bedroom.roundTable",
+      "bedroom.fixture-2"
+    ],
+    "path": "foto/20-spalnya-tumba.webp",
+    "date": "",
+    "notes": ""
+  }
+]
