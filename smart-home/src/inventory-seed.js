@@ -62,7 +62,7 @@ const RUDENKO = { supplier: 'Студия Руденко (шторы, подуш
 const CLEAN = 'Химчистка мебели: Чисто Хата — instagram.com/chisto_hata';
 const PAINT_MILK = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 1', sku: 'цвет SIENA 30', specs: 'краска ВД-ВАЭ цветная, молочная; тара 10 л / 14 кг' };
 const PAINT_GREEN = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 3', sku: 'цвет TUNDRA 85', specs: 'краска ВД-ВАЭ цветная, зелёная (спальня за изголовьем и лоджия); тара 2,35 л' };
-const SPOT_BULB = { brand: 'SAPRA', model: 'LM1095E', specs: 'LED, цоколь GU10, 9,5 Вт, 4000 K (нейтральный белый), 750 лм, 220–240 В', notes: 'По маркировке лампы (фото в документах)' };
+const SPOT_BULB = { brand: 'SAPRA', model: 'LM1095E', specs: 'LED, цоколь GU10, 9,5 Вт, 4000 K (нейтральный белый), 750 лм, 220–240 В', notes: 'Одинаковые во всех встроенных спотах квартиры (подтверждено владельцем); фото маркировки в документах' };
 const WIRING = { brand: 'Schneider Electric', model: 'AtlasDesign, бежевый' };
 const CABINET_FINISH = { specs: 'фасады окрашены RAL 9001 Cream, корпус — ДСП яркий серый' };
 
