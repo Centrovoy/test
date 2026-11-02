@@ -7,6 +7,8 @@ import { buildDevices, refreshMarker, isAlarm } from './devices.js';
 import { createHome, climateTick } from './home.js';
 import { createUI } from './ui.js';
 import { createPanelUI } from './panelui.js';
+import { openInventory } from './inventory.js';
+import { createInventoryUI } from './inventoryui.js';
 import { PANEL_LOCATION } from './panel.js';
 import { ICONS } from './icons.js';
 import { boxFromRect, M, CSS2DObject } from './scene.js';
@@ -59,6 +61,7 @@ const highlight = { rooms: new Set(), pins: [] };
 function showCircuit(b) {
   for (const p of highlight.pins) stage.scene.remove(p);
   highlight.pins = [];
+  // b — автомат щитка или запись паспорта: { rooms, points }
   highlight.rooms = new Set(b ? (b.kind === 'main' ? home.rooms.map((r) => r.id) : b.rooms) : []);
   if (!b) return;
   for (const [x, y, label] of b.points) {
@@ -72,6 +75,19 @@ function showCircuit(b) {
   }
 }
 panelUI = createPanelUI(home, { highlight: showCircuit });
+
+// ---- паспорт квартиры ----
+let inventoryUI = null;
+openInventory().then((store) => {
+  inventoryUI = createInventoryUI(home, store, {
+    highlight: showCircuit,
+    focusRoom: (id) => {
+      const room = home.rooms.find((r) => r.id === id);
+      setView(stage, 'iso', true, [mx(room.label[0]), 0, mz(room.label[1])]);
+    },
+  });
+});
+document.getElementById('room-inventory').addEventListener('click', () => inventoryUI?.open(true, { room: ui.room }));
 
 for (const [id, entry] of Object.entries(devices)) {
   entry.impl.apply(home.state[id]);

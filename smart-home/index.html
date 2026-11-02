@@ -55,6 +55,7 @@
           <button id="walls" class="tb">Срез стен</button>
           <button id="markers" class="tb active">Устройства</button>
           <button id="panel-open" class="tb">Щиток</button>
+          <button id="inv-open" class="tb">Паспорт</button>
         </div>
         <div class="group time">
           <button id="time-play" class="tb" title="Ускоренное время">▶</button>
@@ -80,6 +81,28 @@
           <div id="panel-detail" class="panel-detail"></div>
         </div>
       </section>
+      <section id="inv-drawer" class="panel-drawer inv-drawer" hidden aria-label="Паспорт квартиры">
+        <header class="pdr-head">
+          <div>
+            <h2>Паспорт квартиры</h2>
+            <p id="inv-summary" class="pdr-summary">Загрузка…</p>
+          </div>
+          <div class="inv-tools">
+            <input id="inv-search" type="search" placeholder="Поиск: название, бренд, артикул" aria-label="Поиск">
+            <select id="inv-room" aria-label="Помещение"></select>
+            <select id="inv-cat" aria-label="Категория"></select>
+            <label class="inv-check"><input id="inv-missing" type="checkbox"> Только незаполненные</label>
+            <button id="inv-add" class="chip" type="button">Добавить</button>
+            <button id="inv-export" class="chip" type="button" hidden>Выгрузить JSON</button>
+            <label class="chip inv-import" hidden>Загрузить JSON<input id="inv-import" type="file" accept="application/json,.json"></label>
+          </div>
+          <button id="inv-close" class="tb" type="button" aria-label="Закрыть паспорт">✕</button>
+        </header>
+        <div class="pdr-body inv-body">
+          <div id="inv-list" class="inv-list"></div>
+          <div id="inv-form" class="inv-form"></div>
+        </div>
+      </section>
       <div class="bottom">
         <div class="sims-wrap">
           <h2>Имитация событий</h2>
@@ -96,6 +119,7 @@
       <header class="panel-head">
         <h2 id="panel-title">Гостиная</h2>
         <div id="panel-climate" class="climate"></div>
+        <button id="room-inventory" class="chip room-inv-btn" type="button">Паспорт комнаты</button>
       </header>
       <div id="devices" class="devices"></div>
     </aside>

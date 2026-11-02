@@ -109,8 +109,10 @@ export function createPanelUI(home, actions) {
   function open(v) {
     drawer.hidden = !v;
     document.getElementById('panel-open').classList.toggle('active', v);
+    if (v) document.dispatchEvent(new CustomEvent('drawer-open', { detail: 'panel' }));
     if (!v && selected) select(selected);
   }
+  document.addEventListener('drawer-open', (e) => { if (e.detail !== 'panel' && !drawer.hidden) open(false); });
 
   sync();
   return {

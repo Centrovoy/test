@@ -185,6 +185,7 @@ export function createUI(home, actions) {
   syncRooms();
 
   return {
+    get room() { return selectedRoom; },
     selectRoom,
     selectDevice(id) {
       const def = home.def(id);

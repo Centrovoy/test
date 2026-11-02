@@ -87,8 +87,8 @@ export const FURNITURE = [
   { type: 'wardrobe', r: [785, 55, 815, 118], h: 2.2, color: 'vanity' },
   { type: 'vanity', r: [790, 122, 815, 152] },
   // коридор
-  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5, panels: 's' },
-  { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.5 },
+  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5, panels: 's', room: 'corridor' },
+  { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.5, room: 'corridor' },
   // кухня: колонна с духовкой и СВЧ слева, светлые низы, тауп верх с двумя витринами, чёрный фартук
   { type: 'kitchenRun', r: [897, 55, 1155, 97], showcases: [990, 1080] },
   { type: 'kitchenRun', r: [897, 97, 945, 175] },
@@ -111,7 +111,7 @@ export const FURNITURE = [
   { type: 'cabinet', r: [1100, 466, 1160, 492], h: 0.75, style: 'console' },
   { type: 'showcase', r: [822, 282, 878, 293], h: 2.6, face: 's' },
   { type: 'mirror', r: [735, 290, 738, 450] },
-  { type: 'barCart', at: [757, 300] },
+  { type: 'barCart', at: [757, 300], room: 'living' },
   { type: 'plant', at: [868, 472], big: true },
   // спальня: изголовье во всю стену у оливковой стены, белые рифлёные тумбы,
   // комод с ТВ и шкаф вдоль перегородки
@@ -125,7 +125,7 @@ export const FURNITURE = [
   { type: 'armchair', at: [1145, 655] },
   { type: 'plant', at: [1165, 530] },
   // прихожая: белые шкафы с золотыми ручками, зелёная скамья и картина в торце
-  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.6, panels: 'w' },
+  { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.6, panels: 'w', room: 'hall' },
   { type: 'bench', r: [738, 697, 798, 712] },
   { type: 'art', r: [742, 709.5, 794, 712], y0: 1.0, y1: 1.8 },
 ];

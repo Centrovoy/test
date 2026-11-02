@@ -321,6 +321,56 @@ h2 {
 .marker.no-power { background: var(--marker-bg); opacity: .45; border-style: dashed; }
 .marker-panel { border-radius: 6px; }
 
+/* ---- паспорт квартиры ---- */
+.inv-drawer { height: 62%; max-height: 62%; }
+.inv-body { flex: 1; overflow: hidden; }
+.inv-form { max-height: 100%; }
+.inv-tools { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; flex: 3; min-width: 0; }
+.inv-tools input[type="search"], .inv-tools select {
+  font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 8px; min-width: 0;
+}
+.inv-tools input[type="search"] { flex: 1 1 200px; }
+.inv-check { display: inline-flex; gap: 5px; align-items: center; color: var(--muted); font-size: 12px; }
+.inv-check input { accent-color: var(--accent); }
+.inv-import { position: relative; cursor: pointer; }
+.inv-import input { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
+.inv-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.inv-list { overflow-y: auto; min-height: 0; max-height: 100%; padding-right: 4px; }
+.inv-group h3 { font-size: 12px; margin: 10px 0 4px; color: var(--text); position: sticky; top: 0; background: var(--panel); padding: 2px 0; }
+.inv-group h3 span { color: var(--muted); font-weight: 500; }
+.inv-row {
+  display: flex; justify-content: space-between; gap: 10px; width: 100%; text-align: left;
+  border: 0; background: transparent; padding: 6px 8px; border-radius: 8px;
+}
+.inv-row:hover { background: var(--hover); }
+.inv-row.selected { background: var(--accent-soft); }
+.inv-name { min-width: 0; }
+.inv-name small { color: var(--muted); }
+.inv-meta { color: var(--muted); font-size: 12px; text-align: right; flex: none; max-width: 45%; }
+.inv-chip { background: var(--on-soft); color: var(--text); border-radius: 999px; padding: 1px 7px; font-size: 11px; }
+.inv-empty, .inv-hint { color: var(--muted); font-size: 12px; line-height: 1.45; }
+.inv-form { border-left: 1px solid var(--line); padding-left: 14px; min-width: 0; overflow-y: auto; }
+.inv-form-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.inv-form-head a { color: var(--accent); font-size: 12px; }
+.inv-state { font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 999px; }
+.inv-state.ok { background: var(--accent-soft); color: var(--accent); }
+.inv-state.todo { background: var(--on-soft); color: var(--text); }
+.inv-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 10px; }
+.inv-field { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.inv-field.wide { grid-column: 1 / -1; }
+.inv-field span { font-size: 11px; color: var(--muted); }
+.inv-field input, .inv-field textarea, .inv-field select {
+  font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--line);
+  border-radius: 8px; padding: 5px 8px; min-width: 0; width: 100%; resize: vertical;
+}
+.inv-field input:focus-visible, .inv-field textarea:focus-visible, .inv-field select:focus-visible,
+.inv-tools input:focus-visible, .inv-tools select:focus-visible { outline: 2px solid var(--accent); outline-offset: 0; }
+.inv-actions { display: flex; gap: 6px; align-items: center; margin-top: 10px; flex-wrap: wrap; }
+.chip.primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.inv-saved { color: var(--muted); font-size: 12px; }
+.room-inv-btn { margin-top: 8px; }
+
 /* ---- адаптив ---- */
 @media (max-width: 1100px) {
   .app { grid-template-columns: 250px 1fr; }
@@ -335,6 +385,8 @@ h2 {
   .bottom { grid-template-columns: 1fr; height: auto; }
   .log { max-height: 140px; }
   .time input { width: 100px; }
-  .pdr-body { grid-template-columns: 1fr; }
+  .pdr-body, .inv-body { grid-template-columns: 1fr; }
+  .inv-form { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 10px; }
+  .inv-fields { grid-template-columns: 1fr; }
   .panel-detail { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 10px; }
 }
