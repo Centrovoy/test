@@ -409,6 +409,21 @@ function showcase(r, h, face, opts = {}) {
   return g;
 }
 
+// Швы между фасадами. Ряд мебели идёт вдоль оси (alongX) от start (px плана),
+// face — координата лицевой плоскости, dir — куда смотрит фасад (+1/−1).
+// verts — позиции вертикальных швов (px вдоль ряда), horiz — [from, to, [высоты]].
+function seams(g, { alongX, face, dir, y0, y1, verts = [], horiz = [] }) {
+  const seamMat = M('#8f877c', { roughness: 0.6 });
+  const f0 = dir > 0 ? face : face - 0.35;
+  const f1 = dir > 0 ? face + 0.35 : face;
+  for (const v of verts) {
+    g.add(boxFromRect(alongX ? [v - 0.2, f0, v + 0.2, f1] : [f0, v - 0.2, f1, v + 0.2], y0, y1, seamMat));
+  }
+  for (const [a, b, hs] of horiz) {
+    for (const h of hs) g.add(boxFromRect(alongX ? [a, f0, b, f1] : [f0, a, f1, b], h - 0.004, h + 0.004, seamMat));
+  }
+}
+
 const builders = {
   rug: (f) => {
     let material;
@@ -830,9 +845,16 @@ const builders = {
     // чёрный фартук
     const splash = wide ? [x1, z1, x2, z1 + 2] : [x1, z1, x1 + 2, z2];
     g.add(boxFromRect(splash, 0.93, 1.53, M(P.worktop, { roughness: 0.2 })));
-    // верхние шкафы (тауп) с двумя подсвеченными витринами
-    const upper = wide ? [x1, z1, x2, z1 + 25] : [x1, z1, x1 + 25, z2];
+    // верхние шкафы (тауп) с двумя подсвеченными витринами; в углу — без разрыва
+    const upper = wide ? [x1, z1, x2, z1 + 25] : [x1, f.upperFrom ?? z1, x1 + 25, z2];
     g.add(boxFromRect(upper, 1.53, 2.6, M(P.kitchenHigh, { roughness: 0.6 })));
+    // швы дверец и ящиков (позиции — в мм от угла по развёртке)
+    if (f.fronts) {
+      const { origin, k, lower = [], upperSeams = [], drawers = [] } = f.fronts;
+      const at = (mm) => origin + mm * k;
+      seams(g, { alongX: wide, face: wide ? z2 : x2, dir: 1, y0: 0.1, y1: 0.89, verts: lower.map(at), horiz: drawers.map(([a, b, hs]) => [at(a), at(b), hs]) });
+      seams(g, { alongX: wide, face: wide ? z1 + 25 : x1 + 25, dir: 1, y0: 1.53, y1: 2.6, verts: upperSeams.map(at) });
+    }
     if (wide) {
       for (const sx of f.showcases || []) {
         const sw = f.showcaseW || 30;
@@ -854,6 +876,8 @@ const builders = {
     const mw = roundedBox(0.04, 0.38, 0.55, M(P.black, { roughness: 0.2 }));
     mw.position.set(cx + 0.31, 1.38, cz);
     g.add(oven, mw);
+    // ящик под духовкой и дверца антресоли
+    seams(g, { alongX: false, face: f.r[2], dir: 1, y0: 0, y1: 0, horiz: [[f.r[1], f.r[3], [0.51, 1.58, 2.1]]] });
     return g;
   },
   fridge: (f) => {
@@ -865,6 +889,8 @@ const builders = {
     const handle = roundedBox(0.02, 0.6, 0.02, gold());
     handle.position.set(cx + 0.31, 1.2, cz + 0.2);
     g.add(handle);
+    // фасады встроенного холодильника: морозильник снизу, холодильная камера сверху
+    seams(g, { alongX: false, face: f.r[2], dir: 1, y0: 0, y1: 0, horiz: [[f.r[1], f.r[3], [0.8]]] });
     return g;
   },
   hob: (f) => {
