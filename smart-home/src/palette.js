@@ -6,10 +6,10 @@ export const PALETTE = {
   floorWoodLine: '#4b3324',
   floorTile: '#d8cdbf',      // бежевый керамогранит в ванной и санузле
   floorLoggia: '#cfc8bd',
-  wall: '#ebe8e3',           // светлый тёплый серый
+  wall: '#ebe8e3',           // молочный, Caparol Samtex 10 SIENA 30
   wallCap: '#2e2b29',
   wallpaper: '#ddd0c4',      // обои с золотыми линиями в гостиной
-  wallOlive: '#a6a26c',      // оливковая стена за изголовьем в спальне
+  wallOlive: '#a6a26c',      // зелёный Caparol Samtex 10 TUNDRA 85: за изголовьем и на лоджии
   wallKids: '#dcc1b9',       // пыльно-розовые стены детской
   mirror: '#c9d2d6',
   glass: '#b8d6e4',
@@ -19,7 +19,7 @@ export const PALETTE = {
   // мебель
   gold: '#d2ae5e',
   black: '#1d1d1f',
-  cabinet: '#ece9e3',        // белые фасады шкафов
+  cabinet: '#ece9e3',        // фасады шкафов RAL 9001 Cream
   kitchenLow: '#d5d0c8',     // нижние фасады кухни
   kitchenHigh: '#b5ada3',    // верхние фасады кухни (тауп)
   worktop: '#1e1e1f',        // чёрная столешница и фартук

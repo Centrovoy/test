@@ -60,6 +60,9 @@ const TILE = { brand: 'Уральский гранит', model: 'UF010 MR', spec
 const DOORS_SHOP = { supplier: 'Urban Style Doors — instagram.com/urban_style_doors', link: 'https://www.instagram.com/urban_style_doors' };
 const RUDENKO = { supplier: 'Студия Руденко (шторы, подушки) — instagram.com/studio.rudenko', link: 'https://www.instagram.com/studio.rudenko' };
 const CLEAN = 'Химчистка мебели: Чисто Хата — instagram.com/chisto_hata';
+const PAINT_MILK = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 1', sku: 'цвет SIENA 30', specs: 'краска ВД-ВАЭ цветная, молочная; тара 10 л / 14 кг' };
+const PAINT_GREEN = { brand: 'Caparol', model: 'Samtex 10 E.L.F., Base 3', sku: 'цвет TUNDRA 85', specs: 'краска ВД-ВАЭ цветная, зелёная (спальня за изголовьем и лоджия); тара 2,35 л' };
+const CABINET_FINISH = { specs: 'фасады окрашены RAL 9001 Cream, корпус — ДСП яркий серый' };
 
 // Межкомнатные двери по заказ-наряду; сторона открытия — со стороны коридора.
 const DOOR_ORDER = {
@@ -87,6 +90,7 @@ const PATCHES = {
   'bath.floor': TILE, 'bath.walltile': TILE, 'wc.floor': TILE, 'wc.walltile': TILE,
   'living.fixture': { brand: 'Odeon Light', model: 'Focco' },
   'kitchen.table': { name: 'Обеденный стол (столешница из керамогранита, золотое основание)', supplier: 'Grant Stone — instagram.com/grant_stone.by', link: 'https://www.instagram.com/grant_stone.by' },
+  'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
   'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
   'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },
   'wc.cabinet': { specs: '1000 × 300 мм; короб инсталляции 0–1200, шкаф с двумя дверцами 1200–2622 мм', notes: SRC_WC },
@@ -121,8 +125,10 @@ export function buildSeed() {
     } else {
       add(r.id, 'finish', 'floor', 'Покрытие пола', { at });
     }
-    const wall = { kids: 'пыльно-розовый', bedroom: 'светлый тёплый серый; стена за изголовьем — оливковая', living: 'светлый тёплый серый; за диваном — обои с золотыми линиями' }[r.id];
-    if (r.floor !== 'tile') add(r.id, 'finish', 'paint', 'Краска стен', { specs: wall || 'светлый тёплый серый', at });
+    // стены: молочный SIENA 30 везде, зелёный TUNDRA 85 — на лоджии и за изголовьем в спальне
+    const extra = { bedroom: '; стена за изголовьем — зелёная, отдельная позиция', living: '; за диваном — обои с золотыми линиями' }[r.id] || '';
+    if (r.floor !== 'tile') add(r.id, 'finish', 'paint', 'Краска стен', r.id === 'loggia' ? { ...PAINT_GREEN, at } : { ...PAINT_MILK, specs: PAINT_MILK.specs + extra, at });
+    if (r.id === 'bedroom') add(r.id, 'finish', 'paint-accent', 'Краска стены за изголовьем', { ...PAINT_GREEN, place: 'стена за изголовьем кровати', at: [960, 705] });
     add(r.id, 'finish', 'ceiling', 'Потолок', { at });
   }
   add('hall', 'finish', 'floorglue', 'Клей для пола', {

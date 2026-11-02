@@ -192,9 +192,10 @@ export const FURNITURE = [
 
 // Акцентные стены: тонкие панели поверх стен.
 export const ACCENTS = [
-  { r: [52, 52, 330, 54.5], color: 'wallKids' },
-  { r: [52, 260.5, 350, 263], color: 'wallKids' },
   { r: [850, 709, 1085, 712], color: 'wallOlive' },
+  // лоджия — зелёная, как стена за изголовьем (Caparol TUNDRA 85)
+  { r: [1100, 507, 1185, 509.5], color: 'wallOlive' },
+  { r: [1100, 709.5, 1185, 712], color: 'wallOlive' },
   { r: [820, 492, 1085, 495], color: 'wallpaper', trim: true },
 ];
 
