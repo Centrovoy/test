@@ -226,6 +226,7 @@ export function buildSeed() {
   for (const f of FURNITURE.filter((x) => x.type === 'switch')) {
     add(f.room, 'electric', 'wallswitch', `Выключатель ${f.label}${f.gang === 2 ? ' (двухклавишный)' : ''}`, {
       at: f.at, place: f.label, specs: f.new ? 'новый по проекту, высота 900 мм' : 'существующий',
+      ...(f.room === 'kitchen' ? { specs: 'перенесён с колонны у окна; высота 900 мм, 150 мм от угла стены' } : {}),
       notes: 'По плану освещения (выполнен вариант 1)',
     });
   }
