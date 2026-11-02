@@ -853,6 +853,23 @@ const builders = {
     g.add(boxFromRect([cx - hw, cz - hd, cx + hw, cz + hd], 0.86, 0.97, M(P.ceramic, { roughness: 0.15 })));
     return g;
   },
+  // выключатель: рамка с клавишей (двухклавишный — шире), на высоте 0.9 м
+  switch: (f) => {
+    const g = new THREE.Group();
+    const w = f.gang === 2 ? 0.15 : 0.085;
+    const along = f.face === 'n' || f.face === 's';
+    const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? w : 0.012, 0.085, along ? 0.012 : w), M('#f7f6f3', { roughness: 0.4 }));
+    g.add(plate);
+    for (let i = 0; i < (f.gang || 1); i++) {
+      const off = f.gang === 2 ? (i ? 0.034 : -0.034) : 0;
+      const key = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.05 : 0.008, 0.05, along ? 0.008 : 0.05), M('#e9e7e2', { roughness: 0.5 }));
+      const d = { n: -0.008, s: 0.008, e: 0.008, w: -0.008 }[f.face];
+      key.position.set(along ? off : d, 0, along ? d : off);
+      g.add(key);
+    }
+    g.position.set(mx(f.at[0]), f.h || 0.9, mz(f.at[1]));
+    return g;
+  },
   // угловая асимметричная ванна: многоугольник по точкам плана, чаша и шторка вдоль скоса
   cornerBath: (f) => {
     const g = new THREE.Group();

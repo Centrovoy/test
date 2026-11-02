@@ -65,7 +65,6 @@
       "bedroom.ac",
       "bedroom.fixture",
       "corridor.fixture",
-      "corridor.fixture-2",
       "dressing.fixture",
       "hall.fixture",
       "kids.ac",
@@ -78,7 +77,19 @@
       "living.ac",
       "living.fixture",
       "living.fixture-2",
-      "wc.fixture"
+      "wc.fixture",
+      "storage.fixture",
+      "kitchen.wallswitch",
+      "bedroom.wallswitch",
+      "bedroom.wallswitch-2",
+      "corridor.wallswitch",
+      "corridor.wallswitch-2",
+      "corridor.wallswitch-3",
+      "hall.wallswitch",
+      "corridor.wallswitch-4",
+      "corridor.wallswitch-5",
+      "corridor.wallswitch-6",
+      "kids.wallswitch"
     ],
     "notes": "На листе два варианта; в квартире выполнен первый (левый). Обозначения: потолочный свет, люстра, вывод кабеля, существующие выключатели."
   },

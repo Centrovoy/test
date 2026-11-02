@@ -166,8 +166,8 @@ export function buildSeed() {
   ap('bath', 'washer', 'Стиральная машина', [550, 80], { brand: 'Bosch', place: 'Колонна, нижний ярус (0–900 мм)' });
   ap('bath', 'dryer', 'Сушильная машина', [550, 80], { brand: 'Bosch', place: 'Колонна, над стиральной машиной (900–1722 мм)' });
   ap('bedroom', 'tv', 'Телевизор', [970, 512], { place: 'На комоде' });
-  ap('living', 'vacuum', 'Робот-пылесос', [760, 345]);
-  ap('hall', 'vacuumdock', 'База робота-пылесоса', [760, 330]);
+  ap('storage', 'vacuum', 'Робот-пылесос', [848, 168]);
+  ap('storage', 'vacuumdock', 'База робота-пылесоса', [848, 178], { place: 'Кладовая (комната пылесоса)' });
 
   // ---- климат ----
   for (const d of DEVICES.filter((x) => x.type === 'ac')) {
@@ -206,7 +206,13 @@ export function buildSeed() {
   }
   for (const r of ROOMS.filter((x) => x.id !== 'loggia')) {
     add(r.id, 'electric', 'sockets', 'Розетки', { qty: '', at: r.label });
-    add(r.id, 'electric', 'switches', 'Выключатели', { qty: '', at: r.label });
+  }
+  // выключатели — каждый на своём месте по плану освещения
+  for (const f of FURNITURE.filter((x) => x.type === 'switch')) {
+    add(f.room, 'electric', 'wallswitch', `Выключатель ${f.label}${f.gang === 2 ? ' (двухклавишный)' : ''}`, {
+      at: f.at, place: f.label, specs: f.new ? 'новый по проекту, высота 900 мм' : 'существующий',
+      notes: 'По плану освещения (выполнен вариант 1)',
+    });
   }
 
   // ---- связь ----
@@ -239,7 +245,7 @@ export function buildSeed() {
       case 'desk': return ['furniture', 'Письменный стол'];
       case 'chair': return ['furniture', room === 'kitchen' ? 'Стул обеденный (оливковый велюр, золотые ножки)' : 'Стул'];
       case 'cabinet': return ['furniture', f.style === 'console' ? 'Консоль (чёрный поднос, золотые ножки)' : room === 'wc' ? 'Короб инсталляции и шкаф над ним' : 'Тумба'];
-      case 'wardrobe': return ['furniture', room === 'dressing' ? 'Стеллаж гардеробной' : room === 'wc' ? 'Хозяйственный шкаф' : room === 'bath' ? 'Шкаф в нише стены' : 'Шкаф'];
+      case 'wardrobe': return ['furniture', room === 'dressing' ? 'Стеллаж гардеробной' : room === 'wc' ? 'Хозяйственный шкаф' : room === 'bath' ? 'Шкаф в нише стены' : room === 'storage' ? 'Стеллаж кладовой' : 'Шкаф'];
       case 'rug': return ['textile', f.style === 'geo' ? 'Ковёр чёрно-белый геометрический' : 'Ковёр'];
       case 'armchair': return ['furniture', f.style === 'round' ? 'Кресло круглое (серый велюр, золотой кант)' : room === 'kids' ? 'Кресло-качалка' : 'Кресло'];
       case 'vanity': return ['furniture', 'Тумба под раковину (рифлёный фасад)'];
@@ -261,7 +267,7 @@ export function buildSeed() {
       case 'featherLamp': return ['decor', 'Торшер с перьями'];
       case 'washer': return ['furniture', 'Ниша-колонна под стиральную и сушильную машины со шкафом'];
       case 'vase': return ['decor', null];
-      case 'cornerBath': case 'towelRail': case 'wallSink': case 'toilet': case 'hob': case 'sink': return ['', null];
+      case 'cornerBath': case 'towelRail': case 'wallSink': case 'switch': case 'toilet': case 'hob': case 'sink': return ['', null];
       default: return ['furniture', null];
     }
   };

@@ -52,6 +52,7 @@ export const ROOMS = [
   { id: 'bath', name: 'Ванная', rects: [[525, 52, 712, 176]], floor: 'tile', label: [585, 100], temp: 24.6, hum: 61 },
   { id: 'wc', name: 'Санузел', rects: [[722, 52, 815, 176]], floor: 'tile', label: [760, 140], temp: 23.9, hum: 55 },
   { id: 'corridor', name: 'Коридор', rects: [[400, 183, 885, 263], [735, 263, 810, 282]], floor: 'wood', label: [640, 225], temp: 22.6, hum: 43 },
+  { id: 'storage', name: 'Кладовая', rects: [[828, 52, 885, 183]], floor: 'wood', label: [856, 150], temp: 22.4, hum: 42 },
   { id: 'kitchen', name: 'Кухня-столовая', rects: [[897, 52, 1180, 263]], floor: 'wood', label: [1010, 200], temp: 23.1, hum: 46 },
   { id: 'living', name: 'Гостиная', rects: [[808, 263, 1180, 495]], floor: 'wood', label: [1000, 300], temp: 23.0, hum: 45 },
   { id: 'hall', name: 'Прихожая', rects: [[712, 282, 808, 712]], floor: 'wood', label: [760, 560], temp: 22.1, hum: 41 },
@@ -95,8 +96,9 @@ export const FURNITURE = [
   { type: 'wardrobe', r: [788, 52, 815, 118], h: 2.6, color: 'vanity', panels: 'w' },
   { type: 'wallSink', r: [798, 135, 815, 167], y: 0.9 },
   // коридор
-  { type: 'wardrobe', r: [828, 85, 885, 132], h: 2.5, panels: 's', room: 'corridor' },
-  { type: 'wardrobe', r: [865, 132, 885, 180], h: 2.5, room: 'corridor' },
+  // кладовая (она же комната пылесоса): стеллажи и база робота-пылесоса
+  { type: 'wardrobe', r: [828, 55, 885, 95], h: 2.5, panels: 's', room: 'storage' },
+  { type: 'wardrobe', r: [865, 95, 885, 150], h: 2.5, room: 'storage' },
   // кухня: колонна с духовкой и СВЧ слева, светлые низы, тауп верх с двумя витринами, чёрный фартук
   { type: 'kitchenRun', r: [897, 55, 1155, 97], showcases: [990, 1080] },
   { type: 'kitchenRun', r: [897, 97, 945, 175] },
@@ -136,6 +138,20 @@ export const FURNITURE = [
   { type: 'wardrobe', r: [808, 598, 840, 712], h: 2.6, panels: 'w', room: 'hall' },
   { type: 'bench', r: [738, 697, 798, 712] },
   { type: 'art', r: [742, 709.5, 794, 712], y0: 1.0, y1: 1.8 },
+
+  // выключатели — по плану освещения (вариант 1); new — новые по проекту (h = 900),
+  // остальные существующие; face — куда смотрит клавиша
+  { type: 'switch', at: [1107, 262.5], face: 'n', room: 'kitchen', label: 'на колонне между кухней и гостиной' },
+  { type: 'switch', at: [1084.5, 512], face: 'w', room: 'bedroom', label: 'у балконной двери' },
+  { type: 'switch', at: [820.5, 510], face: 'e', room: 'bedroom', label: 'у входа в спальню' },
+  { type: 'switch', at: [809.5, 268], face: 'w', room: 'corridor', label: 'на торце стены у кухни' },
+  { type: 'switch', at: [795, 183.5], face: 's', room: 'corridor', label: 'у двери санузла' },
+  { type: 'switch', at: [735.5, 274], face: 'e', room: 'corridor', label: 'на углу у прихожей' },
+  { type: 'switch', at: [728, 600.5], face: 's', room: 'hall', label: 'у входной двери' },
+  { type: 'switch', at: [628, 183.5], face: 's', room: 'corridor', label: 'у двери ванной' },
+  { type: 'switch', at: [522, 262.5], face: 'n', room: 'corridor', label: 'напротив двери ванной' },
+  { type: 'switch', at: [484, 183.5], face: 's', room: 'corridor', label: 'у двери гардероба', new: true },
+  { type: 'switch', at: [389.5, 176], face: 'w', room: 'kids', label: 'у двери детской', new: true, gang: 2 },
 ];
 
 // Акцентные стены: тонкие панели поверх стен.
@@ -165,7 +181,7 @@ export const DEVICES = [
   { id: 'light.loggia', type: 'light', room: 'loggia', name: 'Бра', at: [1142, 600] },
   { id: 'light.kids-spots', type: 'light', room: 'kids', name: 'Споты', at: [245, 153], spots: [[350, 107], [350, 200], [140, 107], [140, 200]] },
   { id: 'light.kids-desk', type: 'light', room: 'kids', name: 'Подсветка стола', at: [110, 258], style: 'strip', strip: [80, 259, 175, 261], y: 1.8 },
-  { id: 'light.storage', type: 'light', room: 'corridor', name: 'Свет в кладовой (комната пылесоса)', at: [854, 166], spots: [[854, 166]] },
+  { id: 'light.storage', type: 'light', room: 'storage', name: 'Свет', at: [854, 140], spots: [[854, 140]] },
   { id: 'light.counter', type: 'light', room: 'kitchen', name: 'Подсветка столешницы', at: [1030, 78], style: 'strip', strip: [899, 76, 1153, 78], y: 1.48, seed: false },
   { id: 'light.floorlamp', type: 'light', room: 'living', name: 'Торшер', at: [1098, 290], style: 'floor' },
 
@@ -197,12 +213,12 @@ export const DEVICES = [
   { id: 'tv.bedroom', type: 'tv', room: 'bedroom', name: 'Телевизор', at: [970, 503] },
   { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [550, 80], front: 101 },
   { id: 'dryer.bath', type: 'washer', variant: 'dryer', room: 'bath', name: 'Сушильная машина', at: [550, 80], front: 101 },
-  { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [760, 345] },
+  { id: 'vacuum', type: 'vacuum', room: 'storage', name: 'Робот-пылесос', at: [848, 168] },
 ];
 
 // Маршрут робота-пылесоса (точки плана).
 export const VACUUM_PATH = [
-  [760, 345], [850, 310], [1080, 300], [1160, 390], [1090, 430], [870, 430], [850, 310],
+  [848, 168], [848, 222], [790, 240], [790, 300], [850, 310], [1080, 300], [1160, 390], [1090, 430], [870, 430], [850, 310],
   [1000, 270], [980, 240], [1000, 120], [1170, 120], [1170, 240], [1030, 240], [960, 270],
-  [880, 300], [760, 345],
+  [880, 300], [790, 300], [790, 240], [848, 222], [848, 168],
 ];

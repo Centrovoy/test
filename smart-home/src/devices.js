@@ -489,7 +489,7 @@ const build = {
     const led = new THREE.Mesh(new THREE.BoxGeometry(0.12, 0.01, 0.01), ledMat);
     led.position.set(0, 0.07, -0.17);
     g.add(body, top, led);
-    const dock = boxFromRect([748, 326, 772, 334], 0, 0.12, M(P.dark));
+    const dock = boxFromRect([838, 177, 858, 182], 0, 0.12, M(P.dark));
     const pts = VACUUM_PATH.map(([x, y]) => new THREE.Vector3(mx(x), 0, mz(y)));
     const lens = [];
     let total = 0;
