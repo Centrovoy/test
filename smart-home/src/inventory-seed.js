@@ -93,6 +93,7 @@ const PATCHES = {
   'living.fixture': { brand: 'Odeon Light', model: 'Focco' },
   'kitchen.table': { name: 'Обеденный стол (столешница из керамогранита, золотое основание)', supplier: 'Grant Stone — instagram.com/grant_stone.by', link: 'https://www.instagram.com/grant_stone.by' },
   'kids.desk': { name: 'Письменный стол с тремя ящиками', specs: '1600 × 700 мм, высота 750 мм, царга 160 мм с тремя ящиками; кремовый, П-образные опоры из золотого металла; стоит над радиатором', notes: 'Договор № 28/06/23 от 28.06.2023, приложение 1 (эскиз); проект — ИП Ращеня А. А.' },
+  'kids.thermo': { brand: 'ZEISSLER', model: 'Термоголовка 6–28 °C, белая', specs: 'жидкостная, резьба M30 × 1,5, регулировка 6–28 °C, рабочее давление 10 бар', price: '25,72 BYN' },
   'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
   'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
   'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },
