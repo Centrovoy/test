@@ -182,6 +182,7 @@ export const DEVICES = [
   { id: 'camera.entrance', type: 'camera', room: 'hall', name: 'Камера', at: [800, 700] },
   { id: 'tv.bedroom', type: 'tv', room: 'bedroom', name: 'Телевизор', at: [970, 503] },
   { id: 'washer.bath', type: 'washer', room: 'bath', name: 'Стиральная машина', at: [552, 80] },
+  { id: 'dryer.bath', type: 'washer', variant: 'dryer', room: 'bath', name: 'Сушильная машина', at: [552, 80] },
   { id: 'vacuum', type: 'vacuum', room: 'living', name: 'Робот-пылесос', at: [760, 345] },
 ];
 

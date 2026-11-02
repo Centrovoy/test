@@ -854,14 +854,45 @@ const builders = {
     g.position.set(mx(f.at[0]), 0, mz(f.at[1]));
     return g;
   },
+  // колонна в ванной: внизу стиральная машина Bosch, над ней сушильная Bosch на полке,
+  // сверху шкаф для хранения с рифлёным фасадом; всё в бежевой нише
   washer: (f) => {
     const g = new THREE.Group();
-    g.add(boxFromRect(f.r, 0, 1.75, M(P.vanity)));
     const [x1, z1, x2, z2] = f.r;
-    g.add(boxFromRect([x1 + 2, z1 + 2, x2 - 2, z2 + 0.5], 0.02, 0.85, M(P.ceramic)));
-    g.add(boxFromRect([x1 + 2, z1 + 2, x2 - 2, z2 + 0.5], 0.89, 1.7, M(P.ceramic)));
-    // рифлёный шкаф над колонной
-    g.add(boxFromRect(f.r, 1.75, 2.45, M(P.vanity)));
+    const niche = M(P.vanity, { roughness: 0.7 });
+    const white = M('#f7f7f6', { roughness: 0.35 });
+    const grey = M('#d9dbdc', { roughness: 0.4 });
+    const display = M('#202426', { roughness: 0.2 });
+    // боковины ниши и задняя стенка
+    g.add(boxFromRect([x1, z1, x1 + 3, z2], 0, 2.45, niche));
+    g.add(boxFromRect([x2 - 3, z1, x2, z2], 0, 2.45, niche));
+    g.add(boxFromRect([x1 + 3, z1, x2 - 3, z1 + 2], 0, 2.45, niche));
+    // полка между машинами
+    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 0.86, 0.9, niche));
+    const bx1 = x1 + 5, bx2 = x2 - 5, bz1 = z1 + 4, bz2 = z2 - 1;
+    const machine = (y0, y1, dryer) => {
+      g.add(boxFromRect([bx1, bz1, bx2, bz2], y0, y1, white));
+      // панель управления: ручка-селектор и дисплей
+      g.add(boxFromRect([bx1, bz2, bx2, bz2 + 0.6], y1 - 0.12, y1 - 0.01, grey));
+      g.add(boxFromRect([bx1 + 22, bz2 + 0.5, bx1 + 34, bz2 + 1], y1 - 0.1, y1 - 0.04, display));
+      const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.035, 0.035, 0.02, 20), grey);
+      knob.rotation.x = Math.PI / 2;
+      knob.position.set(mx(bx1 + 13), y1 - 0.065, mz(bz2) + 0.015);
+      g.add(knob);
+      if (dryer) {
+        // решётка теплообменника внизу справа
+        g.add(boxFromRect([bx2 - 14, bz2, bx2 - 4, bz2 + 0.6], y0 + 0.05, y0 + 0.17, grey));
+      }
+    };
+    machine(0.02, 0.85, false);
+    machine(0.92, 1.74, true);
+    // шкаф для хранения с вертикальными рёбрами
+    g.add(boxFromRect([x1 + 3, z1 + 2, x2 - 3, z2], 1.78, 2.45, niche));
+    const n = 14;
+    for (let i = 0; i < n; i++) {
+      const a = x1 + 3 + ((x2 - x1 - 6) * (i + 0.5)) / n;
+      g.add(boxFromRect([a - 0.6, z2, a + 0.6, z2 + 0.8], 1.8, 2.43, niche));
+    }
     return g;
   },
   mirror: (f) => {

@@ -217,7 +217,7 @@ function describe(def, s) {
     case 'lock': return `${n}: ${s.locked ? 'закрыт' : 'открыт'}`;
     case 'valve': return `${n}: ${s.open ? 'открыт' : 'перекрыт'}`;
     case 'camera': return `${n}: ${s.recording ? 'запись' : 'ожидание'}`;
-    case 'washer': return `${n}: ${s.running ? 'стирка' : 'остановлена'}`;
+    case 'washer': return `${n}: ${s.running ? (def.variant === 'dryer' ? 'сушка' : 'стирка') : 'остановлена'}`;
     case 'vacuum': return `${n}: ${s.running ? 'уборка' : 'на базе'}`;
     default: return `${n}: ${s.on ? 'вкл' : 'выкл'}`;
   }
@@ -314,7 +314,7 @@ function deviceCard(home, def) {
     case 'valve': addToggle('Вода открыта', 'open'); break;
     case 'camera': addToggle('Запись', 'recording'); break;
     case 'tv': addToggle('Включён', 'on'); break;
-    case 'washer': addToggle('Стирка', 'running'); break;
+    case 'washer': addToggle(def.variant === 'dryer' ? 'Сушка' : 'Стирка', 'running'); break;
     case 'vacuum': addToggle('Уборка', 'running'); break;
   }
 

@@ -422,23 +422,36 @@ const build = {
   },
 
   washer(def) {
+    // Bosch: у стиральной машины — люк со стеклом и вращающимся барабаном,
+    // у сушильной (variant: 'dryer') — сплошная белая дверца с серым кольцом
     const g = new THREE.Group();
-    const drumMat = emissive(P.water, 0);
-    const drum = new THREE.Mesh(new THREE.TorusGeometry(0.14, 0.025, 10, 30), drumMat);
-    const glassDisc = new THREE.Mesh(new THREE.CircleGeometry(0.13, 30), new THREE.MeshStandardMaterial({ color: '#2b3a44', roughness: 0.1 }));
-    glassDisc.position.z = -0.001;
+    const dryer = def.variant === 'dryer';
+    const glowMat = emissive(dryer ? P.heat : P.water, 0);
+    const rim = new THREE.Mesh(new THREE.TorusGeometry(0.2, 0.022, 12, 40), M(dryer ? '#e9eaeb' : '#c9ccce', { roughness: 0.3 }));
+    const glow = new THREE.Mesh(new THREE.TorusGeometry(0.17, 0.008, 8, 40), glowMat);
+    glow.position.z = 0.012;
+    const face = new THREE.Mesh(new THREE.CircleGeometry(0.185, 40), dryer ? M('#f4f4f3', { roughness: 0.3 }) : new THREE.MeshStandardMaterial({ color: '#2b3a44', roughness: 0.08 }));
+    face.position.z = -0.002;
     const spin = new THREE.Group();
-    const blade = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.02, 0.005), M('#c9d6de'));
-    spin.add(blade);
-    g.add(drum, glassDisc, spin);
-    g.position.set(mx(def.at[0]), 0.45, mz(105) + 0.01);
+    if (!dryer) {
+      for (const r of [0, Math.PI / 1.5, -Math.PI / 1.5]) {
+        const blade = new THREE.Mesh(new THREE.BoxGeometry(0.2, 0.025, 0.004), M('#c9d6de'));
+        blade.rotation.z = r;
+        spin.add(blade);
+      }
+    } else {
+      const logo = new THREE.Mesh(new THREE.TorusGeometry(0.05, 0.006, 6, 24), M('#cfd1d2'));
+      spin.add(logo);
+    }
+    g.add(face, rim, glow, spin);
+    g.position.set(mx(def.at[0]), dryer ? 1.25 : 0.4, mz(104) + 0.02);
     return {
       group: g,
-      markerY: 2.1 - 0.45,
+      markerY: dryer ? 1.65 - 1.25 : 1.65 - 0.4,
       apply() {},
-      tick(dt, s) {
-        drumMat.emissiveIntensity = s.running ? 1.4 : 0;
-        if (s.running) spin.rotation.z += dt * 12;
+      tick(dt, s, t) {
+        glowMat.emissiveIntensity = s.running ? 1.2 + 0.4 * Math.sin(t * 3) : 0;
+        if (s.running && !dryer) spin.rotation.z += dt * 12;
       },
     };
   },

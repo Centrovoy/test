@@ -199,6 +199,7 @@ export const RULES = [
     then(h, e) {
       h.set('valve.water', { open: false }, 'rule');
       h.set('washer.bath', { running: false }, 'rule');
+      h.set('dryer.bath', { running: false }, 'rule');
       h.notify(`Протечка: ${roomName(h, e.id)}. Кран воды перекрыт`, 'alarm', 'rule');
     },
   },

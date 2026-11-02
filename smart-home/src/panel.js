@@ -70,7 +70,7 @@ export const PANEL = [
           { text: 'Коридор возле С/У: розетки', icon: 'socket' },
         ],
         rooms: ['bath', 'wc'],
-        devices: ['light.bath', 'light.wc', 'washer.bath'],
+        devices: ['light.bath', 'light.wc', 'washer.bath', 'dryer.bath'],
         points: [[552, 80, 'Стиральная и сушильная'], [608, 70, 'Зеркало'], [770, 70, 'Вентиляция'], [700, 240, 'Розетки у С/У']],
       },
       {
@@ -140,5 +140,5 @@ export const UNLABELED = ['light.living', 'light.loggia', 'light.dressing'];
 
 export const BREAKERS = PANEL.flatMap((r) => r.breakers);
 
-// Где висит щиток (точка плана). Реальное место не указано — условно в прихожей.
-export const PANEL_LOCATION = { r: [736, 462, 741, 512], y0: 1.25, y1: 2.0 };
+// Где висит щиток: прихожая, стена у входной двери (между зеркалом и дверью).
+export const PANEL_LOCATION = { r: [736, 542, 741, 592], y0: 1.25, y1: 2.0 };

@@ -32,5 +32,7 @@ export const HA_CONFIG = {
     'valve.water': 'switch.kran_vody',
     'vacuum': 'vacuum.robot',
     'tv.bedroom': 'media_player.tv',
+    'washer.bath': 'switch.stiralnaia_mashina',
+    'dryer.bath': 'switch.sushilnaia_mashina',
   },
 };
