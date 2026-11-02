@@ -93,6 +93,10 @@ const PATCHES = {
   'living.fixture': { brand: 'Odeon Light', model: 'Focco' },
   'kitchen.table': { name: 'Обеденный стол (столешница из керамогранита, золотое основание)', supplier: 'Grant Stone — instagram.com/grant_stone.by', link: 'https://www.instagram.com/grant_stone.by' },
   'kids.desk': { name: 'Письменный стол с тремя ящиками', specs: '1600 × 700 мм, высота 750 мм, царга 160 мм с тремя ящиками; кремовый, П-образные опоры из золотого металла; стоит над радиатором', notes: 'Договор № 28/06/23 от 28.06.2023, приложение 1 (эскиз); проект — ИП Ращеня А. А.' },
+  'storage.fixture': { name: 'Свет: светильник', brand: 'Eleganz', model: 'встраиваемый потолочный, безрамочный круглый', specs: '36 Вт, 3000 K, встроенный светодиод', qty: '1', link: 'https://ozon.by/t/5DVAYsV', supplier: 'Ozon' },
+  'storage.bulb': { name: 'Свет: лампы', brand: '', model: '', specs: 'не требуются — светодиоды встроены в светильник Eleganz', qty: '', notes: '' },
+  'bath.drain': { name: 'Сифон для ванны', brand: 'McAlpine', model: 'MRB12', specs: 'хром, с прочисткой снаружи, слив-перелив', link: 'https://ozon.by/t/zLJsaq6', supplier: 'Ozon' },
+  'bath.mirrorled': { name: 'Подсветка зеркала: блок питания', brand: 'Ecola', model: 'блок питания 100 Вт 220–12 В IP67', specs: 'для светодиодной ленты подсветки зеркала', link: 'https://ozon.by/t/9oKMQ81', supplier: 'Ozon' },
   'kids.thermo': { brand: 'ZEISSLER', model: 'Термоголовка 6–28 °C, белая', specs: 'жидкостная, резьба M30 × 1,5, регулировка 6–28 °C, рабочее давление 10 бар', price: '25,72 BYN' },
   'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
   'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
@@ -356,6 +360,14 @@ export function buildSeed() {
     seen[key] = items[items.length - 1];
   }
 
+  const OZ = (link, extra) => ({ supplier: 'Ozon', link, ...extra });
+  add('hall', 'smart', 'doorbell', 'Дверной звонок', OZ('https://ozon.by/t/dweU2Lr', { place: 'у входной двери', at: [700, 640] }));
+  add('bath', 'plumbing', 'aerator', 'Аэратор для смесителя', OZ('https://ozon.by/product/beskorpusnoy-aerator-dlya-smesitelya-s-rezboy-m18-3sht-klyuch-2163378362/', { specs: 'бескорпусной, резьба M18; комплект 3 шт + ключ', place: 'смесители раковин в ванной и в туалете', qty: '3', at: [609, 58] }));
+  add('kitchen', 'plumbing', 'waterfilter', 'Фильтр питьевой воды: картриджи', OZ('https://ozon.by/t/sXGdkok', { brand: 'Atoll', model: 'набор картриджей № 107 STDA', place: 'под кухонной мойкой (уточнить)', at: [960, 80] }));
+  add('kitchen', 'furniture', 'hinge-overlay', 'Мебельные петли для накладных дверей', OZ('https://ozon.by/t/l1kDXOA', { brand: 'BLUM', model: '71B3550 CLIP TOP BLUMOTION', sku: '71B3550 + планка 173L6100', specs: 'открывание 110°, встроенный доводчик, ответная планка 173L6100 под саморез', qty: '4', place: 'корпусная мебель (какие шкафы — уточнить)', at: [1020, 80] }));
+  add('kitchen', 'furniture', 'hinge-inset', 'Мебельные петли для вкладных дверей', OZ('https://ozon.by/t/V2BoB4x', { brand: 'BLUM', model: '71B3750 CLIP TOP BLUMOTION', sku: '71B3750 + планка 173L6100', specs: 'внутренние / вкладные, открывание 110°, встроенный доводчик, с заглушками, планка 173L6100 под саморез', qty: '2', place: 'корпусная мебель (какие шкафы — уточнить)', at: [1020, 80] }));
+  add('kitchen', 'lighting', 'ledamp', 'LED-подсветка кухни: усилитель', OZ('https://ozon.by/product/usilitel-odnotsvetnyy-5-24v-150-720w-30a-single-amplifier-1614498319/', { model: 'Single Amplifier, одноцветный', specs: '5–24 В, 150–720 Вт, 30 А', at: [1030, 90] }));
+  add('kitchen', 'lighting', 'ledpwm', 'LED-подсветка кухни: фильтр ШИМ', OZ('https://ozon.by/t/D42YM7Y', { specs: '20 А', at: [1030, 90] }));
   add('living', 'textile', 'pillows', 'Декоративные подушки', { place: 'диван в гостиной, кровати в спальне и детской', qty: '', at: [1000, 430], ...RUDENKO });
   add('bedroom', 'furniture', 'nightstand-right', 'Прикроватная тумба справа', { place: 'справа от кровати', specs: 'белая, рифлёная, на золотом цоколе', at: [1039, 682] });
   for (const id of ['living.sofa', 'living.armchair', 'kids.daybed', 'kids.armchair', 'bedroom.bed', 'bedroom.headboard', 'kitchen.chair', 'loggia.armchair']) {
