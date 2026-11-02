@@ -870,6 +870,23 @@ const builders = {
     g.position.set(mx(f.at[0]), f.h || 0.9, mz(f.at[1]));
     return g;
   },
+  // блок розеток: n постов в ряд вдоль стены; у интернет-розетки синяя метка
+  socket: (f) => {
+    const g = new THREE.Group();
+    const along = f.face === 'n' || f.face === 's';
+    const d = { n: -0.008, s: 0.008, e: 0.008, w: -0.008 }[f.face];
+    for (let i = 0; i < f.n; i++) {
+      const off = (i - (f.n - 1) / 2) * 0.075;
+      const plate = new THREE.Mesh(new THREE.BoxGeometry(along ? 0.072 : 0.012, 0.072, along ? 0.012 : 0.072), M('#f7f6f3', { roughness: 0.4 }));
+      plate.position.set(along ? off : 0, 0, along ? 0 : off);
+      const hole = new THREE.Mesh(new THREE.CylinderGeometry(0.022, 0.022, 0.01, 18), M(f.net && i === 0 ? '#3e7bd6' : '#dedcd7'));
+      hole.rotation[along ? 'x' : 'z'] = Math.PI / 2;
+      hole.position.set(along ? off : d, 0, along ? d : off);
+      g.add(plate, hole);
+    }
+    g.position.set(mx(f.at[0]), f.h, mz(f.at[1]));
+    return g;
+  },
   // угловая асимметричная ванна: многоугольник по точкам плана, чаша и шторка вдоль скоса
   cornerBath: (f) => {
     const g = new THREE.Group();

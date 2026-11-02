@@ -46,6 +46,7 @@ const m = (px) => (px / PX_PER_M).toFixed(2);
 const SRC = 'По развёртке ванной комнаты (дизайн-проект)';
 const SRC_WC = 'По развёртке санузла (дизайн-проект)';
 const SRC_LIGHT = 'По плану освещения (выполнен вариант 1)';
+const SRC_SOCK = 'По плану розеток';
 
 // Уточнения из чертежей: дополняют записи, собранные по плану.
 const PATCHES = {
@@ -204,9 +205,16 @@ export function buildSeed() {
       notes: `Линии: ${b.lines.map((l) => l.text).join('; ')}`,
     });
   }
-  for (const r of ROOMS.filter((x) => x.id !== 'loggia')) {
-    add(r.id, 'electric', 'sockets', 'Розетки', { qty: '', at: r.label });
+  // розетки — каждый блок на своём месте по плану розеток
+  for (const f of FURNITURE.filter((x) => x.type === 'socket')) {
+    const kind = f.n === 1 ? 'Розетка' : `Блок розеток × ${f.n}`;
+    add(f.room, 'electric', 'wallsocket', `${kind} ${f.label.replace(/, h \d+$/, '')}${f.net ? ' + интернет' : ''}`, {
+      at: f.at, place: f.label, qty: String(f.n),
+      specs: `${f.new ? 'новая по проекту' : 'существующая'}, высота ${Math.round(f.h * 1000)} мм`,
+      notes: SRC_SOCK,
+    });
   }
+  add('storage', 'electric', 'sockets', 'Розетки', { qty: '', at: [856, 120], notes: 'На плане розеток не показаны; кладовка есть в подписи автомата «Кухня»' });
   // выключатели — каждый на своём месте по плану освещения
   for (const f of FURNITURE.filter((x) => x.type === 'switch')) {
     add(f.room, 'electric', 'wallswitch', `Выключатель ${f.label}${f.gang === 2 ? ' (двухклавишный)' : ''}`, {
@@ -267,7 +275,7 @@ export function buildSeed() {
       case 'featherLamp': return ['decor', 'Торшер с перьями'];
       case 'washer': return ['furniture', 'Ниша-колонна под стиральную и сушильную машины со шкафом'];
       case 'vase': return ['decor', null];
-      case 'cornerBath': case 'towelRail': case 'wallSink': case 'switch': case 'toilet': case 'hob': case 'sink': return ['', null];
+      case 'cornerBath': case 'towelRail': case 'wallSink': case 'switch': case 'socket': case 'toilet': case 'hob': case 'sink': return ['', null];
       default: return ['furniture', null];
     }
   };
