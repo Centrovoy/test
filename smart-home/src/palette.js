@@ -10,7 +10,7 @@ export const PALETTE = {
   wallCap: '#2e2b29',
   wallpaper: '#ddd0c4',      // обои с золотыми линиями в гостиной
   wallOlive: '#a6a26c',      // зелёный Caparol Samtex 10 TUNDRA 85: за изголовьем и на лоджии
-  wallKids: '#dcc1b9',       // пыльно-розовые стены детской
+  wallKids: '#dcc1b9',       // фреска в детской (стена за диваном-кроватью)
   mirror: '#c9d2d6',
   glass: '#b8d6e4',
   frame: '#f2f1ee',

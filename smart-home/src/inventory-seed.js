@@ -129,7 +129,8 @@ export function buildSeed() {
     const extra = { bedroom: '; стена за изголовьем — зелёная, отдельная позиция', living: '; за диваном — обои с золотыми линиями' }[r.id] || '';
     if (r.floor !== 'tile') add(r.id, 'finish', 'paint', 'Краска стен', r.id === 'loggia' ? { ...PAINT_GREEN, at } : { ...PAINT_MILK, specs: PAINT_MILK.specs + extra, at });
     if (r.id === 'bedroom') add(r.id, 'finish', 'paint-accent', 'Краска стены за изголовьем', { ...PAINT_GREEN, place: 'стена за изголовьем кровати', at: [960, 705] });
-    add(r.id, 'finish', 'ceiling', 'Потолок', { at });
+    add(r.id, 'finish', 'ceiling', 'Потолок натяжной тканевый', { at });
+    if (r.id === 'kids') add(r.id, 'finish', 'fresco', 'Фреска на стене', { place: 'стена за диваном-кроватью', at: [190, 55] });
   }
   add('hall', 'finish', 'floorglue', 'Клей для пола', {
     brand: 'Uzin', model: 'MK 160', specs: 'силановый клей для паркета, ведро 16 кг', place: 'Под ламинатом во всех комнатах с «ёлочкой»',
