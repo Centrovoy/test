@@ -17,6 +17,19 @@ python3 -m http.server 8080
 
 Three.js подгружается с `cdn.jsdelivr.net` (версия 0.160.0) через import map.
 
+## Перенос на свой компьютер
+
+Проект работает без облака: это статические файлы.
+
+1. Скачайте репозиторий: `git clone https://github.com/Centrovoy/test.git`, затем
+   `git checkout claude/smart-home-visualization-czmw6u` (или «Download ZIP» этой ветки на GitHub).
+2. Запустите локальный сервер в папке `smart-home`:
+   `python3 -m http.server 8080` (на Windows — `py -m http.server 8080`) и откройте http://localhost:8080.
+   Нужен интернет только для загрузки Three.js и шрифта с CDN.
+3. Паспорт: откройте «Паспорт» → «Загрузить JSON» и выберите выгрузку `pasport-kvartiry.json`.
+   Данные сохранятся в браузере; резервную копию делайте кнопкой «Выгрузить JSON».
+   Документы (чертежи, фото) уже лежат в `docs/`.
+
 ## Что есть
 
 - **Модель квартиры** по плану: детская, гардероб, ванная, санузел, коридор,
