@@ -136,7 +136,7 @@ export const PANEL = [
 ];
 
 // Устройства модели, которых нет ни в одной подписи щитка.
-export const UNLABELED = ['light.living', 'light.floorlamp', 'light.loggia', 'light.dressing'];
+export const UNLABELED = ['light.living', 'light.loggia', 'light.dressing'];
 
 export const BREAKERS = PANEL.flatMap((r) => r.breakers);
 

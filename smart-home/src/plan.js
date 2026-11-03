@@ -122,15 +122,10 @@ export const FURNITURE = [
   // золотые столики на ч/б ковре, витрина в стене у кухни, зеркальная стена и барная тележка
   { type: 'rug', r: [868, 318, 1088, 438], style: 'geo' },
   { type: 'sofa', r: [900, 440, 1080, 492], back: 's' },
-  { type: 'roundTable', at: [985, 388], rad: 22, h: 0.48 },
-  { type: 'roundTable', at: [1028, 398], rad: 17, h: 0.4 },
-  { type: 'armchair', at: [1132, 318], style: 'round', rot: -Math.PI * 0.2 },
-  { type: 'cabinet', r: [1100, 466, 1160, 492], h: 0.75, style: 'console' },
   // шкаф-витрина со стеклянной дверью и подсветкой — в нише у колонны холодильника, правее торца
   // несущей стены, фасад вровень со стеной (≈ 700 × 400)
   { type: 'showcase', r: [890, 256, 939, 282], h: 2.6, face: 's', glassDoor: true },
   { type: 'mirror', r: [735, 290, 738, 450], room: 'living' },
-  { type: 'barCart', at: [757, 300], room: 'living' },
   { type: 'plant', at: [868, 472], big: true },
   // спальня: изголовье во всю стену у оливковой стены, белые рифлёные тумбы,
   // комод с ТВ и шкаф вдоль перегородки
@@ -174,7 +169,7 @@ export const FURNITURE = [
   { type: 'socket', at: [897.5, 186], face: 'e', room: 'kitchen', n: 1, h: 2.0, new: true, label: 'в колонне (СВЧ), h 2000' },
   { type: 'socket', at: [897.5, 196], face: 'e', room: 'kitchen', n: 2, h: 0.3, new: true, label: 'в колонне (духовка), h 300' },
   { type: 'socket', at: [1130, 262.5], face: 'n', room: 'kitchen', n: 1, h: 0.3, label: 'у обеденного стола, на колонне' },
-  { type: 'socket', at: [1110, 282.5], face: 's', room: 'living', n: 2, h: 0.3, label: 'на колонне у окна (торшер)' },
+  { type: 'socket', at: [1110, 282.5], face: 's', room: 'living', n: 2, h: 0.3, label: 'на колонне у окна' },
   { type: 'socket', at: [835, 492.5], face: 'n', room: 'living', n: 1, h: 0.3, label: 'у стены спальни' },
   { type: 'socket', at: [1083, 528], face: 'w', room: 'bedroom', n: 2, h: 0.3, label: 'у балконной двери' },
   { type: 'socket', at: [1032, 528.5], face: 's', room: 'bedroom', n: 1, h: 0.3, label: 'у шкафа' },
@@ -227,7 +222,6 @@ export const DEVICES = [
   { id: 'light.kids-desk', type: 'light', room: 'kids', name: 'Подсветка стола', at: [110, 258], style: 'strip', strip: [80, 259, 175, 261], y: 1.8 },
   { id: 'light.storage', type: 'light', room: 'storage', name: 'Свет', at: [854, 140], style: 'panel' },
   { id: 'light.counter', type: 'light', room: 'kitchen', name: 'Подсветка столешницы', at: [1030, 78], style: 'strip', strip: [899, 76, 1153, 78], y: 1.48, seed: false },
-  { id: 'light.floorlamp', type: 'light', room: 'living', name: 'Торшер', at: [1098, 290], style: 'floor' },
 
   // шторы
   { id: 'curtain.kids', type: 'curtain', room: 'kids', name: 'Шторы', r: [55, 62, 62, 253], axis: 'z', color: 'curtainKids' },
