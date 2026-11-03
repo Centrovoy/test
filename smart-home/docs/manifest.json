@@ -552,5 +552,29 @@
       "kids.bulb-2"
     ],
     "notes": "GU10, 9,5 Вт, 4000 K, 750 лм, 220–240 В"
+  },
+  {
+    "id": "doc-washer-plate",
+    "title": "Фото: шильдик стиральной машины Bosch WLP20260BL",
+    "kind": "photo",
+    "room": "bath",
+    "path": "shildik-stiralnaya-bosch.webp",
+    "date": "",
+    "items": [
+      "bath.washer"
+    ],
+    "notes": ""
+  },
+  {
+    "id": "doc-dryer-plate",
+    "title": "Фото: шильдик сушильной машины Bosch WQG24100OE",
+    "kind": "photo",
+    "room": "bath",
+    "path": "shildik-sushilnaya-bosch.webp",
+    "date": "",
+    "items": [
+      "bath.dryer"
+    ],
+    "notes": ""
   }
 ]
