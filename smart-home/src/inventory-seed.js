@@ -100,7 +100,7 @@ const PATCHES = {
   'kids.thermo': { brand: 'ZEISSLER', model: 'Термоголовка 6–28 °C, белая', specs: 'жидкостная, резьба M30 × 1,5, регулировка 6–28 °C, рабочее давление 10 бар', price: '25,72 BYN' },
   'living.showcase': { name: 'Шкаф-витрина в нише у холодильника', specs: 'в нише у колонны холодильника, правее торца несущей стены; фасад вровень со стеной; стеклянная дверь, подсветка полок; ≈ 700 × 400 мм, до потолка', at: [915, 270] },
   'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
-  'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '483–761 $ (зависит от размера)', at: [883, 682] },
+  'bedroom.roundTable': { name: 'Прикроватная тумба слева', brand: 'Hi!moon', model: 'Журнальный столик «Мира» в эмали', qty: '1', place: 'слева от кровати', supplier: 'himoon.shop', price: '460 $', at: [883, 682] },
   'wc.ceiling': { specs: 'высота 2622 мм', notes: SRC_WC },
   'wc.cabinet': { specs: '1000 × 300 мм; короб инсталляции 0–1200, шкаф с двумя дверцами 1200–2622 мм', notes: SRC_WC },
   'wc.wardrobe': { specs: '900 × 400 мм, высота 2622 мм, в углу у раковины', notes: SRC_WC },
