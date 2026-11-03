@@ -31,6 +31,8 @@ export async function openInventory() {
   const db = window.claude?.use ? await withTimeout(window.claude.use('db'), DB_TIMEOUT) : null;
   if (db) {
     attachDb(store, db);
+  } else if (await hasServer()) {
+    await attachServer(store);
   } else {
     attachLocal(store);
   }
@@ -99,6 +101,75 @@ function attachDb(store, db) {
     const shared = store.docs.some((d) => d.id !== doc.id && d.assetId === doc.assetId);
     if (assets && doc.assetId && !shared) { try { await assets.delete(doc.assetId); } catch { /* файл уже удалён */ } }
   };
+}
+
+// ---- локальный сервер (server.py): данные на диске компьютера ----
+async function hasServer() {
+  try { return (await fetch('api/health', { cache: 'no-store' })).ok; } catch { return false; }
+}
+
+async function api(method, path, body, headers = {}) {
+  const r = await fetch(path, { method, body, headers, cache: 'no-store' });
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw Object.assign(new Error(data.error || `Ошибка сервера ${r.status}`), { code: r.status });
+  return data;
+}
+
+async function attachServer(store) {
+  store.mode = 'server';
+  store.canUpload = true;
+  const { items } = await api('GET', 'api/items');
+  if (items) {
+    store.items = items;
+  } else {
+    // первый запуск: начальный список (или данные, сохранённые раньше в этом браузере)
+    let saved = null;
+    try { saved = JSON.parse(localStorage.getItem(LOCAL_KEY) || 'null'); } catch { saved = null; }
+    store.items = Array.isArray(saved) ? saved : buildSeed();
+    await api('PUT', 'api/items', JSON.stringify(store.items), { 'Content-Type': 'application/json' });
+  }
+  const loadDocs = async () => { store.docs = (await api('GET', 'api/docs')).docs; store.emit(); };
+  await loadDocs();
+
+  store.save = async (item) => {
+    const saved = await api('PUT', `api/items/${encodeURIComponent(item.id)}`, JSON.stringify(item), { 'Content-Type': 'application/json' });
+    const i = store.items.findIndex((x) => x.id === item.id);
+    if (i >= 0) store.items[i] = saved; else store.items.push(saved);
+    store.emit();
+  };
+  store.remove = async (id) => {
+    await api('DELETE', `api/items/${encodeURIComponent(id)}`);
+    store.items = store.items.filter((x) => x.id !== id);
+    store.emit();
+  };
+  store.uploadDoc = async (file, meta) => {
+    const doc = await api('POST', 'api/docs', file, {
+      'Content-Type': file.type || 'application/octet-stream',
+      'X-Filename': encodeURIComponent(file.name),
+      'X-Meta': encodeURIComponent(JSON.stringify(meta)),
+    });
+    await loadDocs();
+    return doc.id;
+  };
+  store.saveDoc = async (doc) => {
+    if (doc.readonly) throw new Error('Документ из папки проекта меняется в docs/manifest.json');
+    await api('PUT', `api/docs/${encodeURIComponent(doc.id)}`, JSON.stringify(doc), { 'Content-Type': 'application/json' });
+    await loadDocs();
+  };
+  store.removeDoc = async (doc) => {
+    await api('DELETE', `api/docs/${encodeURIComponent(doc.id)}`);
+    await loadDocs();
+  };
+  store.exportJSON = () => JSON.stringify(store.items, null, 2);
+  store.importJSON = async (text) => {
+    const arr = JSON.parse(text);
+    if (!Array.isArray(arr)) throw new Error('Ожидался массив записей');
+    const r = await api('PUT', 'api/items', text, { 'Content-Type': 'application/json' });
+    store.items = (await api('GET', 'api/items')).items || [];
+    store.emit();
+    return r.count;
+  };
+  store.emit();
 }
 
 function attachLocal(store) {

@@ -7,28 +7,51 @@
 
 ## Запуск
 
-Сборка не нужна — достаточно любого статического сервера:
+    cd smart-home
+    docker compose up -d --build      # или: ./start.sh / start.bat
+    # открыть http://localhost:8080
 
-```bash
-cd smart-home
-python3 -m http.server 8080
-# открыть http://localhost:8080
-```
-
-Three.js подгружается с `cdn.jsdelivr.net` (версия 0.160.0) через import map.
+Подробности — в разделе ниже.
 
 ## Перенос на свой компьютер
 
-Проект работает без облака: это статические файлы.
+Проект полностью работает у вас на компьютере, без облака и без интернета: 3D-движок
+лежит в `vendor/`, а паспорт квартиры и документы хранит небольшой сервер `server.py`
+(только Python, без зависимостей) в папке `data/`.
 
-1. Скачайте репозиторий: `git clone https://github.com/Centrovoy/test.git`, затем
-   `git checkout claude/smart-home-visualization-czmw6u` (или «Download ZIP» этой ветки на GitHub).
-2. Запустите локальный сервер в папке `smart-home`:
-   `python3 -m http.server 8080` (на Windows — `py -m http.server 8080`) и откройте http://localhost:8080.
-   Нужен интернет только для загрузки Three.js и шрифта с CDN.
-3. Паспорт: откройте «Паспорт» → «Загрузить JSON» и выберите выгрузку `pasport-kvartiry.json`.
-   Данные сохранятся в браузере; резервную копию делайте кнопкой «Выгрузить JSON».
-   Документы (чертежи, фото) уже лежат в `docs/`.
+**Скачать проект:** `git clone https://github.com/Centrovoy/test.git`, затем
+`git checkout claude/smart-home-visualization-czmw6u` (или «Download ZIP» этой ветки на GitHub).
+Дальше всё делается в папке `smart-home`.
+
+**Вариант 1 — Docker** (Docker Desktop на Windows/Mac или Docker на Linux):
+
+    docker compose up -d --build
+
+Откройте http://localhost:8080. Данные хранятся в `smart-home/data/` рядом с проектом и
+переживают перезапуск и пересборку контейнера. Остановить: `docker compose down`.
+
+**Вариант 2 — без Docker** (нужен Python 3.8+):
+- Windows: двойной щелчок по `start.bat` (Python с python.org, галочка «Add to PATH»);
+- Mac/Linux: `./start.sh`.
+
+Порт и папку данных можно сменить: `python3 server.py --port 9000 --data D:\\smart-home-data`.
+
+**Первый запуск — перенос данных из облака:** «Паспорт» → «Загрузить JSON» → файл
+`pasport-kvartiry.json` (выгрузка из облачной версии). Можно и просто положить его в `data/items.json`.
+
+**Что хранится в `data/`:**
+
+| Файл | Что внутри |
+|---|---|
+| `items.json` | все позиции паспорта (рядом — `items.bak`, предыдущая версия) |
+| `docs.json`, `uploads/` | документы, загруженные через интерфейс |
+
+Папка `data/` не попадает в git: там контакты мастеров. Для резервной копии достаточно
+скопировать её целиком (или «Выгрузить JSON» в паспорте). Документы из `docs/` проекта
+показываются всегда и меняются через `docs/manifest.json`.
+
+Сервер слушает все сетевые интерфейсы, поэтому паспорт можно открыть и с телефона в той же
+Wi-Fi сети: `http://<IP-компьютера>:8080`. Пароля нет — не открывайте порт в интернет.
 
 ## Что есть
 

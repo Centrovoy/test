@@ -47,7 +47,7 @@ export function createInventoryUI(home, store, actions) {
     missing.closest('label').hidden = tab !== 'items';
     $('inv-add').hidden = tab !== 'items' || !store.canEdit;
     uploadInput.closest('label').hidden = tab !== 'docs' || !store.canUpload;
-    const local = store.mode === 'local';
+    const local = Boolean(store.exportJSON);
     $('inv-export').hidden = !local || tab !== 'items';
     $('inv-import').closest('label').hidden = !local || tab !== 'items';
     if (tab === 'items') { renderList(); renderForm(); } else { renderDocList(); renderDocForm(); }
@@ -226,7 +226,7 @@ export function createInventoryUI(home, store, actions) {
         ${store.mode === 'local' ? '<p class="inv-hint">В локальной версии документы берутся из папки docs/ репозитория (список — docs/manifest.json).</p>' : ''}`;
       return;
     }
-    const ro = !store.canUpload || store.mode === 'local';
+    const ro = !store.canUpload || store.mode === 'local' || docDraft.readonly;
     const roomItems = store.items.filter((i) => !docDraft.room || i.room === docDraft.room || docDraft.items.includes(i.id));
     formEl.innerHTML = `
       <div class="inv-form-head">
@@ -350,7 +350,7 @@ export function createInventoryUI(home, store, actions) {
   importInput.addEventListener('change', async () => {
     const file = importInput.files[0];
     if (!file) return;
-    try { store.importJSON(await file.text()); summaryEl.textContent += ' · Загружено'; } catch (err) { summaryEl.textContent = `Не удалось загрузить файл: ${err.message}`; }
+    try { await store.importJSON(await file.text()); summary(); summaryEl.textContent += ' · Загружено'; } catch (err) { summaryEl.textContent = `Не удалось загрузить файл: ${err.message}`; }
     importInput.value = '';
   });
 
