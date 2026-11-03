@@ -843,7 +843,8 @@ const builders = {
       g.add(boxFromRect([a + 0.5, z2, b - 0.5, z2 + 0.8], 0.8, 0.86, M('#c9ccce', { metalness: 0.5, roughness: 0.3 })));
     }
     // чёрный фартук
-    const splash = wide ? [x1, z1, x2, z1 + 2] : [x1, z1, x1 + 2, z2];
+    // фартук сплошной: на короткой стороне начинается от угла (upperFrom → от стены длинной стороны)
+    const splash = wide ? [x1, z1, x2, z1 + 2] : [x1, f.splashFrom ?? z1, x1 + 2, z2];
     g.add(boxFromRect(splash, 0.93, 1.53, M(P.worktop, { roughness: 0.2 })));
     // верхние шкафы (тауп) с двумя подсвеченными витринами; в углу — без разрыва
     const upper = wide ? [x1, z1, x2, z1 + 25] : [x1, f.upperFrom ?? z1, x1 + 25, z2];

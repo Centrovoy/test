@@ -110,7 +110,7 @@ export const FURNITURE = [
   { type: 'kitchenRun', r: [897, 52, 1149, 94], showcases: [991.5, 1054.5], showcaseW: 31.5, dishwasher: [981, 1023],
     fronts: { origin: 897, k: 0.07, lower: [600, 1200, 1800, 2700], upperSeams: [300, 450, 900, 1350, 1800, 2250, 2700, 3150],
       drawers: [[1800, 2700, [0.47, 0.69]], [2700, 3600, [0.47]]] } },
-  { type: 'kitchenRun', r: [897, 94, 939, 161.5], upperFrom: 77,
+  { type: 'kitchenRun', r: [897, 94, 939, 161.5], upperFrom: 77, splashFrom: 54,
     fronts: { origin: 52, k: 0.066, upperSeams: [750, 1200], drawers: [[600, 1660, [0.52]]] } },
   { type: 'tallUnit', r: [897, 161.5, 939, 201] },
   { type: 'fridge', r: [897, 201, 939, 247] },
