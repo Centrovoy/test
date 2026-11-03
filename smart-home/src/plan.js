@@ -141,7 +141,8 @@ export const FURNITURE = [
   { type: 'headboard', r: [860, 700, 1065, 712] },
   { type: 'bed', r: [905, 562, 1018, 700], head: 's' },
   { type: 'roundTable', at: [883, 682], rad: 15, style: 'white' },
-  { type: 'roundTable', at: [1039, 682], rad: 15, style: 'white' },
+  // правая тумба — Hi!moon «Меридиана»: гладкая, белая эмаль, золотые столешница и цоколь, h 600
+  { type: 'nightstand', r: [1023, 670, 1055, 698] },
   { type: 'wardrobe', r: [822, 502, 878, 545], h: 2.6, panels: 's' },
   { type: 'dresser', r: [878, 502, 1065, 528] },
   // лоджия

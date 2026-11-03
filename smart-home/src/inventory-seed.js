@@ -330,6 +330,7 @@ export function buildSeed() {
       case 'tallUnit': return ['furniture', 'Колонна под духовку и СВЧ'];
       case 'fridge': return ['furniture', 'Колонна под холодильник'];
       case 'filler': return ['furniture', 'Торцевая планка кухни'];
+      case 'nightstand': return ['', null];
       case 'table': return ['furniture', 'Обеденный стол (мрамор, золотое основание)'];
       case 'sofa': return ['furniture', 'Диван светлый на золотых ножках'];
       case 'roundTable': return ['furniture', f.style === 'white' ? 'Прикроватная тумба (белая, рифлёная)' : 'Журнальный столик (золото, чёрное основание)'];

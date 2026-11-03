@@ -904,6 +904,15 @@ const builders = {
     m.position.set(mx(f.at[0]), 0.935, mz(f.at[1]));
     return m;
   },
+  // гладкая тумба без ручки: белый корпус, утопленная золотая столешница со скошенным краем, золотой цоколь
+  nightstand: (f) => {
+    const g = new THREE.Group();
+    const [x1, z1, x2, z2] = f.r;
+    g.add(boxFromRect([x1 + 1, z1 + 1, x2 - 1, z2 - 1], 0, 0.06, gold()));
+    g.add(boxFromRect(f.r, 0.06, 0.6, M('#f6f5f2', { roughness: 0.7 })));
+    g.add(boxFromRect([x1 + 1.5, z1 + 1.5, x2 - 1.5, z2 - 1.5], 0.585, 0.595, gold()));
+    return g;
+  },
   // торцевая планка-заглушка во всю высоту
   filler: (f) => boxFromRect(f.r, 0, 2.6, M(P.kitchenHigh, { roughness: 0.6 })),
   vanity: (f) => {
