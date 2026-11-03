@@ -34,7 +34,7 @@
 - Windows: двойной щелчок по `start.bat` (Python с python.org, галочка «Add to PATH»);
 - Mac/Linux: `./start.sh`.
 
-Порт и папку данных можно сменить: `python3 server.py --port 9000 --data D:\\smart-home-data`.
+Порт и папку данных можно сменить: `python3 server.py --port 9000 --data D:\smart-home-data`.
 
 **Первый запуск — перенос данных из облака:** «Паспорт» → «Загрузить JSON» → файл
 `pasport-kvartiry.json` (выгрузка из облачной версии). Можно и просто положить его в `data/items.json`.
