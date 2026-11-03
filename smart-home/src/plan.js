@@ -69,15 +69,11 @@ export const FURNITURE = [
   // круглое зеркало над тумбой, лампа с перьями и кресло-качалка у двери
   { type: 'wardrobe', r: [330, 55, 390, 182], h: 2.6, panels: 'w' },
   { type: 'daybed', r: [85, 55, 235, 125] },
-  { type: 'cabinet', r: [240, 55, 285, 82], h: 0.6 },
-  { type: 'vase', at: [262, 66], y: 0.6 },
   { type: 'roundMirror', at: [262, 53], face: 's', rad: 0.42, y: 1.45 },
   // стол по эскизу (договор № 28/06/23): 1600 × 700, h 750, царга 160 с тремя ящиками, П-образные золотые опоры, над радиатором
   { type: 'desk', r: [56, 214, 168, 263], drawers: 3 },
   { type: 'chair', at: [112, 200], color: 'cabinet' },
   { type: 'rug', r: [110, 135, 320, 225], style: 'soft' },
-  { type: 'featherLamp', at: [318, 248] },
-  { type: 'armchair', at: [258, 214], rot: -Math.PI * 0.65 },
   // гардероб
   { type: 'wardrobe', r: [400, 55, 490, 92], h: 2.5 },
   { type: 'wardrobe', r: [455, 92, 490, 170], h: 2.5 },
