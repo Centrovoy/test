@@ -97,8 +97,8 @@ const PATCHES = {
   'storage.bulb': { name: 'Свет: лампы', brand: '', model: '', specs: 'не требуются — светодиоды встроены в светильник Eleganz', qty: '', notes: '' },
   'bath.drain': { name: 'Сифон для ванны', brand: 'McAlpine', model: 'MRB12', specs: 'хром, с прочисткой снаружи, слив-перелив', link: 'https://ozon.by/t/zLJsaq6', supplier: 'Ozon' },
   'bath.mirrorled': { name: 'Подсветка зеркала: блок питания', brand: 'Ecola', model: 'блок питания 100 Вт 220–12 В IP67', specs: 'для светодиодной ленты подсветки зеркала', link: 'https://ozon.by/t/9oKMQ81', supplier: 'Ozon' },
-  'kids.fixture': { name: 'Люстра: светильник', brand: 'Maytoni', model: 'Tessara MOD081PL-L50G3K', sku: 'MOD081PL-L50G3K', specs: 'подвесная светодиодная люстра, кольцо, золото, 3000 K', price: '1500 BYN', supplier: 'marketsveta.by', link: 'https://www.marketsveta.by/product/podvesnaja-ljustra-maytoni-tessara-mod081pl-l50g3k/' },
-  'kids.bulb': { specs: 'не требуются — светодиоды встроены в люстру Maytoni Tessara', qty: '' },
+  'kids.fixture': { name: 'Люстра Maytoni Tessara: светильник', brand: 'Maytoni', model: 'Tessara MOD081PL-L50G3K', sku: 'MOD081PL-L50G3K', specs: 'подвесная светодиодная люстра, кольцо, золото, 3000 K', price: '1500 BYN', supplier: 'marketsveta.by', link: 'https://www.marketsveta.by/product/podvesnaja-ljustra-maytoni-tessara-mod081pl-l50g3k/' },
+  'kids.bulb': { name: 'Люстра Maytoni Tessara: лампы', specs: 'не требуются — светодиоды встроены в люстру Maytoni Tessara', qty: '' },
   'kids.thermo': { brand: 'ZEISSLER', model: 'Термоголовка 6–28 °C, белая', specs: 'жидкостная, резьба M30 × 1,5, регулировка 6–28 °C, рабочее давление 10 бар', price: '25,72 BYN' },
   'living.showcase': { name: 'Шкаф-витрина в нише у холодильника', specs: 'в нише у колонны холодильника, правее торца несущей стены; фасад вровень со стеной; стеклянная дверь, подсветка полок; ≈ 700 × 400 мм, до потолка', at: [915, 270] },
   'hall.wardrobe': CABINET_FINISH, 'bedroom.wardrobe': CABINET_FINISH,
@@ -251,7 +251,7 @@ export function buildSeed() {
   for (const d of DEVICES.filter((x) => x.type === 'light' && x.seed !== false)) {
     const n = d.spots?.length;
     const style = d.pendant ? 'подвес из стеклянных шаров'
-      : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', panel: 'круглая встраиваемая панель', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
+      : { chandelier: 'хрустальная люстра с золотым кольцом', ring: 'кольцевая люстра', bedside: 'подвесы-шары у кровати', tessara: 'подвесное золотое LED-кольцо', panel: 'круглая встраиваемая панель', floor: 'торшер', strip: `LED-лента, высота ${d.y} м` }[d.style]
       || `встроенные споты${n ? ` × ${n}` : ''}`;
     add(d.room, 'lighting', 'fixture', `${d.name}: светильник`, { specs: style, qty: n ? String(n) : '1', at: d.at, deviceId: d.id, notes: d.spots || d.style === 'floor' || d.style === 'strip' ? SRC_LIGHT : '' });
     add(d.room, 'lighting', 'bulb', d.style === 'strip' ? `${d.name}: лента и блок питания` : `${d.name}: лампы`, { specs: 'цоколь, мощность, цветовая температура', ...(n ? SPOT_BULB : {}), qty: n ? String(n) : '', at: d.at });

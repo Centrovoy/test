@@ -85,6 +85,30 @@ const build = {
       ring2.rotation.x = Math.PI / 2.6;
       ring2.position.y = y + 0.05;
       g.add(ring, ring2);
+    } else if (style === 'tessara') {
+      // Maytoni Tessara MOD081PL-L50G3K: подвесное золотое кольцо Ø 500 мм со светодиодной
+      // полосой снизу, на трёх тросах от потолочной чашки
+      y = 2.05;
+      const r = 0.25;
+      const hoop = new THREE.Mesh(new THREE.TorusGeometry(r, 0.022, 12, 64), goldMat);
+      hoop.rotation.x = Math.PI / 2;
+      hoop.position.y = y;
+      const led = new THREE.Mesh(new THREE.TorusGeometry(r, 0.012, 8, 64), glowMat);
+      led.rotation.x = Math.PI / 2;
+      led.position.y = y - 0.02;
+      const cup = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.03, 24), goldMat);
+      cup.position.y = CEILING - 0.015;
+      g.add(hoop, led, cup);
+      for (let i = 0; i < 3; i++) {
+        const a = (i / 3) * Math.PI * 2;
+        const top = new THREE.Vector3(Math.cos(a) * 0.05, CEILING - 0.03, Math.sin(a) * 0.05);
+        const bot = new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r);
+        const len = top.distanceTo(bot);
+        const wire = new THREE.Mesh(new THREE.CylinderGeometry(0.002, 0.002, len), M('#bdbdbd'));
+        wire.position.copy(top).add(bot).multiplyScalar(0.5);
+        wire.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), top.clone().sub(bot).normalize());
+        g.add(wire);
+      }
     } else if (style === 'pendant') {
       y = 1.6;
       for (const [dx, dz, s] of [[-0.35, 0, 0.13], [0.35, 0.05, 0.13], [-0.2, 0.12, 0.08], [0.18, -0.1, 0.09]]) {

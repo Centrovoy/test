@@ -206,7 +206,7 @@ export const ACCENTS = [
 export const DEVICES = [
   // освещение
   // точки света — по плану освещения (выполнен вариант 1); spots — встроенные споты
-  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра', at: [225, 153], style: 'ring' },
+  { id: 'light.kids', type: 'light', room: 'kids', name: 'Люстра Maytoni Tessara', at: [225, 153], style: 'tessara' },
   { id: 'light.dressing', type: 'light', room: 'dressing', name: 'Споты', at: [443, 130], spots: [[457, 109], [457, 152], [429, 109], [429, 152]] },
   { id: 'light.bath', type: 'light', room: 'bath', name: 'Споты', at: [637, 110], spots: [[684, 92], [653, 129], [621, 92], [590, 129]] },
   { id: 'light.wc', type: 'light', room: 'wc', name: 'Споты', at: [761, 123], spots: [[761, 99], [761, 147]] },
