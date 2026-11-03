@@ -370,7 +370,7 @@ export function buildSeed() {
   add('kitchen', 'lighting', 'ledamp', 'LED-подсветка кухни: усилитель', OZ('https://ozon.by/product/usilitel-odnotsvetnyy-5-24v-150-720w-30a-single-amplifier-1614498319/', { model: 'Single Amplifier, одноцветный', specs: '5–24 В, 150–720 Вт, 30 А', at: [1030, 90] }));
   add('kitchen', 'lighting', 'ledpwm', 'LED-подсветка кухни: фильтр ШИМ', OZ('https://ozon.by/t/D42YM7Y', { specs: '20 А', at: [1030, 90] }));
   add('living', 'textile', 'pillows', 'Декоративные подушки', { place: 'диван в гостиной, кровати в спальне и детской', qty: '', at: [1000, 430], ...RUDENKO });
-  add('bedroom', 'furniture', 'nightstand-right', 'Прикроватная тумба справа', { place: 'справа от кровати', specs: 'белая, рифлёная, на золотом цоколе', at: [1039, 682] });
+  add('bedroom', 'furniture', 'nightstand-right', 'Прикроватная тумба справа', { place: 'справа от кровати', specs: 'белая, рифлёная, на золотом цоколе', brand: 'Hi!moon', model: 'Тумба «Меридиана» в эмали', supplier: 'himoon.shop', link: 'https://himoon.shop/product/tumba-meridiana-v-emali/', at: [1039, 682] });
   for (const id of ['living.sofa', 'living.armchair', 'kids.daybed', 'kids.armchair', 'bedroom.bed', 'bedroom.headboard', 'kitchen.chair', 'loggia.armchair']) {
     const it = items.find((x) => x.id === id);
     if (it) it.notes = it.notes ? `${it.notes}; ${CLEAN}` : CLEAN;
